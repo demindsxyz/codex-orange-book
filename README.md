@@ -12,9 +12,9 @@
 
 ## 阅读入口
 
-- [在线阅读](https://bozhoudev.github.io/codex-orange-book/)
-- [下载 PDF](https://raw.githubusercontent.com/bozhouDev/codex-orange-book/main/Codex%E6%A9%99%E7%9A%AE%E4%B9%A6.pdf)
-- [Markdown 原文](https://github.com/bozhouDev/codex-orange-book/blob/main/README.md)
+- [在线阅读](https://vink567.github.io/codex-orange-book/)
+- [下载 PDF](https://raw.githubusercontent.com/Vink567/codex-orange-book/main/Codex%E6%A9%99%E7%9A%AE%E4%B9%A6.pdf)
+- [Markdown 原文](https://github.com/Vink567/codex-orange-book/blob/main/README.md)
 
 > GitHub 文件页可能无法稳定预览较大的 PDF，并显示“无法渲染代码块”等误导提示。建议使用上面的在线阅读入口，或直接下载 PDF。
 
