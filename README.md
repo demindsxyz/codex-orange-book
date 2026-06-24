@@ -17,6 +17,7 @@
 - [Markdown 原文](https://github.com/Vink567/codex-orange-book/blob/main/README.md)
 
 > GitHub 文件页可能无法稳定预览较大的 PDF，并显示“无法渲染代码块”等误导提示。建议使用上面的在线阅读入口，或直接下载 PDF。
+> 在线阅读页使用轻量预览版保证加载稳定；“下载 PDF”提供高清原版文件。
 
 ## 目录
 

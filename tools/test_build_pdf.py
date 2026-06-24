@@ -13,6 +13,9 @@ import build_pdf
 
 
 class BuildPdfAssetTests(unittest.TestCase):
+    def test_build_outputs_preview_pdf_without_overwriting_original_download(self) -> None:
+        self.assertEqual(build_pdf.OUTPUT_PDF.name, "Codex橙皮书.preview.pdf")
+
     def test_resolve_chrome_prefers_env_path(self) -> None:
         with tempfile.TemporaryDirectory() as raw_tmp:
             fake_chrome = Path(raw_tmp) / "chrome"

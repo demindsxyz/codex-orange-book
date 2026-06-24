@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ReaderLinkTests(unittest.TestCase):
-    def test_readme_points_to_this_fork_pages_and_compressed_pdf(self) -> None:
+    def test_readme_points_to_this_fork_pages_and_original_pdf_download(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
         self.assertIn("https://vink567.github.io/codex-orange-book/", readme)
@@ -15,6 +15,14 @@ class ReaderLinkTests(unittest.TestCase):
             readme,
         )
         self.assertIn("https://github.com/Vink567/codex-orange-book/blob/main/README.md", readme)
+
+    def test_reader_page_downloads_original_pdf_and_embeds_preview_pdf(self) -> None:
+        index_html = (ROOT / "index.html").read_text(encoding="utf-8")
+
+        self.assertIn('data="./Codex橙皮书.preview.pdf#view=FitH"', index_html)
+        self.assertIn('href="./Codex橙皮书.pdf"', index_html)
+        self.assertIn('download="Codex橙皮书.pdf"', index_html)
+        self.assertNotIn('download="Codex橙皮书.preview.pdf"', index_html)
 
     def test_reader_page_markdown_link_points_to_this_fork(self) -> None:
         index_html = (ROOT / "index.html").read_text(encoding="utf-8")
