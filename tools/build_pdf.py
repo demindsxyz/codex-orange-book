@@ -5,7 +5,8 @@
 1. 读取 cover.html，取出其 <style> 与封面 <div class="cover">，做多页上下文适配后嵌入；
 2. 用 python-markdown 把 README 正文转成 HTML（支持表格、围栏代码、原始 HTML 图片块）；
 3. 套上整本书的打印 CSS（A4、页边距、表格/代码/图片样式），封面用命名页占满一整页；
-4. 输出 book.html 到仓库根目录（让 assets/ 相对路径能被解析），再调用 Chrome --print-to-pdf。
+4. 输出 book.html 到仓库根目录（让 assets/ 相对路径能被解析），再调用 Chrome --print-to-pdf；
+5. 默认生成轻量预览版 Codex橙皮书.preview.pdf，不覆盖高清下载版 Codex橙皮书.pdf。
 """
 
 from __future__ import annotations
@@ -23,7 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 COVER = ROOT / "cover.html"
 BOOK_HTML = ROOT / "book.html"
-OUTPUT_PDF = ROOT / "Codex橙皮书.pdf"
+OUTPUT_PDF = ROOT / "Codex橙皮书.preview.pdf"
 PDF_ASSET_CACHE = ROOT / ".cache" / "pdf-assets"
 PDF_IMAGE_MAX_WIDTH = 1400
 PDF_IMAGE_JPEG_QUALITY = 82
@@ -78,9 +79,29 @@ def extract_cover() -> tuple[str, str]:
     return style, body
 
 
+def prepare_readme_for_pdf(text: str) -> str:
+    """Remove README-only navigation blocks before rendering the book PDF."""
+    excluded_h2_titles = {"阅读入口"}
+    output: list[str] = []
+    skipping = False
+
+    for line in text.splitlines(keepends=True):
+        match = re.match(r"^##\s+(.+?)\s*$", line)
+        if match:
+            title = match.group(1).strip()
+            skipping = title in excluded_h2_titles
+            if skipping:
+                continue
+
+        if not skipping:
+            output.append(line)
+
+    return "".join(output)
+
+
 def render_readme() -> str:
     """README.md → HTML 正文。"""
-    text = README.read_text(encoding="utf-8")
+    text = prepare_readme_for_pdf(README.read_text(encoding="utf-8"))
     md = markdown.Markdown(
         extensions=["tables", "fenced_code", "sane_lists", "attr_list"],
         output_format="html5",
