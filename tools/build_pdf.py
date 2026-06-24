@@ -79,9 +79,29 @@ def extract_cover() -> tuple[str, str]:
     return style, body
 
 
+def prepare_readme_for_pdf(text: str) -> str:
+    """Remove README-only navigation blocks before rendering the book PDF."""
+    excluded_h2_titles = {"阅读入口"}
+    output: list[str] = []
+    skipping = False
+
+    for line in text.splitlines(keepends=True):
+        match = re.match(r"^##\s+(.+?)\s*$", line)
+        if match:
+            title = match.group(1).strip()
+            skipping = title in excluded_h2_titles
+            if skipping:
+                continue
+
+        if not skipping:
+            output.append(line)
+
+    return "".join(output)
+
+
 def render_readme() -> str:
     """README.md → HTML 正文。"""
-    text = README.read_text(encoding="utf-8")
+    text = prepare_readme_for_pdf(README.read_text(encoding="utf-8"))
     md = markdown.Markdown(
         extensions=["tables", "fenced_code", "sane_lists", "attr_list"],
         output_format="html5",

@@ -16,6 +16,35 @@ class BuildPdfAssetTests(unittest.TestCase):
     def test_build_outputs_preview_pdf_without_overwriting_original_download(self) -> None:
         self.assertEqual(build_pdf.OUTPUT_PDF.name, "Codex橙皮书.preview.pdf")
 
+    def test_pdf_source_excludes_reading_entry_section(self) -> None:
+        source = """# Codex 橙皮书
+
+开头介绍。
+
+## 阅读入口
+
+- [在线阅读](https://vink567.github.io/codex-orange-book/)
+- [下载 PDF](https://raw.githubusercontent.com/Vink567/codex-orange-book/main/Codex%E6%A9%99%E7%9A%AE%E4%B9%A6.pdf)
+- [Markdown 原文](https://github.com/Vink567/codex-orange-book/blob/main/README.md)
+
+> GitHub 文件页可能无法稳定预览较大的 PDF。
+
+## 目录
+
+- 第一篇
+"""
+
+        prepared = build_pdf.prepare_readme_for_pdf(source)
+
+        self.assertIn("# Codex 橙皮书", prepared)
+        self.assertIn("## 目录", prepared)
+        self.assertIn("- 第一篇", prepared)
+        self.assertNotIn("## 阅读入口", prepared)
+        self.assertNotIn("在线阅读", prepared)
+        self.assertNotIn("下载 PDF", prepared)
+        self.assertNotIn("Markdown 原文", prepared)
+        self.assertNotIn("GitHub 文件页可能无法稳定预览", prepared)
+
     def test_resolve_chrome_prefers_env_path(self) -> None:
         with tempfile.TemporaryDirectory() as raw_tmp:
             fake_chrome = Path(raw_tmp) / "chrome"
