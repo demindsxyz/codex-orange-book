@@ -1,570 +1,566 @@
-# Codex 橙皮书：从安装到实战案例的全链路使用指南
+# Codex Orange Book: A Complete Guide from Installation to Real-World Practice
+>This English version is translated from the original Chinese edition of [**Codex Orange Book**](https://github.com/bozhouDev/codex-orange-book)
+> The original project is a community-maintained, unofficial guide to Codex. This repository provides an English-localized version for readers who prefer English technical documentation.
+> Translation updates may lag behind the Chinese source, so please refer to the original repository for the latest revisions and authoritative context.
 
-> 非官方开源指南 · 持续更新版  
-> 写给开发者、独立开发者和 AI 工具重度用户的 Codex 使用手册。
+> Unofficial open-source guide · Continuously updated edition  
+> A practical Codex handbook for developers, indie developers, and heavy users of AI tools.
 
-| 版本 | 最后校验 | 资料性质 |
+| Version | Last reviewed | Document status |
 | --- | --- | --- |
-| v0.1.0 | 2026-06-22 | 非官方指南，不代表 OpenAI 官方文档或产品承诺 |
+| v0.1.0 | 2026-06-22 | Unofficial guide. Not OpenAI official documentation or a product commitment |
 
-> 本文以 2026-06-22 可访问的 Codex App、Codex CLI、Codex IDE Extension、Codex Web / Cloud 公开能力和实测界面为参考。Codex 更新很快，安装方式、模型名称、额度、入口位置和命令参数都可能变化；涉及具体功能和价格时，请以 OpenAI 官方文档、Codex 当前版本和你账号实际显示为准。  
-> CC Switch、DeepSeek 等第三方工具和模型接入方案仅作为扩展方法记录，不属于 OpenAI 官方功能。
+> This guide is based on the publicly accessible capabilities and hands-on UI behavior of Codex App, Codex CLI, Codex IDE Extension, and Codex Web / Cloud as of 2026-06-22. Codex changes quickly. Installation methods, model names, usage limits, entry points, and command parameters may change. For specific features and pricing, always rely on OpenAI's official documentation, the current Codex version, and what your own account displays.  
+> Third-party tools and model integration approaches such as CC Switch and DeepSeek are documented only as extension methods. They are not official OpenAI features.
 
-## 阅读入口
+## Table of contents
 
-- [在线阅读](https://vink567.github.io/codex-orange-book/)
-- [下载 PDF](https://raw.githubusercontent.com/bozhouDev/codex-orange-book/main/Codex%E6%A9%99%E7%9A%AE%E4%B9%A6.pdf)
-
-> GitHub 文件页可能无法稳定预览较大的 PDF，并显示“无法渲染代码块”等误导提示。建议使用上面的在线阅读入口，或直接打开 [Codex橙皮书.preview.pdf](https://github.com/Vink567/codex-orange-book/blob/main/Codex%E6%A9%99%E7%9A%AE%E4%B9%A6.preview.pdf) 进行预览。
-
-## 目录
-
-- [0. 使用说明](#0-使用说明)
-  - [0.1 重要声明](#01-重要声明)
-  - [0.2 这份 PDF 适合谁](#02-这份-pdf-适合谁)
-  - [0.3 阅读路线](#03-阅读路线)
-- [第一篇：先搞懂 Codex 是什么](#第一篇先搞懂-codex-是什么)
-  - [Codex 基础认知](#codex-基础认知)
-  - [Codex 的使用入口](#codex-的使用入口)
-- [第二篇：安装、配置与环境准备](#第二篇安装配置与环境准备)
-  - [安装前准备](#安装前准备)
-  - [Codex App 安装与上手 （新手最为推荐，也是功能最强的）](#codex-app-安装与上手-新手最为推荐也是功能最强的)
-  - [Codex CLI 安装与上手](#codex-cli-安装与上手)
+- [0. How to use this guide](#0-how-to-use-this-guide)
+  - [0.1 Important notes](#01-important-notes)
+  - [0.2 Who this PDF is for](#02-who-this-pdf-is-for)
+  - [0.3 Reading paths](#03-reading-paths)
+- [Part 1: Understand what Codex is first](#part-1-understand-what-codex-is-first)
+  - [Codex fundamentals](#codex-fundamentals)
+  - [Codex entry points](#codex-entry-points)
+- [Part 2: Installation, configuration, and environment setup](#part-2-installation-configuration-and-environment-setup)
+  - [Before you install](#before-you-install)
+  - [Installing and getting started with Codex App (the best starting point for beginners, and also the most capable option)](#installing-and-getting-started-with-codex-app-the-best-starting-point-for-beginners-and-also-the-most-capable-option)
+  - [Installing and getting started with Codex CLI](#installing-and-getting-started-with-codex-cli)
   - [Codex IDE Extension](#codex-ide-extension)
   - [Codex Web](#codex-web)
-- [第三篇：核心功能详解](#第三篇核心功能详解)
-  - [自动化](#自动化)
-  - [插件](#插件)
+- [Part 3: Core capabilities in depth](#part-3-core-capabilities-in-depth)
+  - [Automations](#automations)
+  - [Plugins](#plugins)
   - [Skill](#skill)
   - [MCP](#mcp)
-  - [代码管理 （Git 与 GitHub 工作流）](#代码管理-git-与-github-工作流)
-  - [云端运行](#云端运行)
-  - [记忆系统](#记忆系统)
-- [第四篇：标准工作流](#第四篇标准工作流)
-  - [从需求到交付的完整链路](#从需求到交付的完整链路)
-  - [Codex 任务模板库](#codex-任务模板库)
-- [第五篇：实战案例库](#第五篇实战案例库)
-  - [实战案例一：制作一个宠物零食售卖的前端页面网站](#实战案例一制作一个宠物零食售卖的前端页面网站)
-  - [实战案例二：给宠物零食网站增加功能和优化页面](#实战案例二给宠物零食网站增加功能和优化页面)
-  - [实战案例三：制作宠物零食的管理后台](#实战案例三制作宠物零食的管理后台)
-  - [实战案例四：制作宠物零食品牌招商 PPT](#实战案例四制作宠物零食品牌招商-ppt)
-  - [实战案例五：制作宠物零食宣传视频](#实战案例五制作宠物零食宣传视频)
-- [附录](#附录)
-  - [附录 A：第三方模型接入](#附录-a第三方模型接入)
+  - [Code management (Git and GitHub workflows)](#code-management-git-and-github-workflows)
+  - [Cloud execution](#cloud-execution)
+  - [Memory system](#memory-system)
+- [Part 4: Standard workflow](#part-4-standard-workflow)
+  - [The complete path from requirement to delivery](#the-complete-path-from-requirement-to-delivery)
+  - [Codex task template library](#codex-task-template-library)
+- [Part 5: Real-world case library](#part-5-real-world-case-library)
+  - [Case 1: Build a frontend website for selling pet treats](#case-1-build-a-frontend-website-for-selling-pet-treats)
+  - [Case 2: Add features to the pet-treat website and improve the page](#case-2-add-features-to-the-pet-treat-website-and-improve-the-page)
+  - [Case 3: Build an admin dashboard for pet treats](#case-3-build-an-admin-dashboard-for-pet-treats)
+  - [Case 4: Create a pet-treat brand partnership PPT](#case-4-create-a-pet-treat-brand-partnership-ppt)
+  - [Case 5: Create a promotional video for pet treats](#case-5-create-a-promotional-video-for-pet-treats)
+- [Appendix](#appendix)
+  - [Appendix A: Third-party model integration](#appendix-a-third-party-model-integration)
 
-## 0. 使用说明
+## 0. How to use this guide
 
-### 0.1 重要声明
+### 0.1 Important notes
 
-- 本资料为非官方指南，不代表 OpenAI 官方文档。
-- 所有功能以 OpenAI 官方文档和 Codex 实际版本为准。
-- 本 PDF 会随着 Codex 更新持续维护。
-- 建议读者优先查看 GitHub 仓库中的最新版 Markdown 原稿。
+- This material is an unofficial guide and does not represent OpenAI official documentation.
+- All features are subject to OpenAI's official documentation and the actual Codex version you use.
+- This PDF will be maintained as Codex evolves.
+- Readers are encouraged to check the latest Markdown source in the GitHub repository first.
 
-### 0.2 这份 PDF 适合谁
+### 0.2 Who this PDF is for
 
-- 完全没用过 Codex，但想系统上手的人。
-- 会写代码，但不知道怎么把 Codex 接入真实项目的人。
-- 已经用过 Cursor、Claude Code、ChatGPT，想比较 Codex 工作流的人。
-- 独立开发者、AI 工具博主、技术团队负责人。
-- 想搭建 AI 编程工作流、知识库和自动化流程的人。
+- People who have never used Codex and want a structured onboarding path.
+- Developers who can code but do not know how to integrate Codex into real projects.
+- Users who have tried Cursor, Claude Code, or ChatGPT and want to compare Codex workflows.
+- Indie developers, AI-tool creators, and technical team leads.
+- Anyone building AI-assisted coding workflows, knowledge bases, or automation pipelines.
 
-### 0.3 阅读路线
+### 0.3 Reading paths
 
-- **快速上手路线**：0. 使用说明 → 第一篇：先搞懂 Codex 是什么 → 第二篇：安装、配置与环境准备 → 第四篇：标准工作流 → 第五篇：实战案例库
-- **开发者核心路线**：第一篇：先搞懂 Codex 是什么 → 第二篇：安装、配置与环境准备 → 第三篇：核心功能详解 → 第四篇：标准工作流
-- **进阶扩展路线**：第三篇：核心功能详解 → 第四篇：标准工作流 → 附录：第三方模型接入
-
----
-
-## 第一篇：先搞懂 Codex 是什么
-
-### Codex 基础认知
-
-#### Codex 到底是什么
-
-很多人第一次听到 Codex，会下意识把它理解成“又一个 AI 写代码工具”。
-
-但如果只把 Codex 当成“帮我写代码的 ChatGPT”，你很容易低估它。
-
-Codex 真正重要的地方，不是它能不能写一个函数、补一段代码、解释一个报错，而是它代表了 AI 编程工具的一次角色变化：
-
-以前，AI 是坐在你旁边帮你补代码的人。
-
-后来，AI 是在编辑器里和你一起改代码的人。
-
-现在，Codex 更像是一个可以被交代任务的工程执行者。
-
-它不只是回答你“这段代码怎么写”，而是可以进入一个项目，读取文件，理解上下文，制定计划，修改代码，运行命令，检查结果，最后把改动整理成可以 review 的结果。
-
-这就是 Codex 和普通 AI 聊天工具最大的区别。
+- **Quick-start path**: 0. How to use this guide → Part 1: Understand what Codex is first → Part 2: Installation, configuration, and environment setup → Part 4: Standard workflow → Part 5: Real-world case library
+- **Developer core path**: Part 1: Understand what Codex is first → Part 2: Installation, configuration, and environment setup → Part 3: Core capabilities in depth → Part 4: Standard workflow
+- **Advanced extension path**: Part 3: Core capabilities in depth → Part 4: Standard workflow → Appendix: Third-party model integration
 
 ---
 
-##### 五年变了四次
+## Part 1: Understand what Codex is first
+
+### Codex fundamentals
+
+#### What exactly is Codex?
+
+When people first hear the name Codex, they often assume it is “just another AI coding tool.”
+
+But if you treat Codex merely as “ChatGPT that helps me write code,” you will likely underestimate it.
+
+What makes Codex important is not simply whether it can write a function, complete a snippet, or explain an error. Its real significance is that it represents a shift in the role of AI programming tools:
+
+At first, AI sat beside you and helped complete code.
+
+Later, AI entered the editor and modified code together with you.
+
+Now, Codex is closer to an engineering executor you can assign tasks to.
+
+It does not only answer “how should I write this code?” It can enter a project, read files, understand context, make a plan, modify code, run commands, check results, and finally organize the changes into a reviewable output.
+
+That is the biggest difference between Codex and ordinary AI chat tools.
+
+---
+
+##### Four shifts in five years
 
 <p align="center">
-  <img src="assets/images/image-002-4f0de9d6b3.png" alt="AI编程工具的四次进化历程" width="860">
+  <img src="assets/images/image-002-4f0de9d6b3.png" alt="The four stages of AI programming tool evolution" width="860">
 </p>
 
-**AI 编程工具的四次进化**
+**The four stages of AI programming tools**
 
-过去几年，AI 编程工具大致经历了四个阶段。
+Over the past few years, AI programming tools have broadly moved through four stages.
 
-**2021 年：Copilot 补全时代。**
-Codex 这个名字第一次被大量开发者听到，是因为 GitHub Copilot。那时 AI 主要负责代码补全：你写开头，它补后面；你写函数名，它补函数体。它像一个更聪明的输入法，能让你写得更快，但项目怎么拆、文件怎么找、测试怎么跑，仍然主要靠人完成。
+**2021: The Copilot completion era.**
+The name Codex first became widely known among developers because of GitHub Copilot. At that time, AI was mainly responsible for code completion: you wrote the beginning, it completed the rest; you wrote a function name, it suggested the body. It was like a smarter input method that helped you write faster, but humans still handled how to break down the project, locate files, and run tests.
 
-**2022 年：ChatGPT 对话时代。**
-ChatGPT 出现后，AI 编程从“补全”进入“对话”。你可以直接问它报错原因、代码优化、接口写法、项目结构解释。AI 从输入法变成了问答伙伴。但它通常不在真实项目里，你需要复制代码、粘贴报错、手动补上下文，再把答案搬回项目。
+**2022: The ChatGPT conversation era.**
+After ChatGPT appeared, AI programming moved from “completion” into “conversation.” You could ask directly about error messages, code improvements, API design, or project structure. AI evolved from an input method into a Q&A partner. But it usually did not operate inside the real project. You still had to copy code, paste errors, manually provide context, and move the answer back into the project.
 
-**2023—2024 年：Cursor 项目协作时代。**
-Cursor 这类 AI 编辑器让 AI 真正进入编辑器，能看到文件、修改函数、跨文件重构、根据项目上下文完成一部分开发任务。AI 开始从“回答问题”变成“协助修改项目”。但它大多数时候仍依附在 IDE 里，你还需要盯着它改、判断下一步、跑测试、整理提交。
+**2023–2024: The Cursor project-collaboration era.**
+AI editors such as Cursor brought AI into the editor. They could see files, modify functions, refactor across files, and complete part of a development task using project context. AI started moving from “answering questions” to “helping modify projects.” But most of the time it still lived inside the IDE. You still had to watch the edits, decide the next step, run tests, and prepare the commit.
 
-**2025 年：Codex 工程 Agent 时代。**
-Codex 重新出现后，已经不只是当年负责代码补全的模型，而是面向真实软件工程任务的 coding agent。它能读项目、解释代码、修 bug、加功能、补测试、重构模块、运行命令、检查 diff、整理 PR 说明，甚至并行处理多个工程任务。
+**2025: The Codex engineering-agent era.**
+When Codex returned, it was no longer only the model once associated with code completion. It had become a coding agent for real software engineering tasks. It can read projects, explain code, fix bugs, add features, add tests, refactor modules, run commands, inspect diffs, draft PR summaries, and even work on multiple engineering tasks in parallel.
 
-这意味着，AI 编程工具的重点正在从“帮你写代码”转向“帮你交付任务”。
+This means the focus of AI programming tools is shifting from “helping you write code” to “helping you deliver tasks.”
 
-一句话总结：
+In one sentence:
 
-**Copilot 帮你补代码，ChatGPT 帮你想代码，Cursor 陪你改项目，而 Codex 开始帮你执行工程任务。**
+**Copilot completes code, ChatGPT helps you think through code, Cursor works with you inside a project, and Codex starts executing engineering tasks for you.**
 
 ---
 
-#### Codex 能做什么
+#### What Codex can do
 
 **What Codex Can Do**
 
 <p align="center">
-  <img src="assets/images/image-003-4ba99b9c0a.png" alt="Codex能做什么的内容" width="860">
+  <img src="assets/images/image-003-4ba99b9c0a.png" alt="What Codex can do" width="860">
 </p>
 
-很多人第一次用 Codex，会直接问：
+Many first-time Codex users immediately ask:
 
-- “帮我写一个登录页面。”
-- “帮我修一下这个 bug。”
-- “帮我做一个项目。”
+- “Build me a login page.”
+- “Fix this bug for me.”
+- “Create a project for me.”
 
-这些当然可以，但还不够准确。
+Those requests are possible, but they are not precise enough.
 
-Codex 真正擅长的，不是凭空生成一段代码，而是在真实项目里完成一组工程任务。
+What Codex is truly good at is not generating isolated code from scratch. It is completing a set of engineering tasks inside a real project.
 
-它可以读项目、找文件、理解上下文、制定计划、修改代码、运行命令、检查结果、整理 diff，最后把任务推进到可以 review 的状态。
+It can read a project, locate files, understand context, create a plan, modify code, run commands, check results, organize the diff, and move the task to a reviewable state.
 
-所以，不要把 Codex 当成一个“代码生成按钮”。
+So do not treat Codex as a “generate code” button.
 
-更准确地说：
+A more accurate description is:
 
-**Codex 是一个可以进入项目现场的 AI 工程助手。**
+**Codex is an AI engineering assistant that can enter the project site.**
 
-它能做的事，大致可以分成以下几类。
-
----
-
-##### 读懂一个陌生项目
-
-使用 Codex 的第一步，不应该是让它直接写代码，而是让它先读项目。
-
-它可以帮你快速搞清楚：
-
-- 项目用什么技术栈。
-- 入口文件在哪里。
-- 核心模块在哪里。
-- 测试和构建命令是什么。
-- 哪些文件不能随便动。
-
-很多 Codex 任务失败，不是因为它不会写代码，而是因为它还没理解项目，就被要求直接动手。
+Its capabilities can be roughly grouped into the following areas.
 
 ---
 
-##### 解释代码和梳理逻辑
+##### Understand an unfamiliar project
 
-Codex 可以帮你解释看不懂的代码。
+The first step with Codex should not be asking it to write code immediately. You should ask it to read the project first.
 
-比如：
+It can help you quickly understand:
 
-- 这个函数是做什么的。
-- 这个组件为什么这样写。
-- 接口调用链路是什么。
-- 状态从哪里来。
-- 这个 bug 可能和哪些文件有关。
+- What technology stack the project uses.
+- Where the entry files are.
+- Where the core modules live.
+- What the test and build commands are.
+- Which files should not be modified casually.
 
-它不只是解释单个函数，还可以结合上下文，梳理模块关系、数据流和潜在风险。
-
-这对接手旧项目尤其有用。
+Many Codex tasks fail not because Codex cannot write code, but because it has not yet understood the project before being asked to act.
 
 ---
 
-##### 修 bug 和加功能
+##### Explain code and map logic
 
-Codex 很适合处理边界清楚的开发任务。
+Codex can help explain code you do not understand.
 
-比如：
+For example:
 
-- 修复一个可复现 bug。
-- 新增一个设置页。
-- 新增一个表单校验。
-- 新增一个接口。
-- 新增一个导出按钮。
-- 优化一个前端页面。
+- What this function does.
+- Why this component is implemented this way.
+- What the API call chain looks like.
+- Where the state comes from.
+- Which files may be related to this bug.
 
-但不要直接把一个大项目丢给它。
+It does not only explain a single function. It can use project context to map module relationships, data flow, and potential risks.
 
-更好的方式是把任务拆小：
-
-1. 先读项目。
-2. 再出方案。
-3. 只改一个模块。
-4. 跑测试。
-5. 看 diff。
-6. 确认没问题后再继续。
-
-Codex 更适合连续完成小任务，而不是一次吞下大项目。
+This is especially useful when taking over a legacy project.
 
 ---
 
-##### 写测试、做重构
+##### Fix bugs and add features
 
-Codex 可以帮你补测试，也可以帮你重构代码。
+Codex works well on development tasks with clear boundaries.
 
-它可以做：
+For example:
 
-- 补单元测试。
-- 补边界条件。
-- 补异常场景。
-- 提取重复逻辑。
-- 拆分过长函数。
-- 整理组件结构。
-- 封装 API 请求。
+- Fixing a reproducible bug.
+- Adding a settings page.
+- Adding form validation.
+- Adding an API endpoint.
+- Adding an export button.
+- Improving a frontend page.
 
-但这类任务必须加边界：
+But do not hand it a large project all at once.
 
-- 不改业务逻辑。
-- 不改公共 API。
-- 不引入无关依赖。
-- 不大范围重构。
-- 修改后必须跑测试。
+A better approach is to break the work into smaller tasks:
 
-Codex 能重构，但你必须控制范围。
+1. Read the project first.
+2. Draft a plan.
+3. Modify only one module.
+4. Run tests.
+5. Inspect the diff.
+6. Continue only after confirming the result.
 
----
-
-##### 写文档和整理 PR
-
-Codex 很适合写工程文档。
-
-比如：
-
-- README。
-- 安装说明。
-- 启动说明。
-- 接口文档。
-- 环境变量说明。
-- 项目结构说明。
-- PR 描述。
-- commit message。
-- 更新日志。
-
-文档不是附属品。
-
-在 Codex 工作流里，文档本身就是上下文基础设施。
-
-文档越清楚，后续人和 AI 接手项目都会更轻松。
-
-但要提醒 Codex：
-
-**不要编造不存在的命令，不确定的信息要明确标注。**
+Codex is better at completing a sequence of small tasks than swallowing an entire large project in one go.
 
 ---
 
-##### 跑命令、看 diff、做 review
+##### Write tests and refactor code
 
-Codex 和普通聊天工具最大的区别之一，是它可以在项目环境里运行命令。
+Codex can help you add tests and refactor code.
 
-它可以：
+It can:
 
-- 运行测试。
-- 运行 lint。
-- 运行 typecheck。
-- 运行 build。
-- 查看 git status。
-- 查看 git diff。
-- 搜索代码。
-- 检查修改结果。
+- Add unit tests.
+- Cover boundary conditions.
+- Cover error scenarios.
+- Extract duplicated logic.
+- Split overly long functions.
+- Organize component structure.
+- Encapsulate API requests.
 
-这让 Codex 不只是“猜答案”，而是可以验证结果。
+But tasks like these must have clear constraints:
 
-但命令执行也有风险。
+- Do not change business logic.
+- Do not change public APIs.
+- Do not introduce unrelated dependencies.
+- Do not perform broad refactors.
+- Run tests after the changes.
 
-能验证的，可以让它验证。
-
-有风险的，必须由你批准。
-
-涉及生产环境、数据库、真实用户数据的操作，不要交给它自动执行。
-
----
-
-##### 什么时候适合用 Codex
-
-适合 Codex 的任务，一般有几个特点：
-
-- 目标明确。
-- 范围可控。
-- 上下文清楚。
-- 结果能验证。
-- 失败能回滚。
-- 风险可接受。
-
-比如：
-
-- 读项目。
-- 修 bug。
-- 加小功能。
-- 补测试。
-- 写文档。
-- 优化前端页面。
-- 整理 PR。
-- 审查 diff。
-- 处理重复任务。
+Codex can refactor, but you must control the scope.
 
 ---
 
-##### 什么时候不适合直接用 Codex
+##### Write documentation and prepare PRs
 
-不建议直接让 Codex 处理：
+Codex is well suited for engineering documentation.
 
-- 生产数据库。
-- 真实用户数据。
-- 支付核心逻辑。
-- 权限和安全核心模块。
-- 大规模架构迁移。
-- 没有备份的重要项目。
-- 没有测试的核心业务。
-- 你自己也无法验收的任务。
+For example:
 
-如果你判断不了结果对不对，就不要让 Codex 独立完成。
+- README files.
+- Installation instructions.
+- Startup instructions.
+- API documentation.
+- Environment variable documentation.
+- Project structure documentation.
+- PR descriptions.
+- Commit messages.
+- Changelogs.
 
-Codex 可以提高效率，但不能替你做判断。
+Documentation is not an accessory.
 
----
+In a Codex workflow, documentation is part of the context infrastructure.
 
-##### 一句话总结
+The clearer the documentation is, the easier it becomes for both humans and AI to take over the project later.
 
-Codex 能做的事情，不只是写代码。
+But you should remind Codex:
 
-它真正重要的能力是：
-
-**把一个明确的软件工程任务，从需求推进到可 review 的结果。**
-
-你不是让它随便写点代码。
-
-你是在让它按照你的项目规则、上下文和验收标准，完成一项可控的工程任务。
-
+**Do not invent commands that do not exist. Clearly mark information that is uncertain.**
 
 ---
 
-#### Codex 与 ChatGPT 的区别
+##### Run commands, inspect diffs, and review changes
 
-很多人会问：
+One of the biggest differences between Codex and ordinary chat tools is that Codex can run commands inside the project environment.
 
-既然 ChatGPT 也能写代码，为什么还要用 Codex？
+It can:
 
-核心区别在于：
+- Run tests.
+- Run lint.
+- Run type checks.
+- Run builds.
+- Inspect `git status`.
+- Inspect `git diff`.
+- Search the codebase.
+- Check modification results.
 
-**ChatGPT 更像一个顾问，有问题问GPT，从它那里得到答案，然后自己去执行。那么现在Codex更像是一个实习生，我们能够真正的让它帮我们干活，交代任务能够完成这种。**
+This means Codex is not only “guessing an answer.” It can verify outcomes.
 
-ChatGPT 适合帮你想问题。
+But command execution also carries risk.
 
-Codex 适合帮你推进任务。
+Let it verify what can safely be verified.
 
-更合理的用法是：
+Risky operations must require your approval.
 
-**先用 ChatGPT 想清楚，再用 Codex 进项目执行。**
+Do not let it automatically execute operations involving production environments, databases, or real user data.
+
+---
+
+##### When Codex is a good fit
+
+Tasks that suit Codex generally share several traits:
+
+- The goal is clear.
+- The scope is controlled.
+- The context is clear.
+- The result can be verified.
+- Failures can be rolled back.
+- The risk is acceptable.
+
+For example:
+
+- Reading a project.
+- Fixing bugs.
+- Adding small features.
+- Adding tests.
+- Writing documentation.
+- Improving frontend pages.
+- Preparing PRs.
+- Reviewing diffs.
+- Handling repetitive tasks.
+
+---
+
+##### When you should not use Codex directly
+
+It is not recommended to let Codex directly handle:
+
+- Production databases.
+- Real user data.
+- Core payment logic.
+- Permission and security-critical modules.
+- Large-scale architecture migrations.
+- Important projects without backups.
+- Core business logic without tests.
+- Tasks you cannot validate yourself.
+
+If you cannot judge whether the result is correct, do not let Codex complete the task independently.
+
+Codex can improve efficiency, but it cannot replace your judgment.
+
+---
+
+##### One-sentence summary
+
+Codex does more than write code.
+
+Its truly important capability is:
+
+**Moving a clearly defined software engineering task from requirement to reviewable result.**
+
+You are not asking it to write code at random.
+
+You are asking it to complete a controlled engineering task according to your project rules, context, and acceptance criteria.
+
+
+---
+
+#### Codex vs. ChatGPT
+
+Many people ask:
+
+If ChatGPT can also write code, why use Codex?
+
+The core difference is:
+
+**ChatGPT is more like a consultant: you ask questions, get answers, and then execute the work yourself. Codex is closer to an intern or junior engineering assistant: you can assign it a task and let it do real work toward completion.**
+
+ChatGPT is better for helping you think.
+
+Codex is better for moving tasks forward.
+
+A more effective pattern is:
+
+**Use ChatGPT to think clearly first, then use Codex to execute inside the project.**
 
 <p align="center">
-  <img src="assets/images/image-004-408fd41f24.png" alt="ChatGPT与Codex的区别对比表，分为核心定位、主要方式、适合场景、项目上下文、交付结果、使用重点六个方面" width="860">
+  <img src="assets/images/image-004-408fd41f24.png" alt="Comparison table between ChatGPT and Codex across positioning, primary interaction, use cases, project context, deliverables, and usage focus" width="860">
 </p>
 
-#### Codex 与 Cursor 的区别
+#### Codex vs. Cursor
 
-很多人会把 Codex 和 Cursor 放在一起比较，因为它们都能帮你写代码、改代码、理解项目。
+Many people compare Codex with Cursor because both can help write code, modify code, and understand projects.
 
-但它们的定位并不一样。
+But their positioning is different.
 
-**Cursor 更像一个 AI 编辑器，Codex 更像一个工程 Agent。**
+**Cursor is closer to an AI editor. Codex is closer to an engineering agent.**
 
-合理的用法是组合使用：
+A sensible approach is to use them together:
 
-**用 Cursor 做日常编码和局部修改，用 Codex 做任务推进和工程交付。**
+**Use Cursor for day-to-day coding and local edits. Use Codex for task progression and engineering delivery.**
 
-Cursor 负责陪你写。
+Cursor writes with you.
 
-Codex 负责帮你跑完整任务。
+Codex helps you run an end-to-end task.
 
-一个偏 IDE 协作，一个偏 Agent 执行。
+One leans toward IDE collaboration; the other leans toward agent execution.
 
-这就是它们最大的区别。
+That is the biggest difference between them.
 
 <p align="center">
-  <img src="assets/images/image-005-e2cbc7da9d.png" alt="图片以“Cursor与Codex的区别”为标题，对比了两者在核心定位、使用位置、主要方式、适合场景、工作粒度、交付结果及使用重点等方面的差异" width="860">
+  <img src="assets/images/image-005-e2cbc7da9d.png" alt="A table titled “Cursor vs. Codex” comparing their core positioning, where they are used, primary mode, suitable scenarios, task granularity, deliverables, and usage focus" width="860">
 </p>
 
-#### Codex 与 Claude Code 的区别
+#### Codex vs. Claude Code
 
-Codex 和 Claude Code 很像。
+Codex and Claude Code are similar.
 
-都是 **agentic coding 工具，**但两者的侧重点不一样。
-
----
-
-##### Claude Code 更偏终端里的长期协作
-
-Claude Code 的体验更像是：
-
-你打开终端，把它放进项目里，然后和它围绕一个开发任务持续协作。
-
-它适合：
-
-- 长时间读项目。
-- 持续追踪一个复杂任务。
-- 在终端里边讨论边修改。
-- 处理多步骤工程问题。
-- 通过 hooks、subagents、MCP 等机制扩展工作流。
-
-所以，Claude Code 更像一个长期待在你终端里的 AI 工程搭档。
-
-它的优势在于命令行工作流、深度上下文协作和工程任务连续推进。
+Both are **agentic coding tools**, but their focus is different.
 
 ---
 
-##### Codex 更偏 OpenAI 生态里的多端任务执行
+##### Claude Code leans toward long-running terminal collaboration
 
-Codex 的优势，不只在 CLI，而在 OpenAI 生态里的多端联动。
+The Claude Code experience is closer to this:
 
-它可以通过不同入口使用：
+You open a terminal, place it inside a project, and then continuously collaborate with it around a development task.
 
-Codex CLI。
+It is suitable for:
 
-Codex App。
+- Reading a project for an extended period.
+- Continuously tracking a complex task.
+- Discussing and editing inside the terminal.
+- Handling multi-step engineering problems.
+- Extending workflows through hooks, subagents, MCP, and related mechanisms.
 
-Codex IDE Extension。
+In that sense, Claude Code is more like an AI engineering partner that stays in your terminal for the long run.
 
-Codex Web。
-
-ChatGPT 账号体系。
-
-GitHub / PR 工作流。
-
-Skills 和项目规则。
-
-OpenAI 官方文档中，Codex CLI 是本地终端里的 coding agent；Codex App 则提供桌面端多线程、worktree、自动化和 Git 功能；Codex Skills 也可以在 CLI、IDE extension 和 Codex app 中复用。
-
-所以，Codex 更像一个接入 OpenAI 生态的工程任务平台。
-
-它不只是“在终端里写代码”，而是可以在 App、CLI、IDE、Web 等多个入口之间流转，让你用不同方式管理、执行和审查工程任务。
+Its strengths are command-line workflow, deep contextual collaboration, and continuous engineering-task progression.
 
 ---
 
-##### 怎么选
+##### Codex leans toward multi-entry task execution in the OpenAI ecosystem
 
-如果你更喜欢终端工作流，希望 AI 长时间待在项目里，和你围绕复杂任务持续协作，Claude Code 很适合。
+Codex's strength is not only the CLI, but multi-entry coordination across the OpenAI ecosystem.
 
-如果你已经在使用 ChatGPT 和 OpenAI 生态，希望在 CLI、桌面 App、IDE、Web 之间切换，并把任务、diff、PR、Skills、GitHub 工作流串起来，Codex 会更顺手。
+You can use it through different entry points:
 
-但两者没有绝对谁替代谁。
+Codex CLI.
 
-最终选择要看：
+Codex App.
 
-- 模型能力。
-- 上下文处理。
-- 工具链。
-- 价格。
-- 团队习惯。
-- 你自己的开发流程。
+Codex IDE Extension.
 
-一句话总结：
+Codex Web.
 
-**Claude Code 更像终端里的长期工程搭档，Codex 更像 OpenAI 生态里的多端工程 Agent。**
+The ChatGPT account system.
+
+GitHub / PR workflows.
+
+Skills and project rules.
+
+In OpenAI official documentation, Codex CLI is a coding agent in the local terminal. Codex App provides desktop multi-threading, worktrees, automation, and Git capabilities. Codex Skills can also be reused across the CLI, IDE extension, and Codex app.
+
+So Codex is closer to an engineering task platform connected to the OpenAI ecosystem.
+
+It is not just “writing code in the terminal.” It can flow across App, CLI, IDE, Web, and other entry points, letting you manage, execute, and review engineering tasks in different ways.
+
+---
+
+##### How to choose
+
+If you prefer terminal workflows and want AI to stay inside the project for long-running collaboration around complex tasks, Claude Code is a strong fit.
+
+If you already use ChatGPT and the OpenAI ecosystem, want to switch across CLI, desktop App, IDE, and Web, and want to connect tasks, diffs, PRs, Skills, and GitHub workflows, Codex will likely feel more natural.
+
+Neither one absolutely replaces the other.
+
+The final choice depends on:
+
+- Model capability.
+- Context handling.
+- Toolchain.
+- Pricing.
+- Team habits.
+- Your own development process.
+
+In one sentence:
+
+**Claude Code is more like a long-running engineering partner in the terminal, while Codex is more like a multi-entry engineering agent in the OpenAI ecosystem.**
 
 <p align="center">
-  <img src="assets/images/image-006-0f0d88385e.png" alt="Claude Code与Codex的区别对比表，从核心定位、主要入口、工作风格、适合场景、扩展能力、生态优势、选择关键等7方面进行对比" width="860">
+  <img src="assets/images/image-006-0f0d88385e.png" alt="Comparison table between Claude Code and Codex across core positioning, main entry points, working style, suitable scenarios, extensibility, ecosystem advantages, and selection criteria" width="860">
 </p>
 
-#### 一句话总结 Codex
+#### Codex in one sentence
 
-- 初级用法：让它帮你写代码。
-- 中级用法：让它帮你读项目、改功能、跑测试。
-- 高级用法：让它成为你的项目执行代理，配合规则、上下文、自动化和团队流程工作。
+- Beginner usage: ask it to help write code.
+- Intermediate usage: ask it to read the project, modify features, and run tests.
+- Advanced usage: make it your project execution agent, working with rules, context, automation, and team processes.
 
 ---
 
-### Codex 的使用入口
+### Codex entry points
 
 <p align="center">
-  <img src="assets/images/image-008-7b9207fbc0.png" alt="图片标题为“Codex的4个入口怎么选”，介绍了Codex的4种使用入口：2.1 Codex App、2.2 Codex CLI、2.3 Codex IDE Extensio..." width="860">
+  <img src="assets/images/image-008-7b9207fbc0.png" alt="A diagram titled “How to choose among Codex's four entry points,” covering Codex App, Codex CLI, Codex IDE Extension, and Codex Web" width="860">
 </p>
 
-如果你主要做本地项目、网页练习和日常开发，优先从 Codex App 开始通常就够用；等你熟悉 Git、终端和团队协作后，再逐步补 CLI、IDE Extension 和 Web / Cloud。
+If you mainly work on local projects, web practice, and day-to-day development, starting with Codex App is usually enough. After you become familiar with Git, terminals, and team collaboration, you can gradually add CLI, IDE Extension, and Web / Cloud.
 
 ---
 
-## 第二篇：安装、配置与环境准备
+## Part 2: Installation, configuration, and environment setup
 
-### 安装前准备
+### Before you install
 
-#### 账号准备
+#### Account preparation
 
-如果你是普通个人用户，建议准备：
+If you are an ordinary individual user, prepare the following:
 
--  ChatGPT 账号
--  能正常访问 ChatGPT / OpenAI 服务的网络
--  选择当前包含 Codex 的 ChatGPT 套餐；套餐名称、额度和功能范围会变化，请以官方页面和你账号实际显示为准。
+- A ChatGPT account
+- A network environment that can reliably access ChatGPT / OpenAI services
+- A ChatGPT plan that currently includes Codex; plan names, limits, and feature coverage may change, so rely on the official pages and what your account displays.
 
-#### 系统准备
+#### System preparation
 
-Codex 四大形态：
+The four main Codex modes:
 
 
-| 方式 | 适合谁 | 需要准备 |
+| Mode | Best for | What you need |
 | --- | --- | --- |
-| Codex App 桌面版 | 小白、想要图形界面的人 | Windows 或 macOS |
-| Codex CLI | 稍微懂终端的人 | 终端、Git、项目环境 |
-| Codex IDE Extension 插件 | 用 VS Code / Cursor / Windsurf 的人 | 编辑器 + 插件 |
-| Codex Web / Cloud | 想让 Codex 远程处理 GitHub 项目的人 | GitHub 仓库 |
+| Codex App desktop | Beginners and users who prefer a graphical interface | Windows or macOS |
+| Codex CLI | Users with some terminal experience | Terminal, Git, and a project environment |
+| Codex IDE Extension | Users of VS Code / Cursor / Windsurf | Editor + extension |
+| Codex Web / Cloud | Users who want Codex to work on GitHub projects remotely | GitHub repository |
 
 
-Codex App 支持 **macOS 和 Windows**；Codex CLI 支持 macOS、Windows 和 Linux。
+Codex App supports **macOS and Windows**. Codex CLI supports macOS, Windows, and Linux.
 
-#### 软件工具准备
+#### Software tools to prepare
 
-安装 Codex 之前，建议先准备这些基础工具：
+Before installing Codex, prepare these basic tools:
 
 
-| 工具 | 作用 | 下载 / 注册链接 |
+| Tool | Purpose | Download / registration link |
 | --- | --- | --- |
-| Git | 让 Codex 能看代码变更、生成 diff、回滚修改 | Git 官方下载 |
-| VS Code / Cursor | 方便查看和编辑代码 | VS Code 下载 / Cursor 下载 |
-| 终端 | Windows 用 PowerShell；Mac 用 Terminal | 不用下载，系统自带 |
-| 浏览器 | 登录 ChatGPT / OpenAI / GitHub | Chrome 下载 |
-| Node.js | 做网页、前端、Next.js、Vite 项目常用 | Node.js 下载 |
-| Python | 做脚本、自动化、数据处理常用 | Python 下载 |
-| GitHub 账号 | 如果要用 Codex Cloud 或推送代码，需要准备 | GitHub 注册 |
-| Codex App | Codex 桌面版，用图形界面管理任务和项目 | Codex App 官方页 |
-| Codex CLI | 在终端里使用 Codex，适合真实项目开发 | Codex CLI 官方文档 |
-| Codex 网页版 | 连接 GitHub 后，让 Codex 在云端处理项目 | Codex Web |
+| Git | Allows Codex to inspect code changes, generate diffs, and roll back changes | Git official download |
+| VS Code / Cursor | Convenient for viewing and editing code | VS Code download / Cursor download |
+| Terminal | Use PowerShell on Windows; Terminal on Mac | Built into the system; no download required |
+| Browser | Sign in to ChatGPT / OpenAI / GitHub | Chrome download |
+| Node.js | Commonly used for web, frontend, Next.js, and Vite projects | Node.js download |
+| Python | Commonly used for scripts, automation, and data processing | Python download |
+| GitHub account | Required if you want to use Codex Cloud or push code | GitHub signup |
+| Codex App | Codex desktop app for managing tasks and projects through a GUI | Codex App official page |
+| Codex CLI | Use Codex in the terminal; suitable for real project development | Codex CLI official documentation |
+| Codex Web | Connect GitHub and let Codex process projects in the cloud | Codex Web |
 
 
-#### 项目目录准备
+#### Project directory preparation
 
-Codex 不是单纯聊天工具，它需要进入一个具体项目目录工作。官方入门流程也是：登录 Codex 后，选择电脑上的文件夹或 Git 仓库，再开始第一个任务。
+Codex is not just a chat tool. It needs to work inside a specific project directory. The official onboarding flow is similar: after signing in to Codex, choose a folder or Git repository on your computer, then start the first task.
 
-建议你提前建一个专门练习目录，比如：
+It is recommended to create a dedicated practice directory first, for example:
 
 ```text
 D:\AI-Codex-Projects
 ```
 
-里面可以放：
+You can place projects such as:
 
 ```text
 hello-web
@@ -573,25 +569,25 @@ xiaohongshu-cover-tool
 landing-page-demo
 ```
 
-不要一开始就让 Codex 操作你最重要的真实项目。先用练习项目熟悉它怎么改文件、跑命令、生成结果。
+Do not let Codex operate on your most important real project at the beginning. Start with practice projects to learn how it modifies files, runs commands, and generates results.
 
-#### 权限与安全准备
+#### Permission and safety preparation
 
-Codex 可以读取、修改文件，还能在你的项目目录里运行命令。官方对 CLI 的描述就是：它可以在你选择的目录中读取、修改代码，并运行命令。
+Codex can read and modify files, and it can run commands inside your project directory. The official CLI description is exactly that: it can read and modify code in the directory you select and run commands.
 
-所以安装前要注意：
+So before installing, pay attention to the following:
 
 
-| 注意点 | 建议 |
+| Point to watch | Recommendation |
 | --- | --- |
-| 不要直接放重要文件 | 先用测试项目 |
-| 不要把密码/API Key 写在代码里 | 用 .env 文件，并避免上传 |
-| 操作前先 Git 提交 | 方便回滚 |
-| 看清 Codex 要执行的命令 | 不懂的命令先问它解释 |
-| 不要给它整个 C 盘权限 | 只选择具体项目文件夹 |
+| Do not place important files directly in the workspace | Start with a test project |
+| Do not write passwords or API keys directly in code | Use `.env` files and avoid uploading them |
+| Commit with Git before operations | Makes rollback easier |
+| Read the commands Codex wants to run | If you do not understand a command, ask it to explain first |
+| Do not grant it access to the entire C drive | Select only the specific project folder |
 
 
-推荐每个项目先初始化 Git：
+It is recommended to initialize Git in every project first:
 
 ```text
 git init
@@ -599,103 +595,103 @@ git add .
 git commit -m "initial commit"
 ```
 
-这样 Codex 改坏了也可以回退。
+This makes it possible to roll back if Codex breaks something.
 
 ---
 
-### Codex App 安装与上手 （新手最为推荐，也是功能最强的）
+### Installing and getting started with Codex App (the best starting point for beginners, and also the most capable option)
 
-#### 下载与安装
+#### Download and installation
 
-##### macOS 安装
+##### Installing on macOS
 
-如果你使用的是 Mac，先确认自己的芯片类型。
+If you are using a Mac, first check your chip type.
 
-点击电脑左上角的 Apple 图标，选择「关于本机」。
+Click the Apple icon in the top-left corner of your computer and choose “About This Mac.”
 
-如果显示的是：
+If it shows:
 
-- Apple M1 / M2 / M3 / M4：选择 Apple Silicon 版本
-- Intel：选择 Intel 版本
+- Apple M1 / M2 / M3 / M4: choose the Apple Silicon version
+- Intel: choose the Intel version
 
-进入 Codex App 官方页面后，根据自己的芯片下载对应版本。下载完成后，打开安装包，把 Codex 拖进「应用程序」文件夹。
+After opening the official Codex App page, download the version that matches your chip. When the download finishes, open the installer and drag Codex into the Applications folder.
 
-安装完成后，在「应用程序」里打开 Codex。
+After installation, open Codex from Applications.
 
-第一次打开时，系统可能会提示：
+The first time you open it, macOS may show:
 
-「这是从互联网下载的应用，是否确认打开？」
+“This app was downloaded from the Internet. Are you sure you want to open it?”
 
-选择「打开」即可。
+Choose “Open.”
 
-###### Intel Mac 与 Apple Silicon 的区别
+###### Difference between Intel Mac and Apple Silicon
 
-Mac 主要分两种芯片：
+Macs mainly use two chip families:
 
 
-| 类型 | 常见机型 | 应该下载 |
+| Type | Common models | Version to download |
 | --- | --- | --- |
-| Apple Silicon | M1 / M2 / M3 / M4 Mac | Apple Silicon 版本 |
-| Intel Mac | 老款 Intel 芯片 Mac | Intel 版本 |
+| Apple Silicon | M1 / M2 / M3 / M4 Mac | Apple Silicon version |
+| Intel Mac | Older Intel-chip Macs | Intel version |
 
 
-最简单的判断方法：
+The simplest way to check:
 
-打开「关于本机」，看芯片信息。
+Open “About This Mac” and read the chip information.
 
-如果写的是 Apple M 系列，就是 Apple Silicon。
+If it says Apple M series, it is Apple Silicon.
 
-如果写的是 Intel Core i5、Intel Core i7、Intel Core i9，就是 Intel Mac。
+If it says Intel Core i5, Intel Core i7, or Intel Core i9, it is an Intel Mac.
 
-这个地方不要选错。选错版本可能会导致无法安装、打不开，或者运行不稳定。
+Do not choose the wrong version here. The wrong version may fail to install, fail to launch, or run unstably.
 
-##### Windows 安装
+##### Installing on Windows
 
-如果你使用的是 Windows，进入 Codex App 官方页面，选择 Windows 版本。
+If you are using Windows, open the official Codex App page and choose the Windows version.
 
-Windows 版一般会跳转到 Microsoft Store 安装。
+The Windows version usually redirects to Microsoft Store for installation.
 
-安装步骤：
+Installation steps:
 
-1. 打开 [Codex App 官方页面](https://openai.com/zh-Hans-CN/codex/)
-2. 点击 Windows 下载入口
-
-<p align="center">
-  <img src="assets/images/image-009-83f16b5f97.png" alt="Codex App在Windows平台的下载页面" width="860">
-</p>
-
-3. 跳转到 Microsoft Store
+1. Open the [official Codex App page](https://openai.com/zh-Hans-CN/codex/)
+2. Click the Windows download entry
 
 <p align="center">
-  <img src="assets/images/image-010-8cac2e1d37.png" alt="Microsoft Store中Codex应用的页面" width="860">
+  <img src="assets/images/image-009-83f16b5f97.png" alt="Codex App download page on Windows" width="860">
 </p>
 
-4. 点击「获取」或「安装」（这里我已经安装过了所以显示的是打开）
-5. 打开 Codex App
-6. 到这里Codex App已经安装完成
+3. Go to Microsoft Store
+
+<p align="center">
+  <img src="assets/images/image-010-8cac2e1d37.png" alt="Codex app page in Microsoft Store" width="860">
+</p>
+
+4. Click “Get” or “Install” (in this screenshot, it shows “Open” because it is already installed)
+5. Open Codex App
+6. At this point, Codex App is installed
 
 
-#### 第一次打开 Codex App
+#### Opening Codex App for the first time
 
-##### 选择项目目录
+##### Choose a project directory
 
-第一次打开 Codex App 后，登录完成，系统会让你选择一个项目目录。
+After you open Codex App for the first time and finish signing in, the system asks you to choose a project directory.
 
-这里的「项目目录」，可以理解成：
+You can think of the “project directory” as:
 
-Codex 要进入哪个文件夹工作。
+The folder Codex will enter to work.
 
-比如你想让 Codex 帮你做一个网页，就可以提前新建一个文件夹：
+For example, if you want Codex to help build a webpage, you can create a folder first:
 
 ```text
 hello-codex
 ```
 
-然后在 Codex App 里选择这个文件夹。
+Then choose that folder in Codex App.
 
-新手建议第一次选择一个干净的练习目录，不要直接 C 盘，也不要一上来就选择重要工作项目。
+For beginners, the first directory should be a clean practice folder. Do not select the C drive directly, and do not start with an important work project.
 
-推荐目录结构：
+Recommended directory structure:
 
 ```text
 AI-Codex-Projects
@@ -703,681 +699,679 @@ AI-Codex-Projects
     └── index.html
 ```
 
-选择项目目录后，Codex 才知道自己应该读哪些文件、改哪些文件、在哪个地方运行命令。
+Only after choosing a project directory does Codex know which files to read, which files to modify, and where to run commands.
 
 <p align="center">
-  <img src="assets/images/image-011-59a65b6cbe.png" alt="Codex App中选择项目目录的界面" width="860">
+  <img src="assets/images/image-011-59a65b6cbe.png" alt="Project directory selection screen in Codex App" width="860">
 </p>
 
-##### 理解项目列表
+##### Understand the project list
 
-进入 Codex App 后，左侧通常会看到项目列表。
+After entering Codex App, you will usually see a project list on the left.
 
-你可以把项目列表理解成：
+You can think of the project list as:
 
-你交给 Codex 的不同代码文件夹。
+The different code folders you have given to Codex.
 
-比如：
+For example:
 
 ```text
 hello-codex
 ai-first-page
 ```
 
-每一个项目，都对应你电脑上的一个本地文件夹，或者一个 Git 仓库。
+Each project corresponds to a local folder on your computer or a Git repository.
 
-如果你之前在 Codex App、Codex CLI、Codex IDE Extension 里打开过项目，这些项目也可能会出现在列表里。
+If you have previously opened projects in Codex App, Codex CLI, or Codex IDE Extension, those projects may also appear in the list.
 
-小白要记住一点：
+Beginners should remember one thing:
 
-项目列表不是聊天记录列表，而是「代码项目列表」。
+The project list is not a chat-history list. It is a “code project list.”
 
-你点进不同项目，Codex 看到的文件范围也不一样。
-
-<p align="center">
-  <img src="assets/images/image-012-caf9bf0f60.png" alt="Codex App的界面左侧菜单栏" width="860">
-</p>
-
-##### 理解 thread（对话）
-
-Thread 可以理解成：
-
-同一个项目里的一个任务对话。
-
-比如你在 `hello-Codex` 这个项目里，可以开多个 thread：
-
-```text
-Thread 1：做一个首页
-Thread 2：修复按钮点击无反应的问题
-Thread 3：优化移动端样式
-Thread 4：帮我写 README
-```
+When you enter different projects, Codex sees a different file scope.
 
 <p align="center">
-  <img src="assets/images/image-013-ab6166a144.png" alt="Codex App的菜单界面" width="860">
+  <img src="assets/images/image-012-caf9bf0f60.png" alt="Left sidebar in Codex App" width="860">
 </p>
 
-每个 thread 都有自己的上下文。
+##### Understand threads
 
-也就是说，你在 Thread 1 里让 Codex 做首页，它会围绕这个任务持续理解和修改。
+A thread can be understood as:
 
-你在 Thread 2 里让它修 bug，它就围绕另一个任务工作。
+A task conversation within the same project.
 
-小白可以简单理解：
-
-- 项目 = 一个公司
-- thread = 公司里面的员工
-
-不要把所有事情都塞进同一个 thread。
-
-更好的做法是：
-
-一个清楚的任务，开一个 thread。
-
-比如：
+For example, in a project named `hello-Codex`, you can create multiple threads:
 
 ```text
-请帮我做一个个人主页
-```
-
-这是一个 thread。
-
-```text
-请检查为什么移动端布局错位
-```
-
-这是另一个 thread。
-
-这样项目不会乱，Codex 也更容易理解任务边界。
-
-##### 理解任务窗口
-
-任务窗口就是你和 Codex 对话、安排工作的地方。
-
-你可以在这里输入任务，比如：
-
-```text
-请帮我做一个简单网页，黑色背景，中间显示 Hello, Codex。
+Thread 1: Build a home page
+Thread 2: Fix the button not responding to clicks
+Thread 3: Improve mobile layout
+Thread 4: Write a README for me
 ```
 
 <p align="center">
-  <img src="assets/images/image-014-f4cad7a35b.png" alt="Codex App中“做一个首页”任务的执行界面" width="860">
+  <img src="assets/images/image-013-ab6166a144.png" alt="Codex App menu interface" width="860">
 </p>
 
-也可以继续追问：
+Each thread has its own context.
+
+That means if you ask Codex to build a home page in Thread 1, it will continue understanding and modifying around that task.
+
+If you ask it to fix a bug in Thread 2, it will work around a separate task.
+
+Beginners can understand it this way:
+
+- Project = a company
+- Thread = an employee inside that company
+
+Do not put everything into one thread.
+
+A better practice is:
+
+One clear task, one thread.
+
+For example:
 
 ```text
-请把这个页面改得更像科技产品首页。
+Please help me build a personal homepage.
 ```
 
-任务窗口里通常会出现这些内容：
+That is one thread.
+
+```text
+Please check why the mobile layout is broken.
+```
+
+That is another thread.
+
+This keeps the project organized and helps Codex understand task boundaries.
+
+##### Understand the task window
+
+The task window is where you talk to Codex and assign work.
+
+You can enter a task such as:
+
+```text
+Please build a simple webpage with a black background and “Hello, Codex” centered in the middle.
+```
+
+<p align="center">
+  <img src="assets/images/image-014-f4cad7a35b.png" alt="Task execution view in Codex App for “build a home page”" width="860">
+</p>
+
+You can also follow up:
+
+```text
+Please make this page feel more like a technology product landing page.
+```
+
+The task window usually contains:
 
 
-| 内容 | 作用 |
+| Content | Purpose |
 | --- | --- |
-| 你的任务描述 | 告诉 Codex 要做什么 |
-| Codex 的计划 | 它准备怎么做 |
-| Codex 的执行过程 | 它正在看文件、改文件、运行命令 |
-| Codex 的总结 | 它最后改了什么 |
-| 后续输入框 | 你可以继续让它修改 |
+| Your task description | Tells Codex what to do |
+| Codex's plan | Shows how it intends to proceed |
+| Codex's execution process | Shows it reading files, modifying files, and running commands |
+| Codex's summary | Summarizes what it changed |
+| Follow-up input box | Lets you ask it to keep modifying |
 
 
-第一次使用时，不要写太复杂的任务。
+For your first use, do not write an overly complex task.
 
-不推荐：
-
-```text
-帮我做一个完整的 AI 工具平台，要有登录、支付、数据库、后台管理。
-```
-
-推荐：
+Not recommended:
 
 ```text
-请帮我做一个简单的产品介绍页，只用 HTML 和 CSS。
+Build me a complete AI tools platform with login, payment, database, and admin dashboard.
 ```
 
-任务越清楚，Codex 越容易做好。
+Recommended:
 
-##### 理解 review pane
+```text
+Please build a simple product introduction page using only HTML and CSS.
+```
 
-Review pane 可以理解成：
+The clearer the task, the easier it is for Codex to do well.
 
-检查 Codex 改了什么的地方。
+##### Understand the review pane
 
-Codex 改完文件后，你不要只看它的文字总结，而是要打开 review pane 看实际改动。
+The review pane is where you inspect what Codex changed.
+
+After Codex modifies files, do not rely only on its written summary. Open the review pane and inspect the actual changes.
 
 <p align="center">
-  <img src="assets/images/image-015-6a51d13719.png" alt="Codex App中“做一个首页”任务的review pane界面" width="860">
+  <img src="assets/images/image-015-6a51d13719.png" alt="Review pane for the “build a home page” task in Codex App" width="860">
 </p>
 
-它会告诉你：
+It tells you:
 
-- 哪些文件被修改了
-- 哪些地方新增了代码
-- 哪些地方删除了代码
-- 哪些改动可以接受
-- 哪些改动可以退回
+- Which files were modified
+- Where code was added
+- Where code was removed
+- Which changes can be accepted
+- Which changes can be reverted
 
-小白可以把 review pane 理解成：
+Beginners can think of the review pane as:
 
-Codex 的「作业检查区」。
+Codex's “work inspection area.”
 
-你不是让 Codex 写完就直接相信，而是要在这里检查它到底交了什么作业。
+You should not simply trust Codex after it finishes writing. You should inspect exactly what it delivered.
 
-如果你看到某一行代码不满意，可以在对应位置留下评论，让 Codex 按照你的评论继续修改。
+If you are not satisfied with a line of code, you can leave a comment at that position and ask Codex to revise according to the comment.
 
-比如你可以评论：
-
-```text
-这里的按钮颜色太亮了，改成更克制的深蓝色。
-```
-
-或者：
+For example, you can comment:
 
 ```text
-这段代码太复杂，请改成新手更容易理解的写法。
+This button color is too bright. Change it to a more restrained dark blue.
 ```
 
-##### 理解 diff
+Or:
 
-Diff 是代码改动对比。
+```text
+This code is too complex. Rewrite it in a way that is easier for beginners to understand.
+```
+
+##### Understand diff
+
+A diff is a comparison of code changes.
 
 <p align="center">
-  <img src="assets/images/image-016-a4f222f686.png" alt="Codex App界面，左侧为项目文件夹，中间是代码编辑区域，右侧是review pane" width="860">
+  <img src="assets/images/image-016-a4f222f686.png" alt="Codex App interface with project folder on the left, code editor in the middle, and review pane on the right" width="860">
 </p>
 
-小白可以这样理解：
+Beginners can understand it like this:
 
 ```text
-绿色 = 新增内容
-红色 = 删除内容
+Green = added content
+Red = deleted content
 ```
 
-比如 Codex 原来没有写标题，后来加了一行：
+For example, if Codex originally had no title and later added a line:
 
 ```html
 <h1>Hello, Codex</h1>
 ```
 
-这行就会显示为新增。
+That line appears as an addition.
 
-如果 Codex 删除了一段旧代码，那段就会显示为删除。
+If Codex deleted an old block of code, that block appears as a deletion.
 
-Diff 的作用是让你看清楚：
+The purpose of diff is to let you see clearly:
 
-Codex 到底改了什么。
+Exactly what Codex changed.
 
-不要只看最终页面，也不要只看 Codex 的总结。
+Do not only look at the final page, and do not only read Codex's summary.
 
-真正重要的是看 diff。
+The diff is what matters.
 
-因为 Codex 有时候可能会：
+Because Codex may sometimes:
 
-- 顺手改了你没要求改的地方
-- 删除了某些你还需要的代码
-- 把简单代码改复杂
-- 修改了多个文件但没有说清楚
+- Change something you did not ask it to change
+- Delete code you still need
+- Make simple code more complex
+- Modify multiple files without explaining clearly
 
-所以第一次上手就要养成习惯：
-
-```text
-每次 Codex 完成任务后，先看 diff，再决定要不要接受。
-```
-
-##### 第一次打开后的推荐操作流程
-
-第一次打开 Codex App，可以按这个顺序操作：
+So from the very first use, build this habit:
 
 ```text
-1. 登录 ChatGPT
-2. 选择一个练习项目目录
-3. 新建或选择一个 thread
-4. 在任务窗口输入一个简单任务
-5. 等 Codex 修改文件
-6. 打开 review pane
-7. 查看 diff
-8. 确认没有问题后再继续修改
+Every time Codex completes a task, inspect the diff first, then decide whether to accept it.
 ```
 
-推荐第一个任务：
+##### Recommended first-run workflow
+
+When opening Codex App for the first time, follow this order:
 
 ```text
-请帮我做一个简单网页，要求：
-1. 黑色背景
-2. 页面中间显示大字 Hello, Codex
-3. 字体白色
-4. 页面整体水平和垂直居中
-5. 只使用 HTML 和 CSS
+1. Sign in to ChatGPT
+2. Choose a practice project directory
+3. Create or select a thread
+4. Enter a simple task in the task window
+5. Wait for Codex to modify files
+6. Open the review pane
+7. Inspect the diff
+8. Continue modifying only after confirming the result
 ```
 
-这个任务足够简单，适合用来熟悉 Codex App 的基本流程。
+Recommended first task:
+
+```text
+Please build a simple webpage with the following requirements:
+1. Black background
+2. Large “Hello, Codex” text centered in the page
+3. White text
+4. The whole page centered horizontally and vertically
+5. Use only HTML and CSS
+```
+
+This task is simple enough to help you learn the basic Codex App workflow.
 
 
-##### 小白需要记住的几个概念
+##### Key concepts beginners should remember
 
 
-| 概念 | 简单理解 |
+| Concept | Simple interpretation |
 | --- | --- |
-| 项目目录 | 你公司的地址 |
-| 项目列表 | 你公司的项目部门 |
-| thread | 一个项目部门的员工 |
-| 任务窗口 | 给员工下指令的地方 |
-| review pane | 检查改动的地方 |
-| diff | 新增和删除的代码对比 |
+| Project directory | The company address |
+| Project list | The company's project departments |
+| Thread | An employee inside a project department |
+| Task window | Where you give instructions to the employee |
+| Review pane | Where you inspect changes |
+| Diff | A comparison of added and deleted code |
 
 
-#### Codex App 的基础使用
+#### Basic usage of Codex App
 
-##### 基础布局
+##### Basic layout
 
-可以看到 Codex App 是经典的三栏布局
+Codex App uses a classic three-column layout.
 
-左侧是任务列表
+The left column is the task list.
 
-中间是对话窗口
+The middle column is the conversation window.
 
-右侧是多功能区域
+The right column is the multi-purpose area.
 
 <p align="center">
-  <img src="assets/images/image-017-45e7b1f44c.png" alt="Codex App的基础布局" width="860">
+  <img src="assets/images/image-017-45e7b1f44c.png" alt="Basic layout of Codex App" width="860">
 </p>
 
-##### 新对话
+##### New conversation
 
-###### 使用项目
+###### Using a project
 
-我们可以开启一个新对话来执行一个新的任务
+You can start a new conversation to execute a new task.
 
-开启新对话后需要选择新对话属于哪个项目
+After starting a new conversation, choose which project the conversation belongs to.
 
 <p align="center">
-  <img src="assets/images/image-018-3206c339e6.png" alt="Codex App的界面，左侧任务列表中“hello - Codex”项目被选中" width="860">
+  <img src="assets/images/image-018-3206c339e6.png" alt="Codex App interface with the “hello - Codex” project selected in the task list on the left" width="860">
 </p>
 
-当然我们也可以直接在项目右侧的小按钮那里点击，直接开启对应项目的一个新对话。
+You can also click the small button on the right side of a project to directly start a new conversation for that project.
 
 <p align="center">
-  <img src="assets/images/image-019-257b446265.png" alt="Codex App的界面，左侧任务列表中“hello - Codex”项目被红色框突出显示" width="860">
+  <img src="assets/images/image-019-257b446265.png" alt="Codex App interface with the “hello - Codex” project highlighted in a red box on the left task list" width="860">
 </p>
 
-###### 不使用项目
+###### Not using a project
 
-点击不使用项目，对应的会话会显示在对话里面，可以作为想问和项目无关的问题
+If you click “Do not use a project,” the corresponding conversation appears under conversations. This is useful for questions unrelated to a project.
 
 <p align="center">
-  <img src="assets/images/image-020-00b4c4d600.png" alt="Codex App的对话界面" width="860">
+  <img src="assets/images/image-020-00b4c4d600.png" alt="Codex App conversation interface" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-021-dfac5ddc9d.png" alt="Codex App的界面" width="860">
+  <img src="assets/images/image-021-dfac5ddc9d.png" alt="Codex App interface" width="860">
 </p>
 
-##### 搜索
+##### Search
 
-后期任务对话太多了，但是只记得一些关键次找不到对应的任务对话了，可以直接在搜索这里，搜关键词，就会查找到对应的任务对话了
+When there are too many task conversations later and you only remember a few keywords, you can search those keywords here to find the matching task conversation.
 
 <p align="center">
-  <img src="assets/images/image-022-35963eb7d8.png" alt="Codex App的界面，左侧为任务列表，中间是对话窗口，右侧是多功能区域" width="860">
+  <img src="assets/images/image-022-35963eb7d8.png" alt="Codex App interface with task list on the left, conversation window in the middle, and multi-purpose area on the right" width="860">
 </p>
 
-##### 插件
+##### Plugins
 
-功能较多，后续再讲
+There are many plugin features; they are covered later.
 
-##### 自动化
+##### Automations
 
-功能较多，后续再讲
+There are many automation features; they are covered later.
 
-##### 项目
+##### Projects
 
-###### 创建项目
+###### Create a project
 
-可以在Codex中直接创建一个新项目，也可以使用现有的项目
+You can create a new project directly in Codex, or use an existing project.
 
-创建或选择好的项目会出现在项目栏里面，方便后续的管理
+Projects you create or select appear in the project column for easier management later.
 
 <p align="center">
-  <img src="assets/images/image-023-e2925cfe7a.png" alt="Codex App中“自动化”功能界面" width="860">
+  <img src="assets/images/image-023-e2925cfe7a.png" alt="Automation feature interface in Codex App" width="860">
 </p>
 
 ###### thread
 
- thread 是一个项目里的「单独任务对话」
+A thread is a “separate task conversation” inside a project.
 
 <p align="center">
-  <img src="assets/images/image-024-5597f4da7e.png" alt="Codex App中“自动化”页面" width="860">
+  <img src="assets/images/image-024-5597f4da7e.png" alt="Automation page in Codex App" width="860">
 </p>
 
-比如你有一个项目叫：
+For example, suppose you have a project named:
 
 ```text
 hello-codex
 ```
 
-你可以在这个项目里开多个 thread：
+You can create multiple threads in that project:
 
 
-| Thread | 代表的任务 |
+| Thread | Task represented |
 | --- | --- |
-| Thread 1 | 做一个首页 |
-| Thread 2 | 修复按钮点击没反应 |
-| Thread 3 | 优化移动端样式 |
-| Thread 4 | 帮我写 README |
-| Thread 5 | 检查项目有没有报错 |
+| Thread 1 | Build a home page |
+| Thread 2 | Fix the button not responding to clicks |
+| Thread 3 | Improve mobile layout |
+| Thread 4 | Write a README for me |
+| Thread 5 | Check whether the project has errors |
 
 
-你可以这样理解：
-
-```text
-Project 项目 = 一个代码文件夹
-Thread = 这个项目里的一个具体任务
-```
-
-比如：
+You can understand it this way:
 
 ```text
-项目：小红书封面生成器
-Thread 1：做首页
-Thread 2：修复上传图片失败
-Thread 3：优化手机端布局
-Thread 4：写项目说明文档
+Project = a code folder
+Thread = a specific task inside that project
 ```
 
-**为什么要有 thread？**
-
-因为不同任务最好分开做。
-
- 如果你把“做首页、修 bug、改样式、写文档”全塞进一个对话里，Codex 容易上下文混乱，你也不好检查它到底改了什么。
-
-更好的用法是：
+For example:
 
 ```text
-一个明确任务 = 一个 thread
+Project: Xiaohongshu cover generator
+Thread 1: Build the home page
+Thread 2: Fix image upload failure
+Thread 3: Improve mobile layout
+Thread 4: Write project documentation
 ```
 
-比如你要做页面：
+**Why do threads exist?**
+
+Because different tasks are better handled separately.
+
+If you put “build the home page, fix bugs, adjust styles, and write documentation” into one conversation, Codex may get confused by the context, and you will have a harder time checking exactly what it changed.
+
+A better practice is:
 
 ```text
-请帮我做一个 AI 工具介绍页。
+One clear task = one thread
 ```
 
-这是一个 thread。
-
-后面你发现按钮有问题，再新开一个 thread：
+For example, if you want to build a page:
 
 ```text
-请检查为什么首页按钮点击后没有反应。
+Please build an AI tool introduction page for me.
 ```
 
-一句话总结：
+That is one thread.
 
-**Thread 就是 Codex App 里的任务对话，一个 thread 专门处理一个具体任务。**
+Later, if you find a button problem, open a new thread:
+
+```text
+Please check why the home-page button does not respond when clicked.
+```
+
+In one sentence:
+
+**A thread is a task conversation in Codex App. One thread should handle one specific task.**
 
 
-###### 等待批准
+###### Waiting for approval
 
-在我们 Codex 执行任务的时候，很多时候都会需要用户进行权限的批准
+When Codex executes tasks, it often needs the user to approve permissions.
 
-并且会在对应的对话处提示等待批准的标签
+The corresponding conversation will show a “waiting for approval” label.
 
-点击对应的对话后，再点击允许，Codex 就会继续进行接下来的工作了
+Click the corresponding conversation, then click Allow. Codex will continue with the next step.
 
 <p align="center">
-  <img src="assets/images/image-025-3c0bbdb2c9.png" alt="Codex App中“等待批准”界面" width="860">
+  <img src="assets/images/image-025-3c0bbdb2c9.png" alt="Waiting for approval interface in Codex App" width="860">
 </p>
 
-###### 归档
+###### Archive
 
-归档 Archive，可以理解成把一个已经完成、暂时不用继续处理的 thread 收起来。
+Archive means putting away a completed thread or a thread you do not plan to continue for now.
 
-它的作用不是删除代码，也不是合并代码，而是让你的任务列表更干净。
+It does not delete code or merge code. It simply keeps your task list cleaner.
 
 <p align="center">
-  <img src="assets/images/image-026-e376d9b72b.png" alt="Codex App中“自动化”功能界面" width="860">
+  <img src="assets/images/image-026-e376d9b72b.png" alt="Automation feature interface in Codex App" width="860">
 </p>
 
-比如你做完了这些任务：
+For example, suppose you have completed these tasks:
 
 ```text
-Thread 1：优化移动端样式
-Thread 2：做一个首页
-Thread 3：做一个首页
+Thread 1: Improve mobile layout
+Thread 2: Build a home page
+Thread 3: Build a home page
 
 ```
 
-其中 Thread 2、Thread 3 已经完成了，Thread 1 你也不打算用了，就可以把它们归档。
+If Thread 2 and Thread 3 are finished, and you do not plan to use Thread 1 either, you can archive them.
 
-归档后，它们不会继续占据当前任务列表的位置，你的项目界面会更清爽。
+After archiving, they no longer occupy the current task list, and your project interface becomes cleaner.
 
-**取消归档，当然你也可以在设置里面找到已归档对话，将其还原回来**
-
-<p align="center">
-  <img src="assets/images/image-027-fe65838194.png" alt="Codex App中“已归档对话”界面" width="860">
-</p>
-
-##### 设置
-
-###### 剩余额度
-
-在这里可以看到当前账号的额度、速率限制或使用情况。
-
-不同套餐、工作区、模型和版本显示的限制可能不一样；具体能用多久、什么时候恢复、是否能购买额外额度，都以 Codex 当前界面和官方说明为准。
+**To unarchive a thread, you can find archived conversations in settings and restore them.**
 
 <p align="center">
-  <img src="assets/images/image-028-428085256a.png" alt="Codex App中“剩余额度”页面" width="860">
+  <img src="assets/images/image-027-fe65838194.png" alt="Archived conversations interface in Codex App" width="860">
 </p>
 
-##### 对话窗口
+##### Settings
 
-###### 权限控制
+###### Remaining quota
 
-###### 沙盒（Sandbox）
+Here you can see the current account's quota, rate limits, or usage status.
 
-要知道权限控制必须先知道一个沙盒（Sandbox）的概念
+Different plans, workspaces, models, and versions may display different limits. How long you can use it, when limits reset, and whether additional quota can be purchased are all subject to the current Codex interface and official guidance.
 
-你可以把它理解成：
+<p align="center">
+  <img src="assets/images/image-028-428085256a.png" alt="Remaining quota page in Codex App" width="860">
+</p>
 
-> Codex 可以在围栏里面干活，但不能随便跑到围栏外面乱动你的电脑。
+##### Conversation window
 
-因为 Codex App 不是普通聊天工具，它可以读文件、改文件、运行命令，所以必须有一个“围栏”限制它能碰哪里、能不能联网、能不能改项目外的文件。官方文档里，Codex 的 sandbox 模式包括 `read-only`、`workspace-write`、`danger-full-access` 这几类，用来控制文件系统和网络访问边界。
+###### Permission control
 
-###### **简单来说**
+###### Sandbox
 
-假设你的项目文件夹是：
+To understand permission control, you first need to understand the concept of a sandbox.
+
+You can think of it as:
+
+> Codex can work inside a fence, but it cannot casually run outside the fence and change your computer.
+
+Because Codex App is not an ordinary chat tool, it can read files, modify files, and run commands. Therefore, it needs a “fence” that limits what it can touch, whether it can access the network, and whether it can modify files outside the project. In official documentation, Codex sandbox modes include `read-only`, `workspace-write`, and `danger-full-access`, which control file-system and network-access boundaries.
+
+###### **In simple terms**
+
+Suppose your project folder is:
 
 ```text
 D:\AI-Codex-Projects\hello-codex
 ```
 
-如果开启沙盒，Codex 正常只能在这个项目文件夹范围内工作，比如：
+If sandboxing is enabled, Codex normally works only within that project folder, for example:
 
 ```text
-可以看 index.html
-可以改 style.css
-可以运行 npm run dev
+Can read index.html
+Can modify style.css
+Can run npm run dev
 ```
 
-但如果它想做这些事，就可能需要你批准：
+But if it wants to do these things, it may need your approval:
 
 ```text
-访问桌面文件
-读取下载文件夹
-修改项目外的文件
-联网下载东西
-运行高风险命令
+Access desktop files
+Read the Downloads folder
+Modify files outside the project
+Download things from the internet
+Run high-risk commands
 ```
 
-所以：
+So:
 
 ```text
-Sandbox = 给 Codex 设置工作边界
+Sandbox = setting work boundaries for Codex
 ```
 
-###### 三大权限
+###### Three permission levels
 
 <p align="center">
-  <img src="assets/images/image-029-36088a5605.png" alt="Codex App的权限控制界面" width="860">
+  <img src="assets/images/image-029-36088a5605.png" alt="Permission control interface in Codex App" width="860">
 </p>
 
 
 ```text
-请求批准
-替我审批
-完全访问权限
+Request approval
+Approve for me
+Full access
 ```
 
-可以这样对应理解：
+You can understand them like this:
 
 
-| 你看到的选项 | 和 Sandbox 的关系 |
+| Option you see | Relationship to sandboxing |
 | --- | --- |
-| 请求批准 | 有沙盒限制，越界操作先问你 |
-| 替我审批 | 让系统帮你自动判断一部分审批 |
-| 完全访问权限 | 放开沙盒，可以在电脑上执行任何操作，风险最高 |
+| Request approval | Sandbox restrictions are active; operations outside the boundary ask you first |
+| Approve for me | Let the system automatically decide some approvals for you |
+| Full access | Sandbox restrictions are loosened; Codex can execute anything on the computer, with the highest risk |
 
 
-新手建议开启：
+Beginners should choose:
 
-**请求批准或自动审批类选项**。如果你是新手，优先选择不会放开项目边界的模式：让 Codex 可以在当前项目内工作，但遇到越界、联网或高风险命令时仍然停下来让你确认。不同版本里权限选项名称可能不同，核心原则是：不要一开始就开完全访问权限。
+**Request approval or an automatic-approval option that still preserves boundaries**. If you are a beginner, prioritize a mode that does not open up the project boundary: let Codex work inside the current project, but still stop for confirmation when it needs to cross boundaries, access the network, or run high-risk commands. Option names may differ across versions, but the core principle is: do not start with full access.
 
-###### 一句话总结
+###### One-sentence summary
 
-**Sandbox 沙盒就是 Codex 的安全围栏。**
+**The sandbox is Codex's safety fence.**
 
-它决定 Codex 能不能：
+It determines whether Codex can:
 
 ```text
-看文件
-改文件
-访问项目外目录
-联网
-运行命令
+Read files
+Modify files
+Access directories outside the project
+Use the network
+Run commands
 ```
 
-###### Model 模型选择
+###### Model selection
 
-###### 推理强度
+###### Reasoning effort
 
-可以看到推理强度分为了4档，强度越高对应的推理能力越强所花的时间和token消耗也越大
+Reasoning effort is divided into four levels. Higher effort means stronger reasoning, but it also takes more time and consumes more tokens.
 
 <p align="center">
-  <img src="assets/images/image-030-5e67deee5c.png" alt="Codex App中“做一个首页”任务的对话窗口界面" width="860">
+  <img src="assets/images/image-030-5e67deee5c.png" alt="Conversation window for a “build a home page” task in Codex App" width="860">
 </p>
 
 
-| 选项 | 简单来说 | 适合任务 |
+| Option | Simple meaning | Suitable tasks |
 | --- | --- | --- |
-| 低 | 想得少，速度快，省额度 | 改文案、改颜色、小问题 |
-| 中 | 平衡速度和质量 | 普通网页、简单 bug、日常开发 |
-| 高 | 想得更深，更适合复杂问题 | 多文件修改、复杂 bug、重构 |
-| 超高 | 最认真、最慢、最耗 | 很难的问题、架构分析、反复修不好的 bug |
+| Low | Less thinking, faster, saves quota | Copy edits, color changes, small issues |
+| Medium | Balanced speed and quality | Ordinary webpages, simple bugs, day-to-day development |
+| High | Deeper thinking, better for complex problems | Multi-file edits, complex bugs, refactors |
+| Very high | Most careful, slowest, most expensive | Difficult problems, architecture analysis, repeatedly unresolved bugs |
 
 
-###### 模型选择
+###### Model selection
 
-这里可以选择不同的模型。模型能力、可用范围和消耗会随账号套餐、地区、版本和模型目录变化。普通任务用默认推荐模型即可；复杂任务再考虑切换更强模型或提高推理强度。
+Here you can choose different models. Model capability, availability, and consumption may change depending on account plan, region, version, and model catalog. Use the default recommended model for ordinary tasks. For complex tasks, consider switching to a stronger model or increasing reasoning effort.
 
 <p align="center">
-  <img src="assets/images/image-031-223a38b5c0.png" alt="Codex App中“做一个首页”任务的界面" width="860">
+  <img src="assets/images/image-031-223a38b5c0.png" alt="Task interface for “build a home page” in Codex App" width="860">
 </p>
 
-###### 速度
+###### Speed
 
-有些模型或版本会提供标准 / 快速之类的服务档位。
+Some models or versions provide service tiers such as Standard / Fast.
 
-快速模式的速度提升、额度消耗和是否可用，都以当前界面显示为准。任务很急、额度充足时可以考虑开启；日常任务不需要默认开启。
+Speed improvements, quota consumption, and availability of fast mode are all subject to the current interface. If a task is urgent and quota is sufficient, you can consider enabling it. Daily tasks do not need it by default.
 
 <p align="center">
-  <img src="assets/images/image-032-19abbbf80a.png" alt="Codex App中“做一个首页”任务的界面" width="860">
+  <img src="assets/images/image-032-19abbbf80a.png" alt="Task interface for “build a home page” in Codex App" width="860">
 </p>
 
-###### 引导
+###### Guidance
 
-可中途插入对话
+You can insert guidance during execution.
 
-当我们在AI执行的过程中，发现AI理解错了我们的意思，就不应该让它继续执行了，这时候就应该及时进行人工引导
+If you notice that AI misunderstood your intent while it is executing, you should not let it keep going. Provide human guidance in time.
 
-如果不选择引导则会排队执行，只有执行完上一个任务过后，AI才会执行你发送的下一个任务
+If you do not choose guidance, your next message may be queued. The AI will only execute it after finishing the previous task.
 
 <p align="center">
-  <img src="assets/images/image-033-ab2aaf4b7c.png" alt="Codex App的界面，左侧为项目管理区域，显示“做一个首页”项目，有“你好”和“做一个首页”两个任务，其中“你好”任务已结束22小时" width="860">
+  <img src="assets/images/image-033-ab2aaf4b7c.png" alt="Codex App interface showing the project management area on the left, with tasks including “hello” and “build a home page”" width="860">
 </p>
 
-###### 计划模式
+###### Plan mode
 
-开启计划模式后，Codex 就不会立即上手干活，而是会先整理出一份工作计划，跟我们确认了过后再开始干活
+After plan mode is enabled, Codex will not start working immediately. It first prepares a work plan, and begins only after you confirm it.
 
-对于所有复杂任务，建议都先开启计划模式，可以查漏补缺。
-
-<p align="center">
-  <img src="assets/images/image-034-6c91bab459.png" alt="Codex App中“做一个首页”任务的对话窗口界面" width="860">
-</p>
+For all complex tasks, it is recommended to enable plan mode first. This helps catch missing details before implementation.
 
 <p align="center">
-  <img src="assets/images/image-035-14008ae664.png" alt="Codex App中“极简动效增强计划”的对话窗口" width="860">
-</p>
-
-##### 多功能区
-
-###### 注释
-
-在多功能的右上角区域的注释
-
-当我们用 Codex 内置的浏览器打开了页面过后，会发现有个注释功能
-
-可以让AI帮我们只修改页面的具体部分
-
-<p align="center">
-  <img src="assets/images/image-036-3a26d98ad0.png" alt="Codex App的界面" width="860">
+  <img src="assets/images/image-034-6c91bab459.png" alt="Conversation window for a “build a home page” task in Codex App" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-037-2ce03561dc.png" alt="Codex App的界面，左侧为项目列表，右侧是“Hello, Codex.”的页面" width="860">
+  <img src="assets/images/image-035-14008ae664.png" alt="Conversation window for a minimalist animation enhancement plan in Codex App" width="860">
+</p>
+
+##### Multi-purpose area
+
+###### Comments
+
+Comments appear in the upper-right area of the multi-purpose panel.
+
+After opening a page in the built-in Codex browser, you will find a comment feature.
+
+It lets the AI modify only a specific part of the page.
+
+<p align="center">
+  <img src="assets/images/image-036-3a26d98ad0.png" alt="Codex App interface" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-038-bea3475dc4.png" alt="Codex App的界面" width="860">
+  <img src="assets/images/image-037-2ce03561dc.png" alt="Codex App interface with project list on the left and a “Hello, Codex.” page on the right" width="860">
+</p>
+
+<p align="center">
+  <img src="assets/images/image-038-bea3475dc4.png" alt="Codex App interface" width="860">
 </p>
 
 
 ---
 
-### Codex CLI 安装与上手
+### Installing and getting started with Codex CLI
 
-Codex CLI 是 Codex 的命令行版本。
+Codex CLI is the command-line version of Codex.
 
-它适合愿意打开终端的人使用，比如 PowerShell、Terminal、iTerm、Windows Terminal。
+It is suitable for users willing to open a terminal, such as PowerShell, Terminal, iTerm, or Windows Terminal.
 
-#### macOS / Linux 安装
+#### Installing on macOS / Linux
 
-macOS 有两种常见安装方式。
+macOS has two common installation methods.
 
-##### 方式一：使用 npm 安装
+##### Method 1: Install with npm
 
-先确认电脑已经安装 Node.js。
+First confirm that Node.js is installed on your computer.
 
-打开 Terminal，输入：
+Open Terminal and enter:
 
 ```text
 node -v
 npm -v
 ```
 
-能看到版本号，说明 Node.js 和 npm 已经可用。
+If you can see version numbers, Node.js and npm are available.
 
-然后安装 Codex CLI：
+Then install Codex CLI:
 
 ```text
 npm install -g @openai/codex
 ```
 
-安装完成后，检查是否安装成功：
+After installation, check whether it succeeded:
 
 ```text
 codex --version
 ```
 
-或者直接运行：
+Or run it directly:
 
 ```text
 codex
@@ -1385,296 +1379,296 @@ codex
 
 ---
 
-##### 方式二：使用 Homebrew 安装
+##### Method 2: Install with Homebrew
 
-Mac 用户也可以用 Homebrew：
+Mac users can also use Homebrew:
 
 ```text
 brew install --cask codex
 ```
 
-安装后运行：
+After installation, run:
 
 ```text
 codex
 ```
 
-小白建议：
+Beginner recommendation:
 
-- 已经装过 Node.js，就用 npm。
-- 已经习惯 Homebrew，就用 brew。
+- If Node.js is already installed, use npm.
+- If you already use Homebrew, use brew.
 
-#### Windows 安装
+#### Installing on Windows
 
-Windows 用户建议使用 PowerShell 或 Windows Terminal。
+Windows users are encouraged to use PowerShell or Windows Terminal.
 
-第一步，安装 Node.js。
+Step 1: install Node.js.
 
-安装完成后，打开 PowerShell，输入：
+After installation, open PowerShell and enter:
 
 ```text
 node -v
 npm -v
 ```
 
-能看到版本号，说明安装成功。
+If you see version numbers, installation succeeded.
 
-第二步，安装 Codex CLI：
+Step 2: install Codex CLI:
 
 ```text
 npm install -g @openai/codex
 ```
 
-第三步，检查是否安装成功：
+Step 3: check whether installation succeeded:
 
 ```text
 codex --version
 ```
 
-或者直接运行：
+Or run it directly:
 
 ```text
 codex
 ```
 
-Windows 用户第一次使用时，建议不要在系统目录里运行 Codex。
+When using Codex for the first time on Windows, do not run it inside a system directory.
 
-不要在这些位置直接操作：
+Do not operate directly in these locations:
 
 ```text
 C:\
-系统目录
-桌面
-下载文件夹
-重要资料文件夹
+System directories
+Desktop
+Downloads folder
+Important document folders
 ```
 
-建议新建一个练习目录：
+Create a practice directory instead:
 
 ```text
 D:\AI-Codex-Projects\hello-codex
 ```
 
-#### 第一次运行
+#### First run
 
-安装完成后，在终端输入：
-
-```text
-codex
-```
-
-第一次运行时，Codex 会提示你登录。
-
-Codex CLI 常见有两种登录方式：
-
-```text
-1. 使用 ChatGPT 账号登录
-2. 使用 OpenAI API Key 登录
-```
-
-新手优先推荐第一种：ChatGPT 账号登录。
-
-##### 方式一：使用 ChatGPT 账号登录
-
-这是最适合普通用户和小白的方式。
-
-在终端输入：
+After installation, enter the following in a terminal:
 
 ```text
 codex
 ```
 
-或者：
+On the first run, Codex asks you to sign in.
+
+Codex CLI commonly supports two sign-in methods:
+
+```text
+1. Sign in with a ChatGPT account
+2. Sign in with an OpenAI API key
+```
+
+Beginners should choose the first option: ChatGPT account sign-in.
+
+##### Method 1: Sign in with a ChatGPT account
+
+This is the best option for ordinary users and beginners.
+
+Enter the following in the terminal:
+
+```text
+codex
+```
+
+Or:
 
 ```text
 codex login
 ```
 
-然后选择：
+Then choose:
 
 ```text
 Sign in with ChatGPT
 ```
 
-登录流程大概是：
+The sign-in flow is roughly:
 
 ```text
-1. 终端输入 codex 或 codex login
-2. 选择 Sign in with ChatGPT
-3. 浏览器会自动打开登录页面
-4. 输入你的 ChatGPT 账号
-5. 登录成功后，浏览器会把登录结果传回终端
-6. 回到终端，Codex CLI 就可以使用了
+1. Enter codex or codex login in the terminal
+2. Choose Sign in with ChatGPT
+3. The browser opens the sign-in page automatically
+4. Enter your ChatGPT account
+5. After successful sign-in, the browser returns the result to the terminal
+6. Return to the terminal, and Codex CLI is ready to use
 ```
 
-##### 方式二：使用 API Key 登录
+##### Method 2: Sign in with an API key
 
-Codex CLI 也支持使用 OpenAI API Key 登录。
+Codex CLI also supports signing in with an OpenAI API key.
 
-API Key 登录更适合开发者、自动化脚本、CI/CD、服务器任务等场景。
+API key sign-in is better suited for developers, automation scripts, CI/CD, server tasks, and similar scenarios.
 
-小白可以这样理解：
+Beginners can understand it this way:
 
 ```text
-ChatGPT 登录 = 走 ChatGPT 账号和套餐额度
-API Key 登录 = 走 OpenAI Platform API 计费
+ChatGPT sign-in = uses your ChatGPT account and plan quota
+API key sign-in = billed through the OpenAI Platform API
 ```
 
-如果你要用 API Key 登录，先去 OpenAI Platform 创建 API Key。
+If you want to use API key sign-in, first create an API key on OpenAI Platform.
 
-然后在终端里设置环境变量。
+Then set the environment variable in your terminal.
 
-macOS / Linux 可以这样写：
+On macOS / Linux:
 
 ```text
-export OPENAI_API_KEY="你的_API_Key"
+export OPENAI_API_KEY="your_API_key"
 printenv OPENAI_API_KEY | codex login --with-api-key
 ```
 
-Windows PowerShell 可以这样写：
+On Windows PowerShell:
 
 ```text
-$env:OPENAI_API_KEY="你的_API_Key"
+$env:OPENAI_API_KEY="your_API_key"
 $env:OPENAI_API_KEY | codex login --with-api-key
 ```
 
-登录成功后，Codex CLI 会保存登录信息，后面再次运行：
+After successful sign-in, Codex CLI saves the login information. Later you can run:
 
 ```text
 codex
 ```
 
-就可以继续使用。
+and continue using it.
 
 ---
 
-##### ChatGPT 登录和 API Key 登录有什么区别？
+##### What is the difference between ChatGPT sign-in and API key sign-in?
 
 
-| 对比 | ChatGPT 账号登录 | API Key 登录 |
+| Comparison | ChatGPT account sign-in | API key sign-in |
 | --- | --- | --- |
-| 适合人群 | 普通用户、小白 | 开发者、自动化、CI/CD |
-| 使用额度 | 跟 ChatGPT 套餐有关 | 按 OpenAI Platform API 计费 |
-| 上手难度 | 更简单 | 稍复杂 |
-| 是否推荐小白 | 推荐 | 不推荐一开始用 |
-| 适合本地练习 | 适合 | 也可以，但没必要 |
-| 适合自动化脚本 | 一般 | 更适合 |
+| Best for | Ordinary users, beginners | Developers, automation, CI/CD |
+| Usage quota | Related to your ChatGPT plan | Billed through OpenAI Platform API |
+| Onboarding difficulty | Easier | Slightly more complex |
+| Recommended for beginners | Recommended | Not recommended at the beginning |
+| Suitable for local practice | Suitable | Also possible, but usually unnecessary |
+| Suitable for automation scripts | Generally | Better suited |
 
 
-##### API Key 登录注意事项
+##### API key sign-in notes
 
-API Key 很敏感，不能随便泄露。
+API keys are sensitive and must not be leaked.
 
-不要把 API Key：
+Do not put an API key:
 
 ```text
-写进代码里
-发给别人
-截图公开
-上传到 GitHub
-放进 README
-放进前端网页
-提交到 Git 仓库
+In code
+In messages to others
+In public screenshots
+On GitHub
+In README files
+In frontend web pages
+In Git commits
 ```
 
-如果不小心泄露了 API Key，要立刻去 OpenAI Platform 删除或重新生成。
+If you accidentally leak an API key, immediately delete or regenerate it on OpenAI Platform.
 
-API Key 登录虽然方便做自动化，但它会按 API 使用量计费，所以新手不要不清楚费用规则就长时间运行任务。
+API key sign-in is convenient for automation, but it is billed according to API usage. Beginners should not run long tasks without understanding the cost model.
 
 ---
 
-##### 查看当前登录状态
+##### Check current login status
 
-你可以用下面命令查看当前是否已经登录：
+Use the following command to see whether you are currently signed in:
 
 ```text
 codex login status
 ```
 
-如果需要退出登录，可以运行：
+To sign out, run:
 
 ```text
 codex logout
 ```
 
-退出后，下次再运行 Codex CLI，需要重新登录。
+After signing out, you need to sign in again the next time you run Codex CLI.
 
-#### CLI 基础命令
+#### Basic CLI commands
 
-Codex CLI 的命令可以分成两类：
+Codex CLI commands can be divided into two categories:
 
 
-| 类型 | 使用位置 | 作用 |
+| Type | Where used | Purpose |
 | --- | --- | --- |
-| 终端命令 | PowerShell / Terminal 里输入 | 启动、登录、更新、诊断、管理 Codex |
-| 斜杠命令 | 进入 Codex 后输入 | 切模型、调权限、看 diff、生成规则、退出会话 |
+| Terminal commands | Entered in PowerShell / Terminal | Start, sign in, update, diagnose, and manage Codex |
+| Slash commands | Entered after entering Codex | Switch models, adjust permissions, inspect diffs, generate rules, exit sessions |
 
 
-##### CLI 终端命令
+##### CLI terminal commands
 
-CLI 终端命令，是在 PowerShell / Terminal / Windows Terminal 里输入的命令。
+CLI terminal commands are entered in PowerShell / Terminal / Windows Terminal.
 
-###### 小白最常用终端命令
+###### Terminal commands beginners use most often
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| `codex` | 启动 Codex CLI | 打开终端版 Codex | 进入项目后使用 |
-| `codex --version` | 查看版本 | 检查是否安装成功 | 安装后第一步 |
-| `codex --help` | 查看帮助 | 查看支持哪些命令 | 不知道命令怎么用时 |
-| `codex login` | 登录 Codex | 用 ChatGPT 账号或 API Key 登录 | 第一次使用 |
-| `codex login status` | 查看登录状态 | 看当前有没有登录 | 登录异常时 |
-| `codex logout` | 退出登录 | 清除本机登录状态 | 换账号、公共电脑 |
-| `codex doctor` | 检查环境问题 | 自动生成诊断报告 | 启动失败、登录失败、环境异常 |
-| `codex update` | 更新 Codex | 更新 CLI 版本 | 需要升级时 |
-| `codex app` | 打开 Codex App | 从终端打开桌面版 | 想切到图形界面时 |
+| `codex` | Start Codex CLI | Open terminal Codex | Use after entering a project |
+| `codex --version` | Show version | Check whether installation succeeded | First step after installation |
+| `codex --help` | Show help | See supported commands | When you do not know how to use a command |
+| `codex login` | Sign in to Codex | Use a ChatGPT account or API key | First use |
+| `codex login status` | Show login status | See whether you are signed in | Login troubleshooting |
+| `codex logout` | Sign out | Clear local login state | Switching accounts or using a public computer |
+| `codex doctor` | Check environment issues | Automatically generate a diagnostic report | Startup failure, login failure, environment issues |
+| `codex update` | Update Codex | Update CLI version | When you need to upgrade |
+| `codex app` | Open Codex App | Open the desktop app from the terminal | When you want to switch to the GUI |
 
 
 ---
 
-###### 进入项目相关命令
+###### Project navigation commands
 
 
-| 命令 | 作用 | 示例 | 简单来说 |
+| Command | Purpose | Example | Simple meaning |
 | --- | --- | --- | --- |
-| `cd 项目目录` | 进入项目文件夹 | `cd D:\\AI-Codex-Projects\\hello-Codex` | 先走到项目里面 |
-| `codex` | 在当前目录启动 Codex | `codex` | 让 Codex 在当前项目工作 |
-| `codex --cd 项目路径` | 指定目录启动 | `codex --cd D:\\AI-Codex-Projects\\hello-Codex` | 不用先 cd，直接指定项目 |
-| `codex -C 项目路径` | --cd 的简写 | `codex -C ./hello-Codex` | 更短写法 |
+| `cd project-directory` | Enter a project folder | `cd D:\\AI-Codex-Projects\\hello-Codex` | Move into the project first |
+| `codex` | Start Codex in the current directory | `codex` | Let Codex work in the current project |
+| `codex --cd project-path` | Start with a specified directory | `codex --cd D:\\AI-Codex-Projects\\hello-Codex` | Specify the project without running `cd` first |
+| `codex -C project-path` | Short form of `--cd` | `codex -C ./hello-Codex` | Shorter syntax |
 
 
-新手推荐最简单的方式：
+The simplest beginner-friendly flow is:
 
 ```text
-cd 项目目录
+cd project-directory
 codex
 ```
 
-不要在这些地方直接运行 Codex：
+Do not run Codex directly in these locations:
 
 ```text
 C:\
-桌面
-下载文件夹
-系统目录
-重要资料文件夹
+Desktop
+Downloads folder
+System directories
+Important document folders
 ```
 
 ---
 
-###### 登录相关命令
+###### Login-related commands
 
 
-| 命令 | 作用 | 适合场景 |
+| Command | Purpose | Best for |
 | --- | --- | --- |
-| `codex login` | 默认打开浏览器，用 ChatGPT 账号登录 | 小白首选 |
-| `codex login --device-auth` | 用设备码登录 | 远程服务器、浏览器打不开 |
-| `printenv OPENAI_API_KEY \| codex login --with-api-key` | 使用 API Key 登录 | 开发者、自动化、CI/CD |
-| `codex login status` | 查看当前登录方式和状态 | 不确定是否已登录 |
-| `codex logout` | 删除本机保存的登录凭证 | 换账号、公共电脑 |
+| `codex login` | Open browser by default and sign in with ChatGPT account | Beginner first choice |
+| `codex login --device-auth` | Sign in with a device code | Remote servers, when browser cannot open |
+| `printenv OPENAI_API_KEY \| codex login --with-api-key` | Sign in with API key | Developers, automation, CI/CD |
+| `codex login status` | Show current login method and status | When you are unsure whether you are signed in |
+| `codex logout` | Delete locally saved login credentials | Switching accounts, public computers |
 
 
-Windows PowerShell 使用 API Key 登录：
+Use API key sign-in on Windows PowerShell:
 
 ```text
 $env:OPENAI_API_KEY | codex login --with-api-key
@@ -1682,63 +1676,63 @@ $env:OPENAI_API_KEY | codex login --with-api-key
 
 ---
 
-###### 启动时直接发任务
+###### Send a task at startup
 
 
-| 命令 | 作用 | 示例 |
+| Command | Purpose | Example |
 | --- | --- | --- |
-| `codex "任务内容"` | 启动 Codex，并直接发送第一条任务 | `codex "请解释这个项目结构"` |
-| `codex -i 图片路径 "任务"` | 附加图片一起分析 | `codex -i ./error.png "分析这个报错"` |
-| `codex --image 图片路径 "任务"` | `-i` 的完整写法 | `codex --image ./ui.png "根据截图优化页面"` |
-| `codex --search "任务"` | 允许使用搜索能力 | `codex --search "查一下这个库的新用法"` |
+| `codex "task content"` | Start Codex and send the first task directly | `codex "Please explain this project structure"` |
+| `codex -i image-path "task"` | Attach an image for analysis | `codex -i ./error.png "Analyze this error"` |
+| `codex --image image-path "task"` | Full form of `-i` | `codex --image ./ui.png "Improve the page based on this screenshot"` |
+| `codex --search "task"` | Allow search capability | `codex --search "Look up the latest usage of this library"` |
 
 
-适合：
+Suitable for:
 
 ```text
-简单解释项目
-分析报错截图
-根据 UI 截图提修改建议
-查新版本文档
+Simple project explanation
+Error screenshot analysis
+Modification suggestions based on a UI screenshot
+Looking up newer version documentation
 ```
 
-新手更推荐先运行：
+For beginners, it is better to run:
 
 ```text
 codex
 ```
 
-进入后再输入任务，更容易观察执行过程。
+first, then enter the task. This makes it easier to observe the execution process.
 
 ---
 
-###### 模型、权限、沙盒相关命令
+###### Model, permission, and sandbox commands
 
 
-| 命令 | 作用 | 简单来说 | 新手建议 |
+| Command | Purpose | Simple meaning | Beginner recommendation |
 | --- | --- | --- | --- |
-| `codex --model 模型名` | 指定模型 | 选择 AI 大脑 | 默认即可，复杂任务再改 |
-| `codex -m 模型名` | `--model` 简写 | 更短写法 | 不必强行记 |
-| `codex --sandbox read-only` | 只读模式 | 只能看，尽量不改 | 只分析项目时用 |
-| `codex --sandbox workspace-write` | 当前项目可读写 | 能在项目里工作 | 日常推荐 |
-| `codex --sandbox danger-full-access` | 完全放开限制 | 权限很大 | 新手不要用 |
-| `codex --ask-for-approval on-request` | 敏感操作先问你 | 请求批准 | 新手推荐 |
-| `codex -a on-request` | 审批模式简写 | 更短写法 | 推荐 |
+| `codex --model model-name` | Specify a model | Choose the AI brain | Use default; change for complex tasks |
+| `codex -m model-name` | Short form of `--model` | Shorter syntax | No need to memorize |
+| `codex --sandbox read-only` | Read-only mode | Can only inspect; avoids modification | Use when only analyzing a project |
+| `codex --sandbox workspace-write` | Current project is readable and writable | Can work inside the project | Recommended for daily use |
+| `codex --sandbox danger-full-access` | Fully loosen restrictions | Very broad permissions | Beginners should not use |
+| `codex --ask-for-approval on-request` | Ask before sensitive operations | Request approval | Recommended for beginners |
+| `codex -a on-request` | Short form of approval mode | Shorter syntax | Recommended |
 
 
-新手推荐组合：
+Recommended beginner combination:
 
 ```text
 codex --sandbox workspace-write --ask-for-approval on-request
 ```
 
-意思是：
+This means:
 
 ```text
-Codex 可以在当前项目里工作，但敏感操作要先问我。
+Codex can work inside the current project, but sensitive operations must ask me first.
 ```
 
-不要把这个当成省事模式：
+Do not treat this as a convenience mode:
 
 ```text
 codex --sandbox danger-full-access
@@ -1746,739 +1740,737 @@ codex --sandbox danger-full-access
 
 ---
 
-###### 非交互式任务命令
+###### Non-interactive task commands
 
 
-| 命令 | 作用 | 简单来说 | 适合场景 |
+| Command | Purpose | Simple meaning | Suitable scenarios |
 | --- | --- | --- | --- |
-| `codex exec "任务"` | 一次性执行任务 | 不进入长对话，跑完就结束 | 自动化、检查、生成报告 |
-| `codex e "任务"` | `exec` 的简写 | 同上 | 快速执行 |
-| `codex exec --cd 项目路径 "任务"` | 指定目录执行任务 | 在某个项目里一次性执行 | 自动化脚本 |
-| `codex exec resume` | 恢复 exec 会话 | 接着上次非交互任务继续 | 自动化任务中断后 |
-| `codex exec resume --last` | 恢复最近一次 exec 会话 | 接着最近任务继续 | 最常用恢复方式 |
+| `codex exec "task"` | Execute a one-off task | Does not enter a long conversation; ends after running | Automation, checks, reports |
+| `codex e "task"` | Short form of `exec` | Same as above | Quick execution |
+| `codex exec --cd project-path "task"` | Execute in a specified directory | Run a one-off task inside a project | Automation scripts |
+| `codex exec resume` | Resume an exec session | Continue a previous non-interactive task | After an automation task is interrupted |
+| `codex exec resume --last` | Resume the most recent exec session | Continue the latest task | Most commonly used resume option |
 
 
-示例：
+Example:
 
 ```text
-codex exec "请检查当前项目有没有明显问题"
+codex exec "Please check whether the current project has any obvious issues"
 ```
 
-小白阶段优先用：
+At the beginner stage, prioritize:
 
 ```text
 codex
 ```
 
-熟悉后再用 `codex exec`。
+After becoming familiar, use `codex exec`.
 
 ---
 
-###### 会话管理命令
+###### Session management commands
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| `codex resume` | 恢复之前会话 | 接着之前的 thread 继续 | 上次没做完 |
-| `codex resume --last` | 恢复最近一次会话 | 接着最近任务继续 | 最常用 |
-| `codex archive` | 归档会话 | 把不用的任务收起来 | 任务完成或不要了 |
-| `codex unarchive` | 恢复归档会话 | 找回被归档的任务 | 归档后还想继续 |
-| `codex fork` | 复制旧会话成新 thread | 保留原任务，再试一个新方向 | 多方案尝试 |
+| `codex resume` | Resume a previous session | Continue an earlier thread | Last task was unfinished |
+| `codex resume --last` | Resume the most recent session | Continue the latest task | Most commonly used |
+| `codex archive` | Archive a session | Put away tasks you no longer need | Task finished or abandoned |
+| `codex unarchive` | Restore an archived session | Recover an archived task | Continue after archiving |
+| `codex fork` | Copy an old session into a new thread | Preserve original task and try a new direction | Exploring multiple approaches |
 
 
-简单来说：
+In simple terms:
 
 ```text
-resume = 接着做
-archive = 收起来
-unarchive = 找回来
-fork = 复制一份去试新方案
+resume = continue
+archive = put away
+unarchive = restore
+fork = copy one session to try a new approach
 ```
 
 ---
 
-###### 诊断、更新和维护命令
+###### Diagnostic, update, and maintenance commands
 
 
-| 命令 | 作用 | 什么时候用 |
+| Command | Purpose | When to use |
 | --- | --- | --- |
-| `codex doctor` | 生成诊断报告 | Codex 启动异常、登录异常、环境异常 |
-| `codex update` | 检查并更新 Codex CLI | 想升级版本时 |
-| `codex completion` | 生成命令补全脚本 | 经常用终端的人 |
-| `codex features list` | 查看功能开关 | 排查功能是否开启 |
-| `codex features enable 功能名` | 开启某个功能 | 进阶配置 |
-| `codex features disable 功能名` | 关闭某个功能 | 进阶配置 |
+| `codex doctor` | Generate a diagnostic report | Codex startup, login, or environment issues |
+| `codex update` | Check and update Codex CLI | When you want to upgrade |
+| `codex completion` | Generate shell completion script | Users who often use terminals |
+| `codex features list` | Show feature flags | Troubleshoot whether a feature is enabled |
+| `codex features enable feature-name` | Enable a feature | Advanced configuration |
+| `codex features disable feature-name` | Disable a feature | Advanced configuration |
 
 
-小白最常用：
+Beginners most commonly use:
 
 ```text
 codex doctor
 codex update
 ```
 
-其他先不用记。
+You can ignore the others at first.
 
 ---
 
-###### Cloud、MCP、插件相关命令
+###### Cloud, MCP, and plugin commands
 
 
-| 命令 | 作用 | 小白是否需要 |
+| Command | Purpose | Do beginners need it? |
 | --- | --- | --- |
-| `codex cloud` | 在终端里浏览或执行 Codex Cloud 任务 | 暂时不用 |
-| `codex apply` | 把 Codex Cloud 生成的 diff 应用到本地 | 用 Cloud 后再学 |
-| `codex mcp list` | 查看 MCP 工具 | 暂时不用 |
-| `codex mcp add` | 添加 MCP server | 进阶 |
-| `codex mcp remove` | 删除 MCP server | 进阶 |
-| `codex plugin list` | 查看插件 | 暂时不用 |
-| `codex plugin add` | 安装插件 | 进阶 |
-| `codex plugin remove` | 删除插件 | 进阶 |
+| `codex cloud` | Browse or execute Codex Cloud tasks in the terminal | Not for now |
+| `codex apply` | Apply a diff generated by Codex Cloud locally | Learn after using Cloud |
+| `codex mcp list` | View MCP tools | Not for now |
+| `codex mcp add` | Add an MCP server | Advanced |
+| `codex mcp remove` | Remove an MCP server | Advanced |
+| `codex plugin list` | View plugins | Not for now |
+| `codex plugin add` | Install plugins | Advanced |
+| `codex plugin remove` | Remove plugins | Advanced |
 
 
-小白阶段先不用管这些。
+Beginners can ignore these at first.
 
-等你开始用：
+Learn this category after you start using:
 
 ```text
 Codex Cloud
-外部工具
-数据库
+External tools
+Databases
 Figma
-项目管理工具
+Project management tools
 MCP
-插件
+Plugins
 ```
-
-再学习这一类命令。
 
 ---
 
-###### 沙盒测试命令
+###### Sandbox testing commands
 
 
-| 命令 | 作用 | 适合谁 |
+| Command | Purpose | Best for |
 | --- | --- | --- |
-| `codex sandbox` | 在 Codex 的沙盒规则下运行命令 | 进阶用户 |
-| `codex sandbox --cd 项目目录 -- 命令` | 指定目录运行沙盒命令 | 调试权限问题 |
-| `codex execpolicy` | 检查某条命令会被允许、询问还是阻止 | 进阶安全配置 |
+| `codex sandbox` | Run a command under Codex sandbox rules | Advanced users |
+| `codex sandbox --cd project-directory -- command` | Run a sandboxed command in a specified directory | Debugging permission issues |
+| `codex execpolicy` | Check whether a command would be allowed, prompt, or blocked | Advanced security configuration |
 
 
-小白阶段不用学。
+Beginners do not need to learn this at first.
 
-只要记住：
+Just remember:
 
 ```text
-默认用 workspace-write + on-request。
-不要随便 full access。
+Use workspace-write + on-request by default.
+Do not casually use full access.
 ```
 
 ---
 
-###### 危险命令和危险参数
+###### Dangerous commands and parameters
 
 
-| 命令 / 参数 | 为什么危险 | 新手建议 |
+| Command / parameter | Why it is dangerous | Beginner recommendation |
 | --- | --- | --- |
-| --sandbox danger-full-access | 放开文件和网络限制 | 不要用 |
-| --dangerously-bypass-approvals-and-sandbox | 跳过审批和沙盒 | 不要用 |
-| --yolo | 上面那个危险参数的别名 | 不要用 |
-| --ask-for-approval never | Codex 操作时不再问你 | 新手不要用 |
-| sudo | 可能修改系统级内容 | 不懂不要允许 |
-| rm -rf | 可能删除大量文件 | 高危 |
-| git reset --hard | 可能丢失未保存改动 | 先确认 |
-| git clean -fd | 可能删除未跟踪文件 | 先确认 |
-| curl xxx \| sh | 下载脚本并直接执行 | 高危 |
+| --sandbox danger-full-access | Loosens file and network restrictions | Do not use |
+| --dangerously-bypass-approvals-and-sandbox | Skips approvals and sandboxing | Do not use |
+| --yolo | Alias for the dangerous parameter above | Do not use |
+| --ask-for-approval never | Codex will no longer ask during operations | Beginners should not use |
+| sudo | May modify system-level content | Do not allow unless you understand it |
+| rm -rf | May delete large amounts of files | High risk |
+| git reset --hard | May lose unsaved changes | Confirm first |
+| git clean -fd | May delete untracked files | Confirm first |
+| curl xxx \| sh | Downloads and directly executes a script | High risk |
 
 
-看到这些内容，先问 Codex：
+When you see these, first ask Codex:
 
 ```text
-请解释这条命令的作用、风险，以及有没有更安全的替代方案。
+Please explain what this command does, its risks, and whether there is a safer alternative.
 ```
 
 ---
 
-###### 新手最推荐记住的命令
+###### Commands beginners should remember first
 
 
-| 排名 | 命令 | 为什么重要 |
+| Rank | Command | Why it matters |
 | --- | --- | --- |
-| 1 | Codex | 启动 Codex CLI |
-| 2 | `codex login` | 登录账号 |
-| 3 | `codex login status` | 检查登录状态 |
-| 4 | `codex doctor` | 排查环境问题 |
-| 5 | `codex --version` | 查看版本 |
-| 6 | `codex resume --last` | 接着上次任务继续 |
-| 7 | `codex archive` | 归档不用的任务 |
-| 8 | `codex update` | 更新 Codex |
-| 9 | `codex exec "任务"` | 一次性执行任务 |
-| 10 | `codex logout` | 退出登录 |
+| 1 | Codex | Starts Codex CLI |
+| 2 | `codex login` | Signs in to your account |
+| 3 | `codex login status` | Checks login status |
+| 4 | `codex doctor` | Diagnoses environment issues |
+| 5 | `codex --version` | Shows version |
+| 6 | `codex resume --last` | Continues the previous task |
+| 7 | `codex archive` | Archives tasks you no longer need |
+| 8 | `codex update` | Updates Codex |
+| 9 | `codex exec "task"` | Executes a one-off task |
+| 10 | `codex logout` | Signs out |
 
 
 ---
 
-###### 推荐新手工作流
+###### Recommended beginner workflow
 
 
-| 步骤 | 命令 | 目的 |
+| Step | Command | Purpose |
 | --- | --- | --- |
-| 1 | cd 项目目录 | 进入项目文件夹 |
-| 2 | git status | 看当前项目状态 |
-| 3 | Codex | 启动 Codex CLI |
-| 4 | 输入任务 | 让 Codex 开始工作 |
-| 5 | /diff | 在 Codex 内查看改动 |
-| 6 | git diff | 在 Git 里再检查一次 |
-| 7 | git add . | 暂存满意的修改 |
-| 8 | git commit -m "说明" | 保存一个版本 |
-| 9 | `codex archive` 或 `/quit` | 归档任务或退出 |
+| 1 | cd project-directory | Enter the project folder |
+| 2 | git status | Check current project state |
+| 3 | Codex | Start Codex CLI |
+| 4 | Enter task | Let Codex begin work |
+| 5 | /diff | Inspect changes inside Codex |
+| 6 | git diff | Check again through Git |
+| 7 | git add . | Stage the changes you accept |
+| 8 | git commit -m "message" | Save a version |
+| 9 | `codex archive` or `/quit` | Archive the task or exit |
 
 
-##### CLI 斜杠命令
+##### CLI slash commands
 
-它不是在外面的 PowerShell / Terminal 里输入，而是在进入 Codex 后，在 Codex 输入框里输入 `/` 使用。
+Slash commands are not entered in the outside PowerShell / Terminal. They are entered inside the Codex input box after you have launched Codex, using `/`.
 
-###### 小白最常用命令
+###### Slash commands beginners use most often
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| /model | 切换模型和推理强度 | 换 AI 大脑和思考深度 | 任务太难、太慢或想省额度时 |
-| /permissions | 调整权限 | 控制 Codex 能不能改文件、联网、运行命令 | 想收紧或放宽权限时 |
-| /diff | 查看代码改动 | 看 Codex 到底改了什么 | Codex 修改文件后必看 |
-| /plan | 进入计划模式 | 先让 Codex 给方案，不急着改代码 | 复杂任务、修 bug、重构前 |
-| /init | 生成 AGENTS.md | 创建项目规则文件 | 新项目第一次使用 Codex 时 |
-| /status | 查看当前状态 | 看模型、权限、上下文、token 等信息 | 不确定当前配置时 |
-| /quit | 退出 Codex CLI | 结束当前会话 | 任务完成后退出 |
-| /exit | 退出 Codex CLI | 和 /quit 类似 | 任务完成后退出 |
+| /model | Switch model and reasoning effort | Change the AI brain and thinking depth | When a task is too hard, too slow, or you want to save quota |
+| /permissions | Adjust permissions | Control whether Codex can edit files, access network, or run commands | When you want to tighten or loosen permissions |
+| /diff | View code changes | See exactly what Codex changed | Must inspect after Codex modifies files |
+| /plan | Enter plan mode | Ask Codex for a plan before changing code | Before complex tasks, bug fixes, or refactors |
+| /init | Generate AGENTS.md | Create a project rules file | First use in a new project |
+| /status | Show current status | Check model, permissions, context, token usage, and more | When you are unsure about current configuration |
+| /quit | Exit Codex CLI | End the current session | After a task is complete |
+| /exit | Exit Codex CLI | Similar to /quit | After a task is complete |
 
 
 ---
 
-###### 模型与速度相关
+###### Model and speed related
 
 
-| 命令 | 作用 | 什么时候用 |
+| Command | Purpose | When to use |
 | --- | --- | --- |
-| /model | 选择模型和推理强度 | 想切换 GPT-5.5、mini、低/中/高推理时 |
-| /fast | 开启或关闭 Fast 模式 | 想让支持的模型更快响应时 |
-| /personality | 调整回答风格 | 想让 Codex 更简洁、更解释型或更协作时 |
-| /status | 查看当前模型和上下文状态 | 想确认现在到底用的是什么模型时 |
+| /model | Choose model and reasoning effort | When switching GPT-5.5, mini, or low/medium/high reasoning |
+| /fast | Turn Fast mode on or off | When you want supported models to respond faster |
+| /personality | Adjust response style | When you want Codex to be more concise, explanatory, or collaborative |
+| /status | Show current model and context state | When you want to confirm what is currently being used |
 
 
-新手建议：
+Beginner recommendation:
 
 ```text
-普通任务：默认模型 + 中推理
-复杂 bug：高推理
-简单改文案：低推理
-不要所有任务都开最高推理
+Ordinary tasks: default model + medium reasoning
+Complex bugs: high reasoning
+Simple copy edits: low reasoning
+Do not use the highest reasoning for every task
 ```
 
 ---
 
-###### 权限与安全相关
+###### Permissions and safety
 
 
-| 命令 | 作用 | 简单来说 | 建议 |
+| Command | Purpose | Simple meaning | Recommendation |
 | --- | --- | --- | --- |
-| /permissions | 修改权限策略 | 控制 Codex 能做什么 | 新手保持“请求批准” |
-| /approve | 批准一次被自动拒绝的操作 | 让被拦截的操作重试一次 | 看懂风险后再用 |
-| /sandbox-add-read-dir | 额外允许读取某个目录 | 让 Codex 能读项目外指定目录 | Windows 特定场景，少用 |
-| /status | 查看权限和可写目录 | 确认 Codex 当前权限范围 | 改权限后检查一下 |
+| /permissions | Modify permission policy | Control what Codex can do | Beginners should keep “request approval” |
+| /approve | Approve an operation that was automatically blocked | Let a blocked operation retry once | Use only after understanding the risk |
+| /sandbox-add-read-dir | Allow reading an additional directory | Let Codex read a specified directory outside the project | Windows-specific scenarios; use sparingly |
+| /status | View permissions and writable directories | Confirm Codex's current permission scope | Check after changing permissions |
 
 
-新手建议：
+Beginner recommendation:
 
 ```text
-默认用 /permissions 保持请求批准。
-不要随便放开完全访问权限。
-看不懂的操作，不要用 /approve。
+Use /permissions and keep request approval by default.
+Do not casually enable full access.
+Do not use /approve for operations you do not understand.
 ```
 
 ---
 
-###### 代码检查与 Review 相关
+###### Code inspection and review
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| /diff | 查看当前 Git diff | 看新增了什么、删除了什么 | 修改后必看 |
-| /review | 让 Codex review 当前改动 | 让它检查代码有没有问题 | 提交前检查 |
-| /copy | 复制最近一次 Codex 输出 | 快速复制结果 | 复制计划、总结、命令说明 |
-| /raw | 切换原始输出模式 | 方便复制长日志或终端输出 | 日志很长时 |
+| /diff | View current Git diff | See what was added and removed | Must inspect after modifications |
+| /review | Ask Codex to review current changes | Let it check whether code has problems | Before committing |
+| /copy | Copy the latest Codex output | Quickly copy results | Copying plans, summaries, command explanations |
+| /raw | Toggle raw output mode | Easier to copy long logs or terminal output | When logs are long |
 
 
-推荐流程：
+Recommended flow:
 
 ```text
-Codex 修改完成
-→ /diff 查看改动
-→ /review 检查问题
-→ 没问题再 git commit
+Codex finishes modifications
+→ /diff to inspect changes
+→ /review to check issues
+→ If everything looks good, git commit
 ```
 
 ---
 
-###### 会话管理相关
+###### Session management
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| /new | 开始新对话 | 在当前 CLI 里换一个新任务 | 当前任务结束，想开始新任务 |
-| /clear | 清空终端并开始新聊天 | 清理当前显示和上下文 | 界面太乱、想重新开始 |
-| /resume | 恢复之前的会话 | 接着以前的任务继续 | 上次任务没做完 |
-| /archive | 归档当前会话并退出 | 把不用的任务收起来 | 任务完成或方案不要了 |
-| /fork | 复制当前会话成新 thread | 保留原思路，另开分支尝试 | 想试另一个方案 |
-| /side | 开一个临时侧边对话 | 不影响主任务地问个小问题 | 想临时确认一个点 |
-| /quit | 退出 CLI | 结束当前使用 | 任务完成 |
-| /exit | 退出 CLI | 和 /quit 一样 | 任务完成 |
+| /new | Start a new conversation | Switch to a new task inside the current CLI | Current task is done and you want a new task |
+| /clear | Clear the terminal and start a new chat | Clean current display and context | When the interface is cluttered or you want to restart |
+| /resume | Resume a previous session | Continue an earlier task | Previous task was unfinished |
+| /archive | Archive current session and exit | Put away an unused task | Task is done or plan is abandoned |
+| /fork | Copy current session into a new thread | Preserve original approach and try another branch | Trying another solution |
+| /side | Open a temporary side conversation | Ask a small question without affecting the main task | Temporarily confirm a detail |
+| /quit | Exit CLI | End current use | Task complete |
+| /exit | Exit CLI | Same as /quit | Task complete |
 
 
-小白区别：
+Beginner distinctions:
 
 ```text
-/new = 开新任务
-/clear = 清理并重新开始
-/archive = 收起当前任务
-/fork = 复制当前任务去试新方案
-/side = 临时问个小问题
+/new = start a new task
+/clear = clean up and restart
+/archive = put away the current task
+/fork = copy the current task to try a new approach
+/side = ask a temporary small question
 ```
 
 ---
 
-###### 上下文与长对话相关
+###### Context and long conversations
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| /compact | 压缩当前对话 | 把长对话总结成重点 | 对话很长、上下文快满时 |
-| /status | 查看上下文使用情况 | 看还有多少上下文空间 | 任务做了很多轮后 |
-| /mention | 附加文件或文件夹 | 指定 Codex 重点看某个文件 | 想让它只看某几个文件 |
-| /ide | 引入 IDE 当前上下文 | 把编辑器打开的文件带进来 | 配合 VS Code / Cursor 使用 |
+| /compact | Compact the current conversation | Summarize a long conversation into key points | When the conversation is long or context is nearly full |
+| /status | Show context usage | See how much context space remains | After many rounds of work |
+| /mention | Attach files or folders | Tell Codex to focus on specific files | When you want it to inspect only a few files |
+| /ide | Bring in current IDE context | Add files currently open in the editor | Use with VS Code / Cursor |
 
 
-新手建议：
+Beginner recommendation:
 
 ```text
-对话长了用 /compact。
-想让 Codex 看特定文件，用 /mention。
-不想让它乱扫整个项目，就明确指定文件。
+Use /compact when the conversation becomes long.
+Use /mention when you want Codex to inspect specific files.
+If you do not want it scanning the whole project, specify the files clearly.
 ```
 
 ---
 
-###### 项目规则与能力相关
+###### Project rules and capabilities
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| /init | 生成 AGENTS.md | 创建项目规则文件 | 新项目第一次用 Codex |
-| /skills | 浏览和使用 Skills | 选择专项技能 | 做 UI、写文档、review 等专项任务 |
-| /memories | 配置记忆 | 控制 Codex 是否使用或生成记忆 | 想管理长期偏好时 |
-| /goal | 设置任务目标 | 给 Codex 一个持续目标 | 大任务、长任务 |
-| /apps | 浏览可连接的应用 | 让 Codex 使用外部 App | 连接外部工具时 |
-| /plugins | 管理插件 | 查看或启用插件能力 | 需要插件工具时 |
-| /mcp | 查看 MCP 工具 | 看 Codex 能调用哪些外部工具 | 配置 MCP 后检查 |
+| /init | Generate AGENTS.md | Create a project rules file | First Codex use in a new project |
+| /skills | Browse and use Skills | Choose specialized capabilities | UI, documentation, review, and other task types |
+| /memories | Configure memory | Control whether Codex uses or creates memories | Manage long-term preferences |
+| /goal | Set a task goal | Give Codex a persistent goal | Large or long-running tasks |
+| /apps | Browse connectable apps | Let Codex use external apps | When connecting external tools |
+| /plugins | Manage plugins | View or enable plugin capabilities | When plugin tools are needed |
+| /mcp | View MCP tools | See which external tools Codex can call | Check after configuring MCP |
 
 
-新手优先掌握：
+Beginners should first master:
 
 ```text
 /init
 /skills
 ```
 
-其他命令可以后面再学。
+Other commands can be learned later.
 
 ---
 
-###### 终端和后台任务相关
+###### Terminal and background tasks
 
 
-| 命令 | 作用 | 简单来说 | 使用场景 |
+| Command | Purpose | Simple meaning | Use case |
 | --- | --- | --- | --- |
-| /ps | 查看后台终端任务 | 看哪些命令还在跑 | npm dev、测试、构建还在运行时 |
-| /stop | 停止后台终端任务 | 终止正在后台跑的命令 | 命令卡住或不想继续跑 |
-| /raw | 原始输出模式 | 方便复制终端日志 | 日志很长时 |
+| /ps | View background terminal tasks | See which commands are still running | When npm dev, tests, or builds are still running |
+| /stop | Stop background terminal tasks | Terminate a command running in the background | When a command is stuck or should stop |
+| /raw | Raw output mode | Easier to copy terminal logs | When logs are long |
 
 
-常见场景：
+Common scenario:
 
 ```text
-Codex 跑了 npm run dev
-你想看它还在不在跑
-→ 用 /ps
+Codex ran npm run dev
+You want to see whether it is still running
+→ use /ps
 
-命令卡住了
-→ 用 /stop
+The command is stuck
+→ use /stop
 ```
 
 ---
 
-###### 界面与快捷键相关
+###### Interface and keyboard shortcuts
 
 
-| 命令 | 作用 | 简单来说 | 是否常用 |
+| Command | Purpose | Simple meaning | Commonly used? |
 | --- | --- | --- | --- |
-| /theme | 切换代码高亮主题 | 改终端显示风格 | 一般 |
-| /statusline | 配置底部状态栏 | 显示模型、token、Git 分支等 | 进阶 |
-| /title | 配置终端标题 | 让窗口标题显示项目信息 | 进阶 |
-| /keymap | 修改快捷键 | 自定义操作按键 | 进阶 |
-| /vim | 开关 Vim 编辑模式 | 用 Vim 方式编辑输入框 | 会 Vim 的人用 |
-| /debug-config | 查看配置层级 | 排查配置为什么不生效 | 进阶排错 |
+| /theme | Switch code highlighting theme | Change terminal display style | Usually not |
+| /statusline | Configure the bottom status bar | Show model, token, Git branch, and more | Advanced |
+| /title | Configure terminal title | Show project information in the window title | Advanced |
+| /keymap | Modify keyboard shortcuts | Customize operation keys | Advanced |
+| /vim | Toggle Vim editing mode | Edit the input box in Vim style | For Vim users |
+| /debug-config | View configuration hierarchy | Troubleshoot why configuration does not take effect | Advanced troubleshooting |
 
 
-小白阶段可以先不用这些。
+Beginners can ignore these at first.
 
 ---
 
-###### 开发者和高级功能
+###### Developer and advanced features
 
 
-| 命令 | 作用 | 适合谁 |
+| Command | Purpose | Best for |
 | --- | --- | --- |
-| /experimental | 开启实验功能 | 喜欢尝鲜的用户 |
-| /hooks | 查看和管理生命周期 hooks | 高级用户、团队项目 |
-| /feedback | 发送日志或反馈 | 遇到问题需要反馈时 |
-| /agent | 切换 active agent thread | 使用 subagent 工作流的人 |
+| /experimental | Enable experimental features | Users who like trying new features |
+| /hooks | View and manage lifecycle hooks | Advanced users, team projects |
+| /feedback | Send logs or feedback | When you need to report an issue |
+| /agent | Switch active agent thread | Users working with subagent workflows |
 
 
-这些不是入门必学内容。
+These are not required for onboarding.
 
-新手知道有就行，不需要一开始掌握。
+Beginners only need to know they exist.
 
 ---
 
-###### 新手最推荐记住的 8 个
+###### The 8 commands beginners should remember first
 
 
-| 排名 | 命令 | 为什么重要 |
+| Rank | Command | Why it matters |
 | --- | --- | --- |
-| 1 | /diff | 看 Codex 实际改了什么 |
-| 2 | /plan | 复杂任务先让它给计划 |
-| 3 | /permissions | 控制权限，避免乱改 |
-| 4 | /model | 切换模型和推理强度 |
-| 5 | /status | 查看当前模型、权限、上下文 |
-| 6 | /init | 生成项目规则 |
-| 7 | /compact | 长对话压缩重点 |
-| 8 | /quit | 退出 Codex |
+| 1 | /diff | Shows what Codex actually changed |
+| 2 | /plan | Asks for a plan before complex tasks |
+| 3 | /permissions | Controls permissions and avoids unsafe changes |
+| 4 | /model | Switches model and reasoning effort |
+| 5 | /status | Shows current model, permissions, and context |
+| 6 | /init | Generates project rules |
+| 7 | /compact | Compacts long conversations |
+| 8 | /quit | Exits Codex |
 
 
 ---
 
-###### 推荐新手使用流程
+###### Recommended beginner workflow
 
 
-| 步骤 | 命令 | 目的 |
+| Step | Command | Purpose |
 | --- | --- | --- |
-| 1 | /init | 生成项目规则 |
-| 2 | /permissions | 确认权限不要太大 |
-| 3 | /model | 确认模型和推理强度 |
-| 4 | /plan | 复杂任务先规划 |
-| 5 | 输入任务 | 让 Codex 开始工作 |
-| 6 | /diff | 检查代码改动 |
-| 7 | /review | 让 Codex 再检查一遍 |
-| 8 | /status | 查看当前状态和上下文 |
-| 9 | /compact | 对话太长时压缩 |
-| 10 | /quit | 退出 Codex |
+| 1 | /init | Generate project rules |
+| 2 | /permissions | Confirm permissions are not too broad |
+| 3 | /model | Confirm model and reasoning effort |
+| 4 | /plan | Plan first for complex tasks |
+| 5 | Enter task | Let Codex begin work |
+| 6 | /diff | Inspect code changes |
+| 7 | /review | Ask Codex to check once more |
+| 8 | /status | View current status and context |
+| 9 | /compact | Compact when conversation becomes too long |
+| 10 | /quit | Exit Codex |
 
 
 ---
 
-###### 一句话总结
+###### One-sentence summary
 
-Slash Commands 是 Codex CLI 里的快捷控制命令。
+Slash commands are quick control commands inside Codex CLI.
 
-新手不用全部背，先记住这几个就够了：
+Beginners do not need to memorize all of them. Start with these:
 
 ```text
-/diff       看改动
-/plan       先规划
-/permissions 控权限
-/model      换模型
-/status     看状态
-/init       建规则
-/compact    压缩长对话
-/quit       退出
+/diff       inspect changes
+/plan       plan first
+/permissions control permissions
+/model      switch model
+/status     check status
+/init       create rules
+/compact    compact long conversations
+/quit       exit
 ```
 
-#### CLI 工作方式
+#### How the CLI works
 
-Codex CLI 的工作方式，可以理解成一条完整流程：
+Codex CLI can be understood as a complete workflow:
 
 ```text
-读取项目
-→ 理解任务
-→ 提出计划
-→ 修改文件
-→ 运行命令
-→ 等待批准
-→ 展示 diff
-→ 处理失败
+Read project
+→ Understand task
+→ Propose plan
+→ Modify files
+→ Run commands
+→ Wait for approval
+→ Show diff
+→ Handle failures
 ```
 
-小白不用一开始理解所有技术细节，只要先知道：
+Beginners do not need to understand every technical detail at first. Just remember:
 
-Codex CLI 不是只会聊天，它会真的进入当前项目目录，读文件、改文件、跑命令，然后把结果展示给你检查。
+Codex CLI does not only chat. It really enters the current project directory, reads files, modifies files, runs commands, and shows you the result for inspection.
 
 ---
 
-###### Codex 如何读取项目
+###### How Codex reads a project
 
-当你在项目目录里运行：
+When you run the following inside a project directory:
 
 ```text
 codex
 ```
 
-Codex 会把当前目录当成工作区。
+Codex treats the current directory as the workspace.
 
-比如你在这个目录里启动：
+For example, if you start it in:
 
 ```text
 D:\AI-Codex-Projects\hello-codex
 ```
 
-Codex 就会围绕这个文件夹里的内容工作。
+Codex works around the contents of that folder.
 
-它可能会读取：
+It may read:
 
 
-| 内容 | 作用 |
+| Content | Purpose |
 | --- | --- |
-| 项目文件 | 理解当前代码 |
-| 文件夹结构 | 判断项目是前端、后端还是脚本项目 |
-| package.json | 判断启动命令、依赖、项目类型 |
-| README.md | 理解项目说明 |
-| AGENTS.md | 读取你给 Codex 写的工作规则 |
-| 报错日志 | 分析问题原因 |
-| Git 状态 | 判断哪些文件被改过 |
+| Project files | Understand current code |
+| Folder structure | Determine whether the project is frontend, backend, or scripts |
+| package.json | Identify startup commands, dependencies, and project type |
+| README.md | Understand project documentation |
+| AGENTS.md | Read the working rules you wrote for Codex |
+| Error logs | Analyze root causes |
+| Git status | Determine which files have changed |
 
 
-简单来说：
+In simple terms:
 
 ```text
-你在哪个文件夹启动 Codex，
-Codex 就默认把哪个文件夹当成当前项目。
+The folder where you start Codex
+is the folder Codex treats as the current project by default.
 ```
 
-所以不要在这些地方乱启动：
+So do not start it casually in:
 
 ```text
 C:\
-桌面
-下载文件夹
-系统目录
-重要资料文件夹
+Desktop
+Downloads folder
+System directories
+Important document folders
 ```
 
-推荐做法：
+Recommended practice:
 
 ```text
-cd 项目目录
+cd project-directory
 codex
 ```
 
 ---
 
-###### Codex 如何理解任务
+###### How Codex understands a task
 
-你输入任务后，Codex 会先判断你想让它做什么。
+After you enter a task, Codex first determines what you want it to do.
 
-比如你输入：
+For example, if you enter:
 
 ```text
-请帮我做一个简单网页，黑色背景，中间显示 Hello Codex。
+Please build a simple webpage with a black background and “Hello Codex” centered in the middle.
 ```
 
-Codex 会判断：
+Codex will infer:
 
 
-| 它会理解什么 | 示例 |
+| What it understands | Example |
 | --- | --- |
-| 任务类型 | 新建网页 |
-| 修改范围 | 当前项目文件 |
-| 可能需要文件 | index.html、style.css |
-| 是否需要运行命令 | 简单 HTML 不一定需要 |
-| 是否有风险 | 风险较低 |
+| Task type | Create a webpage |
+| Modification scope | Current project files |
+| Files likely needed | index.html, style.css |
+| Whether commands are needed | Simple HTML may not require commands |
+| Risk level | Low risk |
 
 
-如果你输入：
+If you enter:
 
 ```text
-请检查为什么 npm run build 失败。
+Please check why npm run build fails.
 ```
 
-Codex 会判断：
+Codex will infer:
 
 
-| 它会理解什么 | 示例 |
+| What it understands | Example |
 | --- | --- |
-| 任务类型 | 排查构建失败 |
-| 可能要运行命令 | npm run build |
-| 可能要读文件 | package.json、报错相关文件 |
-| 是否需要修改代码 | 可能需要 |
-| 是否需要你批准 | 视权限设置而定 |
+| Task type | Diagnose build failure |
+| Commands likely needed | npm run build |
+| Files likely needed | package.json and error-related files |
+| Whether code changes are needed | Possibly |
+| Whether approval is needed | Depends on permission settings |
 
 
-小白提示：
+Beginner tip:
 
-任务越清楚，Codex 越稳定。
+The clearer the task, the more stable Codex becomes.
 
-推荐写法：
+Recommended format:
 
 ```text
-请帮我完成【具体任务】。
+Please help me complete [specific task].
 
-要求：
+Requirements:
 1.
 2.
 3.
 
-限制：
-1. 不要修改无关文件
-2. 不要删除已有功能
-3. 完成后告诉我改了哪些文件
+Constraints:
+1. Do not modify unrelated files
+2. Do not delete existing functionality
+3. After completion, tell me which files changed
 ```
 
 ---
 
-###### Codex 如何提出计划
+###### How Codex proposes a plan
 
-复杂任务开始前，Codex 通常会先分析问题，再提出计划。
+Before complex tasks, Codex usually analyzes the problem and then proposes a plan.
 
-你也可以主动要求它先计划：
+You can also explicitly ask it to plan first:
 
 ```text
-请先给我计划，不要直接修改文件。
+Please give me a plan first. Do not modify files directly.
 ```
 
-或者使用：
+Or use:
 
 ```text
 /plan
 ```
 
-计划通常会包含：
+A plan usually includes:
 
 
-| 内容 | 作用 |
+| Content | Purpose |
 | --- | --- |
-| 它准备检查哪些文件 | 防止乱扫项目 |
-| 它准备怎么修改 | 让你先知道方向 |
-| 它可能运行什么命令 | 提前了解风险 |
-| 它预计影响哪些地方 | 方便你判断是否接受 |
+| Which files it intends to inspect | Prevents uncontrolled project scanning |
+| How it intends to modify | Lets you understand the direction first |
+| Which commands it may run | Lets you understand risk in advance |
+| Which areas may be affected | Helps you decide whether to accept |
 
 
-比如：
+For example:
 
 ```text
-计划：
-1. 先查看 package.json，确认启动命令
-2. 运行 npm run build 复现报错
-3. 根据报错定位相关文件
-4. 最小范围修复问题
-5. 再次运行 build 验证
+Plan:
+1. Inspect package.json first to confirm startup commands
+2. Run npm run build to reproduce the error
+3. Locate related files based on the error
+4. Fix the issue with the smallest scope
+5. Run build again to verify
 ```
 
-小白建议：
+Beginner recommendation:
 
 ```text
-简单任务可以直接让它做。
-复杂任务先让它 /plan。
+Simple tasks can be executed directly.
+Complex tasks should start with /plan.
 ```
 
-尤其是这些任务，建议先计划：
+Plan first especially for:
 
 ```text
-修复复杂 bug
-多文件修改
-项目重构
-新增功能
-构建失败
-涉及依赖升级
+Complex bug fixes
+Multi-file changes
+Project refactors
+New features
+Build failures
+Dependency upgrades
 ```
 
 ---
 
-###### Codex 如何修改文件
+###### How Codex modifies files
 
-当 Codex 确认要修改文件后，它会在当前项目里进行编辑。
+After Codex confirms that it needs to modify files, it edits inside the current project.
 
-它可能会：
+It may:
 
 
-| 操作 | 示例 |
+| Operation | Example |
 | --- | --- |
-| 新建文件 | 新建 index.html |
-| 修改文件 | 修改 style.css |
-| 删除代码 | 删除无用代码 |
-| 重命名文件 | 调整文件名 |
-| 拆分文件 | 把代码拆成多个模块 |
+| Create files | Create index.html |
+| Modify files | Modify style.css |
+| Delete code | Remove unused code |
+| Rename files | Adjust file names |
+| Split files | Split code into multiple modules |
 
 
-新手要注意：
+Beginners should note:
 
-Codex 可能会改对，也可能会改多。
+Codex may make the correct change, or it may change too much.
 
-所以你要养成习惯：
-
-```text
-它改完之后，不要直接相信。
-一定要看 diff。
-```
-
-你可以提前加限制：
+Build this habit:
 
 ```text
-请只修改 index.html 和 style.css，不要修改其他文件。
+After it finishes editing, do not trust it immediately.
+Always inspect the diff.
 ```
 
-或者：
+You can add constraints in advance:
 
 ```text
-请用最小改动修复问题，不要重构整个项目。
+Please modify only index.html and style.css. Do not modify any other files.
 ```
 
-这样可以减少 Codex 改动范围过大的问题。
+Or:
+
+```text
+Please fix the issue with the smallest possible change. Do not refactor the whole project.
+```
+
+This reduces the chance of Codex making overly broad changes.
 
 ---
 
-###### Codex 如何运行命令
+###### How Codex runs commands
 
-Codex 不只会改文件，也可以运行终端命令。
+Codex does not only modify files. It can also run terminal commands.
 
-常见命令包括：
+Common commands include:
 
 
-| 命令 | 作用 |
+| Command | Purpose |
 | --- | --- |
-| npm install | 安装依赖 |
-| npm run dev | 启动开发项目 |
-| npm run build | 检查项目能否构建 |
-| npm test | 运行测试 |
-| git status | 查看 Git 状态 |
-| git diff | 查看代码改动 |
+| npm install | Install dependencies |
+| npm run dev | Start the development project |
+| npm run build | Check whether the project can build |
+| npm test | Run tests |
+| git status | View Git status |
+| git diff | View code changes |
 
 
-比如你让它修构建失败，它可能会运行：
+For example, if you ask it to fix a build failure, it may run:
 
 ```text
 npm run build
 ```
 
-然后根据报错继续修改。
+Then continue modifying based on the error.
 
-小白不要害怕命令，但要看懂再允许。
+Beginners do not need to fear commands, but should understand them before approving.
 
-如果你不懂，可以让它先解释：
+If you do not understand, ask it to explain first:
 
 ```text
-请先解释你准备运行的命令，每条命令是干什么的，不要直接执行。
+Please explain the commands you plan to run, what each command does, and do not execute them directly.
 ```
 
-尤其看到这些命令，要谨慎：
+Be especially careful when you see:
 
 ```text
 rm -rf
@@ -2488,236 +2480,236 @@ git reset --hard
 git clean -fd
 ```
 
-这些命令可能删除文件、修改系统、重置代码或执行远程脚本。
+These commands may delete files, modify the system, reset code, or execute remote scripts.
 
 ---
 
-###### Codex 如何等待用户批准
+###### How Codex waits for user approval
 
-Codex CLI 有权限控制，不是所有操作都能直接执行。
+Codex CLI has permission controls. Not all operations can be executed directly.
 
-如果 Codex 想做敏感操作，可能会停下来问你。
+If Codex wants to perform a sensitive operation, it may stop and ask you.
 
-比如：
+For example:
 
 
-| 操作 | 为什么可能需要批准 |
+| Operation | Why approval may be needed |
 | --- | --- |
-| 联网安装依赖 | 可能下载外部代码 |
-| 访问项目外文件 | 超出当前工作区 |
-| 修改外部文件 | 可能影响其他项目 |
-| 运行高风险命令 | 可能删除或覆盖内容 |
-| 使用更高权限 | 风险更大 |
+| Install dependencies from the internet | May download external code |
+| Access files outside the project | Outside the current workspace |
+| Modify external files | May affect other projects |
+| Run high-risk commands | May delete or overwrite content |
+| Use higher privileges | Higher risk |
 
 
-简单来说：
+In simple terms:
 
 ```text
-批准 = 你允许 Codex 继续做这一步。
-拒绝 = 这一步不要做。
+Approve = you allow Codex to continue this step.
+Reject = do not perform this step.
 ```
 
-如果你看不懂它要做什么，不要直接点允许。
+If you do not understand what it wants to do, do not click Allow immediately.
 
-可以先问：
+Ask first:
 
 ```text
-请解释这个操作的作用、风险，以及有没有更安全的替代方案。
+Please explain what this operation does, its risks, and whether there is a safer alternative.
 ```
 
-新手建议权限：
+Beginner permission recommendation:
 
 ```text
-保持请求批准。
-不要随便开启完全访问权限。
+Keep request approval enabled.
+Do not casually enable full access.
 ```
 
 ---
 
-###### Codex 如何展示 diff
+###### How Codex shows diffs
 
-Diff 是 Codex 修改前后的代码对比。
+A diff compares code before and after Codex's changes.
 
-你可以在 Codex CLI 里输入：
+Inside Codex CLI, enter:
 
 ```text
 /diff
 ```
 
-它会展示当前改动。
+It shows current changes.
 
-简单来说：
+In simple terms:
 
 ```text
-绿色 = 新增内容
-红色 = 删除内容
+Green = added content
+Red = deleted content
 ```
 
-diff 可以帮你确认：
+Diff helps you confirm:
 
 
-| 检查点 | 你要看什么 |
+| Checkpoint | What to look for |
 | --- | --- |
-| 是否改了正确文件 | 有没有改到无关文件 |
-| 是否删除重要代码 | 红色删除部分要重点看 |
-| 是否新增复杂依赖 | 有没有多装不必要的包 |
-| 是否改动太大 | 小任务不要变成大重构 |
-| 是否符合需求 | 有没有实现你要求的效果 |
+| Whether the correct files changed | Check for unrelated files |
+| Whether important code was deleted | Pay close attention to red deletions |
+| Whether complex dependencies were added | Check for unnecessary packages |
+| Whether the change is too large | Small tasks should not become large refactors |
+| Whether it matches the requirement | Check whether your requested effect was implemented |
 
 
-推荐流程：
+Recommended flow:
 
 ```text
-Codex 完成修改
-→ 输入 /diff
-→ 查看改动
-→ 不满意就让它继续改或撤回
-→ 满意后再 git commit
+Codex completes modifications
+→ enter /diff
+→ inspect changes
+→ if unsatisfied, ask it to revise or revert
+→ if satisfied, git commit
 ```
 
-不要只看 Codex 的总结。
+Do not read only Codex's summary.
 
-真正重要的是：
+What truly matters is:
 
 ```text
-它实际改了什么。
+What it actually changed.
 ```
 
 ---
 
-###### Codex 如何处理失败
+###### How Codex handles failures
 
-Codex 执行任务失败很正常。
+It is normal for Codex tasks to fail sometimes.
 
-常见失败包括：
+Common failures include:
 
 
-| 失败类型 | 示例 |
+| Failure type | Example |
 | --- | --- |
-| 命令失败 | npm run build 报错 |
-| 依赖缺失 | 没有安装某个包 |
-| 代码报错 | 页面空白、函数报错 |
-| 权限不足 | 没有联网或文件访问权限 |
-| 理解错需求 | 改的不是你想要的 |
-| 修改范围过大 | 顺手改了无关文件 |
+| Command failure | npm run build reports an error |
+| Missing dependency | A package is not installed |
+| Code error | Blank page, function error |
+| Insufficient permissions | No network or file access permission |
+| Misunderstood requirement | It changed the wrong thing |
+| Modification scope too broad | It changed unrelated files opportunistically |
 
 
-Codex 通常会根据失败结果继续分析。
+Codex usually analyzes based on the failure result and continues.
 
-比如：
-
-```text
-运行 npm run build 失败
-→ 读取报错信息
-→ 定位相关文件
-→ 修改代码
-→ 再次运行 build
-```
-
-但你要注意：
-
-不要让它无限乱试。
-
-如果它连续失败，可以暂停它，让它重新分析：
+For example:
 
 ```text
-先停一下。请总结目前失败原因，不要继续修改文件。
+npm run build failed
+→ read the error output
+→ locate related files
+→ modify code
+→ run build again
 ```
 
-或者：
+But pay attention:
+
+Do not let it try randomly forever.
+
+If it fails repeatedly, pause it and ask it to re-analyze:
 
 ```text
-请列出你已经尝试过的方法、失败原因，以及下一步最小改动方案。
+Pause. Please summarize the current failure causes and do not continue modifying files.
 ```
 
-如果它改乱了，可以说：
+Or:
 
 ```text
-请撤回刚才的修改，恢复到修改前状态。
+Please list what you have tried, why each attempt failed, and the smallest next-step fix.
 ```
 
-或者自己用 Git 查看：
+If it messed up the code, say:
+
+```text
+Please revert the previous changes and restore the state before modification.
+```
+
+Or inspect manually with Git:
 
 ```text
 git status
 git diff
 ```
 
-再决定是否保留。
+Then decide what to keep.
 
 ---
 
-###### 推荐新手工作流
+###### Recommended beginner workflow
 
 
-| 步骤 | 操作 | 目的 |
+| Step | Action | Purpose |
 | --- | --- | --- |
-| 1 | cd 项目目录 | 进入正确项目 |
-| 2 | Codex | 启动 Codex CLI |
-| 3 | 输入任务 | 告诉 Codex 要做什么 |
-| 4 | 复杂任务先 /plan | 先看方案 |
-| 5 | 等 Codex 读取项目 | 让它理解上下文 |
-| 6 | 审批敏感操作 | 看懂再允许 |
-| 7 | 等它修改文件 | 执行任务 |
-| 8 | 运行命令检查 | 验证结果 |
-| 9 | /diff | 查看改动 |
-| 10 | 不满意继续修改 | 迭代优化 |
-| 11 | 满意后 git commit | 保存版本 |
+| 1 | cd project-directory | Enter the correct project |
+| 2 | Codex | Start Codex CLI |
+| 3 | Enter task | Tell Codex what to do |
+| 4 | Use /plan first for complex tasks | Inspect the proposed approach |
+| 5 | Wait for Codex to read the project | Let it understand context |
+| 6 | Approve sensitive operations | Allow only after understanding |
+| 7 | Wait for it to modify files | Execute the task |
+| 8 | Run commands to check | Verify the result |
+| 9 | /diff | Inspect changes |
+| 10 | Continue revising if unsatisfied | Iterate |
+| 11 | git commit when satisfied | Save the version |
 
 
 ---
 
-###### 一句话总结
+###### One-sentence summary
 
-Codex CLI 的工作方式不是“问一句答一句”，而是一个完整的编程流程：
+Codex CLI does not work as “ask one question, get one answer.” It follows a complete programming workflow:
 
 ```text
-读项目
-→ 想方案
-→ 改文件
-→ 跑命令
-→ 等批准
-→ 看 diff
-→ 修失败
-→ 交结果
+Read project
+→ Think through solution
+→ Modify files
+→ Run commands
+→ Wait for approval
+→ Inspect diff
+→ Fix failures
+→ Deliver result
 ```
 
-#### CLI 常见问题
+#### Common CLI issues
 
-Codex CLI 常见问题，大多数不是 Codex 本身坏了，而是出在这几个地方：
+Most common Codex CLI issues are not because Codex itself is broken. They usually come from these areas:
 
-##### 小白最常见问题
+##### Most common beginner issues
 
 
-| 问题 | 常见原因 | 解决方法 |
+| Issue | Common cause | Solution |
 | --- | --- | --- |
-| 输入 `codex` 没反应 | Codex 没装好，或命令没加入环境变量 | 先运行 `codex --version` 检查 |
-| 提示 command not found | 终端找不到 Codex 命令 | 重新安装 Codex CLI，或重开终端 |
-| 不知道在哪运行 Codex | 没进入项目目录 | 先 cd 项目目录，再运行 Codex |
-| Codex 读错项目 | 在错误文件夹启动了 | 退出后进入正确项目目录重新启动 |
-| 登录失败 | 浏览器没打开、网络异常、账号没登录 | 使用 `codex login` 重新登录 |
-| API Key 登录失败 | Key 没设置、Key 错误、环境变量没生效 | 重新设置环境变量后再登录 |
-| Codex 一直等待 | 可能在等你批准权限 | 看终端是否有 approval 提示 |
-| Codex 不能联网 | 沙盒或权限限制 | 需要联网时手动批准 |
-| 改完不知道改了什么 | 没看 diff | 在 Codex 里输入 /diff |
-| 改坏了怎么办 | 没提前用 Git 保存 | 用 git diff 检查，必要时 revert |
+| Nothing happens after entering `codex` | Codex was not installed correctly, or command is not in environment variables | Run `codex --version` first |
+| `command not found` | Terminal cannot find the Codex command | Reinstall Codex CLI or reopen terminal |
+| Do not know where to run Codex | Not inside a project directory | Run `cd project-directory` first, then Codex |
+| Codex reads the wrong project | Started in the wrong folder | Exit, enter the correct project directory, and restart |
+| Login failure | Browser did not open, network issue, or account not signed in | Run `codex login` again |
+| API key sign-in failure | Key not set, incorrect key, or environment variable not applied | Set environment variable again and sign in |
+| Codex keeps waiting | It may be waiting for permission approval | Check whether the terminal shows an approval prompt |
+| Codex cannot access network | Sandbox or permission restriction | Approve manually when network access is needed |
+| Do not know what changed | Did not inspect diff | Enter /diff in Codex |
+| What if it breaks the code? | Did not save with Git beforehand | Use git diff to inspect and revert if needed |
 
 
 ---
 
-##### 安装类问题
+##### Installation issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| `codex --version` 没有输出 | Codex 没安装成功 | 重新安装 Codex CLI |
-| `codex: command not found` | 命令没有加入 PATH | 重开终端，或重新安装 |
-| npm 安装失败 | Node.js / npm 没装好 | 先运行 node -v 和 npm -v |
-| Windows 安装后找不到命令 | PowerShell 没刷新环境变量 | 关闭终端，重新打开 |
-| 版本太旧 | Codex CLI 没更新 | 运行 `codex update` 或重新安装 |
+| `codex --version` has no output | Codex was not installed successfully | Reinstall Codex CLI |
+| `codex: command not found` | Command is not in PATH | Reopen terminal or reinstall |
+| npm installation fails | Node.js / npm not installed correctly | Run node -v and npm -v first |
+| Command not found after Windows installation | PowerShell did not refresh environment variables | Close and reopen terminal |
+| Version too old | Codex CLI not updated | Run `codex update` or reinstall |
 
 
-排查命令：
+Troubleshooting commands:
 
 ```text
 codex --version
@@ -2726,28 +2718,28 @@ npm -v
 codex doctor
 ```
 
-小白建议：
+Beginner recommendation:
 
 ```text
-安装后第一件事，不是直接用，而是先运行 codex --version。
-能看到版本号，说明基础安装正常。
+After installation, the first thing is not to use it directly. Run codex --version first.
+If you see a version number, the basic installation is normal.
 ```
 
 ---
 
-##### 登录类问题
+##### Login issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| 不知道有没有登录 | 没检查登录状态 | 运行 `codex login status` |
-| 浏览器没有自动打开 | 默认浏览器异常或远程环境 | 使用 `codex login --device-auth` |
-| ChatGPT 登录失败 | 网络、账号、浏览器缓存问题 | 重新运行 `codex login` |
-| API Key 登录失败 | 环境变量没设置好 | 检查 OPENAI_API_KEY |
-| 想换账号 | 本机保存了旧账号 | 先 `codex logout`，再重新登录 |
+| Unsure whether you are signed in | Login status not checked | Run `codex login status` |
+| Browser does not open automatically | Default browser issue or remote environment | Use `codex login --device-auth` |
+| ChatGPT login fails | Network, account, or browser-cache issue | Run `codex login` again |
+| API key login fails | Environment variable not set correctly | Check OPENAI_API_KEY |
+| Want to switch accounts | Old account is saved locally | Run `codex logout` first, then sign in again |
 
 
-常用命令：
+Common commands:
 
 ```text
 codex login
@@ -2756,78 +2748,78 @@ codex logout
 codex login --device-auth
 ```
 
-新手建议：
+Beginner recommendation:
 
 ```text
-本地学习优先用 ChatGPT 账号登录。
-API Key 登录更适合开发者、自动化和服务器场景。
+Use ChatGPT account sign-in first for local learning.
+API key sign-in is better suited for developers, automation, and server scenarios.
 ```
 
 ---
 
-##### 项目目录类问题
+##### Project directory issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| Codex 看不到项目文件 | 没进入项目目录 | 先 cd 项目目录 |
-| Codex 读错文件 | 在错误目录启动 | 退出后重新进入正确目录 |
-| Codex 扫描了太多东西 | 在桌面、下载目录或 C 盘启动 | 只在具体项目文件夹里启动 |
-| 不知道当前在哪 | 不清楚终端所在路径 | Windows 用 cd，Mac 用 pwd |
-| 找不到文件 | 文件不在当前项目内 | 用 /mention 指定文件，或进入正确目录 |
+| Codex cannot see project files | Not inside project directory | cd into the project directory first |
+| Codex reads the wrong files | Started in the wrong directory | Exit and re-enter the correct directory |
+| Codex scans too much | Started on Desktop, Downloads, or C drive | Start only inside a specific project folder |
+| Unsure where you are | Do not know terminal's current path | Use cd on Windows, pwd on Mac |
+| Cannot find a file | File is not in the current project | Use /mention to specify it, or enter the correct directory |
 
 
-推荐方式：
+Recommended method:
 
 ```text
 cd D:\AI-Codex-Projects\hello-codex
 codex
 ```
 
-不推荐：
+Not recommended:
 
 ```text
-在 C 盘根目录运行
-在桌面运行
-在下载文件夹运行
-在重要资料文件夹运行
+Run in the C drive root
+Run on the Desktop
+Run in the Downloads folder
+Run in important document folders
 ```
 
-一句话：
+In one sentence:
 
 ```text
-你在哪个目录运行 codex，它就默认把哪个目录当成项目。
+Wherever you run codex, Codex treats that directory as the project by default.
 ```
 
 ---
 
-##### 权限和沙盒类问题
+##### Permission and sandbox issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| Codex 提示需要批准 | 它要执行敏感操作 | 看懂后再允许 |
-| Codex 不能访问网络 | 沙盒默认限制联网 | 需要时手动批准 |
-| Codex 不能读取项目外文件 | 超出 workspace 范围 | 不建议随便放开 |
-| Codex 不能修改某些文件 | 权限不足或在只读模式 | 检查 /permissions |
-| Codex 请求完全访问权限 | 任务需要更大权限 | 小白不要随便同意 |
+| Codex says approval is needed | It wants to perform a sensitive operation | Allow only after understanding |
+| Codex cannot access network | Sandbox limits network by default | Approve manually when needed |
+| Codex cannot read files outside the project | Outside workspace scope | Do not casually loosen this |
+| Codex cannot modify some files | Insufficient permission or read-only mode | Check /permissions |
+| Codex requests full access | Task needs broader permission | Beginners should not casually agree |
 
 
-推荐设置：
-
-```text
-sandbox：workspace-write
-approval：on-request
-```
-
-简单来说：
+Recommended setting:
 
 ```text
-workspace-write = 允许在当前项目里工作
-on-request = 敏感操作先问你
+sandbox: workspace-write
+approval: on-request
 ```
 
-不要随便使用：
+In simple terms:
+
+```text
+workspace-write = allow work inside the current project
+on-request = ask before sensitive operations
+```
+
+Do not casually use:
 
 ```text
 danger-full-access
@@ -2835,93 +2827,93 @@ danger-full-access
 --dangerously-bypass-approvals-and-sandbox
 ```
 
-看到不懂的权限请求，可以问：
+When you see a permission request you do not understand, ask:
 
 ```text
-请解释这个操作为什么需要权限，会影响哪些文件，有没有更安全的替代方案。
+Please explain why this operation needs permission, which files it affects, and whether there is a safer alternative.
 ```
 
 ---
 
-##### 命令运行类问题
+##### Command execution issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| npm run dev 失败 | 依赖没装或脚本不存在 | 先看 package.json |
-| npm install 失败 | 网络、源、权限或依赖冲突 | 让 Codex 先分析错误 |
-| npm run build 失败 | 项目代码本身有报错 | 让 Codex 复现并最小修复 |
-| 命令卡住不动 | 开发服务器一直运行 | 用 /ps 查看后台任务 |
-| 想停止命令 | 命令一直占用终端 | 用 /stop 停止后台任务 |
+| npm run dev fails | Dependencies not installed or script missing | Inspect package.json first |
+| npm install fails | Network, registry, permission, or dependency conflict | Ask Codex to analyze the error first |
+| npm run build fails | Project code itself has an error | Let Codex reproduce and fix minimally |
+| Command hangs | Development server keeps running | Use /ps to inspect background tasks |
+| Want to stop command | Command keeps occupying the terminal | Use /stop to stop background task |
 
 
-常见命令含义：
+Common command meanings:
 
 
-| 命令 | 含义 |
+| Command | Meaning |
 | --- | --- |
-| npm install | 安装项目依赖 |
-| npm run dev | 启动开发环境 |
-| npm run build | 检查项目能否正式构建 |
-| npm test | 运行测试 |
-| git status | 查看项目改动状态 |
-| git diff | 查看具体改动 |
+| npm install | Install project dependencies |
+| npm run dev | Start the development environment |
+| npm run build | Check whether the project can build for production |
+| npm test | Run tests |
+| git status | View project change status |
+| git diff | View specific changes |
 
 
-不懂命令时，先让 Codex 解释：
+If you do not understand a command, ask Codex to explain first:
 
 ```text
-请先解释你准备运行的命令，每条命令是干什么的，不要直接执行。
+Please explain the commands you plan to run, what each command does, and do not execute them directly.
 ```
 
 ---
 
-##### Diff 和改动类问题
+##### Diff and change issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| 不知道 Codex 改了什么 | 没看 diff | 输入 /diff |
-| diff 里改动太多 | Codex 修改范围过大 | 要求它最小改动 |
-| 改了无关文件 | 任务限制不清楚 | 让它撤回无关修改 |
-| 删除了重要代码 | 没检查红色删除部分 | 用 Git 恢复或让它 revert |
-| /diff 没东西 | 没有文件改动，或改动已保存处理 | 用 git status 再检查 |
+| Do not know what Codex changed | Did not inspect diff | Enter /diff |
+| Diff contains too many changes | Codex modified too broadly | Ask for minimal changes |
+| Unrelated files changed | Task constraints were unclear | Ask it to revert unrelated changes |
+| Important code was deleted | Red deletions were not checked | Restore with Git or ask it to revert |
+| /diff shows nothing | No file changes, or changes were already handled | Check again with git status |
 
 
-推荐检查流程：
+Recommended inspection flow:
 
 ```text
-Codex 完成任务
-→ 输入 /diff
-→ 看改了哪些文件
-→ 看红色删除部分
-→ 看是否改了无关文件
-→ 满意后再 git commit
+Codex completes task
+→ enter /diff
+→ check which files changed
+→ inspect red deleted parts
+→ check whether unrelated files changed
+→ commit only after you are satisfied
 ```
 
-提示词可以这样写：
+Prompt example:
 
 ```text
-请只修改当前任务相关文件。
-不要重构整个项目。
-完成后列出修改了哪些文件。
+Please modify only files related to the current task.
+Do not refactor the whole project.
+After completion, list which files were modified.
 ```
 
 ---
 
-##### Git 相关问题
+##### Git-related issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| 改坏了不知道怎么恢复 | 没用 Git 保存版本 | 以后先 git init 和 commit |
-| git status 显示很多文件 | Codex 或你自己改了很多内容 | 用 git diff 逐个检查 |
-| 不知道哪些改动要保留 | 没看 diff | 先不要 commit |
-| commit 后想回退 | Git 基础不熟 | 先让 Codex 解释回退方案 |
-| Codex 改了不该改的文件 | 任务范围太大 | 要求它 revert 无关文件 |
+| Code broke and you do not know how to recover | Did not save a version with Git | In the future, run git init and commit first |
+| git status shows many files | Codex or you changed many things | Inspect each change with git diff |
+| Do not know which changes to keep | Diff was not inspected | Do not commit yet |
+| Want to roll back after commit | Git basics are unfamiliar | Ask Codex to explain rollback options first |
+| Codex changed files it should not change | Task scope was too broad | Ask it to revert unrelated files |
 
 
-推荐新手第一次项目先做：
+Recommended first steps for a beginner project:
 
 ```text
 git init
@@ -2929,133 +2921,133 @@ git add .
 git commit -m "initial commit"
 ```
 
-之后 Codex 每次改完：
+After each Codex modification:
 
 ```text
 git status
 git diff
 ```
 
-简单来说：
+In simple terms:
 
 ```text
-git status = 看哪些文件变了
-git diff = 看具体变了什么
-commit = 保存一个版本
+git status = see which files changed
+git diff = see exactly what changed
+commit = save a version
 ```
 
 ---
 
-##### 模型和额度类问题
+##### Model and quota issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| 某个模型看不到 | 套餐、地区或权限不同 | 使用当前可选模型 |
-| 任务变慢 | 模型强、推理高、项目大 | 降低推理或缩小任务范围 |
-| 额度消耗太快 | 高推理、多轮修改、读大项目 | 小任务用低/中推理 |
-| 提示达到限制 | 当前计划额度用完 | 等额度恢复或购买额外额度 |
-| API Key 消耗费用 | API 登录按 API 使用计费 | 小白优先用 ChatGPT 登录 |
+| A model is not visible | Plan, region, or permission differs | Use currently available models |
+| Task becomes slow | Strong model, high reasoning, or large project | Lower reasoning or narrow task scope |
+| Quota is consumed too quickly | High reasoning, many revision rounds, large project reading | Use low/medium reasoning for small tasks |
+| Limit reached | Current plan quota is exhausted | Wait for quota reset or buy additional quota |
+| API key incurs cost | API sign-in is billed by API usage | Beginners should prioritize ChatGPT sign-in |
 
 
-省额度建议：
+Quota-saving tips:
 
 ```text
-小任务不要开最高推理。
-不要一次让 Codex 扫整个项目。
-不要反复让它大范围重构。
-能指定文件就指定文件。
-复杂任务先 /plan，再修改。
+Do not use highest reasoning for small tasks.
+Do not ask Codex to scan the entire project at once.
+Do not repeatedly ask for broad refactors.
+Specify files when you can.
+For complex tasks, use /plan first, then modify.
 ```
 
-推荐配置：
+Recommended configuration:
 
 ```text
-普通任务：默认模型 + 中推理
-复杂 bug：高推理
-小改动：低推理
+Ordinary tasks: default model + medium reasoning
+Complex bugs: high reasoning
+Small edits: low reasoning
 ```
 
 ---
 
-##### Codex 卡住或结果不对
+##### Codex is stuck or the result is wrong
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| Codex 一直不动 | 等待权限、命令卡住、任务太大 | 检查是否有 approval 或 /ps |
-| Codex 反复修不好 | 没找到根因 | 让它先总结失败原因 |
-| Codex 越改越乱 | 没限制修改范围 | 暂停，要求最小改动 |
-| Codex 理解错需求 | 任务描述太模糊 | 重新写清楚目标、要求、限制 |
-| 输出太长太乱 | 对话上下文太长 | 使用 /compact |
+| Codex does not move | Waiting for permission, command stuck, or task too large | Check whether there is an approval prompt or /ps |
+| Codex cannot fix it after repeated attempts | Root cause not found | Ask it to summarize failure causes first |
+| Codex makes the project messier | Modification scope was not constrained | Pause and ask for the smallest change |
+| Codex misunderstood the requirement | Task description was too vague | Rewrite goals, requirements, and constraints clearly |
+| Output is too long or chaotic | Conversation context is too long | Use /compact |
 
 
-可以这样叫停：
+You can stop it like this:
 
 ```text
-先停一下，不要继续修改文件。
-请总结目前做了什么、失败在哪里、下一步最小修改方案是什么。
+Pause. Do not continue modifying files.
+Please summarize what has been done, where it failed, and what the next smallest modification should be.
 ```
 
-如果它改偏了，可以说：
+If it went in the wrong direction, say:
 
 ```text
-这次方向不对。请撤回刚才的无关修改，只保留和首页样式相关的改动。
+This direction is wrong. Please revert the unrelated changes from the previous attempt and keep only changes related to the homepage style.
 ```
 
 ---
 
-##### Windows 常见问题
+##### Common Windows issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| PowerShell 不识别 Codex | 环境变量未刷新 | 关闭终端重新打开 |
-| 路径带空格报错 | 路径没有加引号 | 用英文路径或加引号 |
-| API Key 命令不适用 | Windows 和 Mac 命令不同 | 用 PowerShell 写法 |
-| 权限弹窗频繁 | Windows 安全限制或沙盒审批 | 保持请求批准即可 |
-| 中文路径异常 | 某些工具对中文路径兼容不好 | 项目路径尽量用英文 |
+| PowerShell does not recognize Codex | Environment variables not refreshed | Close and reopen terminal |
+| Path with spaces causes errors | Path not quoted | Use English-only paths or quote the path |
+| API key command does not apply | Windows and Mac commands differ | Use PowerShell syntax |
+| Frequent permission popups | Windows security restrictions or sandbox approvals | Keep request approval enabled |
+| Chinese path behaves abnormally | Some tools do not handle Chinese paths well | Prefer English project paths |
 
 
-推荐 Windows 项目路径：
+Recommended Windows project path:
 
 ```text
 D:\AI-Codex-Projects\hello-codex
 ```
 
-不推荐：
+Not recommended:
 
 ```text
-C:\Users\你的名字\桌面\新建文件夹
+C:\Users\your-name\Desktop\New Folder
 ```
 
-原因：
+Reason:
 
 ```text
-中文路径、空格、桌面目录，有时更容易出问题。
+Chinese paths, spaces, and Desktop directories can be more error-prone.
 ```
 
 ---
 
-##### macOS 常见问题
+##### Common macOS issues
 
 
-| 问题 | 原因 | 解决方法 |
+| Issue | Cause | Solution |
 | --- | --- | --- |
-| 提示权限不足 | 文件夹权限限制 | 换到用户目录下的项目文件夹 |
-| 命令找不到 | PATH 没生效 | 重开 Terminal |
-| npm 权限问题 | 全局安装权限问题 | 优先用官方推荐安装方式 |
-| 浏览器登录没跳回终端 | 浏览器拦截或网络问题 | 用 device auth |
-| 终端不熟悉路径 | 不知道当前目录 | 用 pwd 和 ls |
+| Insufficient permission prompt | Folder permission restriction | Move to a project folder under your user directory |
+| Command not found | PATH not active | Reopen Terminal |
+| npm permission issue | Global installation permission issue | Prefer the official recommended installation method |
+| Browser login does not return to terminal | Browser block or network issue | Use device auth |
+| Unfamiliar with terminal paths | Do not know current directory | Use pwd and ls |
 
 
-推荐项目路径：
+Recommended project path:
 
 ```text
 ~/AI-Codex-Projects/hello-codex
 ```
 
-常用检查命令：
+Common check commands:
 
 ```text
 pwd
@@ -3066,365 +3058,365 @@ codex doctor
 
 ---
 
-##### 运行 `codex doctor` 排查
+##### Run `codex doctor` for diagnostics
 
-如果你不知道问题出在哪里，可以先运行：
+If you do not know where the problem is, run:
 
 ```text
 codex doctor
 ```
 
-它适合排查：
+It is useful for diagnosing:
 
 ```text
-安装异常
-登录异常
-配置异常
-终端环境异常
-权限问题
-系统环境问题
+Installation issues
+Login issues
+Configuration issues
+Terminal environment issues
+Permission issues
+System environment issues
 ```
 
-简单来说：
+In simple terms:
 
 ```text
-codex doctor = Codex 的体检命令。
+codex doctor = Codex's health-check command.
 ```
 
-遇到复杂问题时，可以把 doctor 结果发给 Codex，让它帮你分析：
+When encountering a complex issue, you can send the doctor output to Codex and ask it to analyze:
 
 ```text
-请根据 codex doctor 的输出，帮我判断 CLI 哪里有问题。
+Based on the codex doctor output, please help me determine what is wrong with the CLI.
 ```
 
 ---
 
-##### 新手通用排查流程
+##### General beginner troubleshooting flow
 
 
-| 步骤 | 命令 / 操作 | 目的 |
+| Step | Command / action | Purpose |
 | --- | --- | --- |
-| 1 | `codex --version` | 检查是否安装成功 |
-| 2 | `codex login status` | 检查是否登录 |
-| 3 | pwd / cd | 确认当前项目目录 |
-| 4 | git status | 查看项目状态 |
-| 5 | `codex doctor` | 检查环境问题 |
-| 6 | /permissions | 检查权限设置 |
-| 7 | /diff | 查看文件改动 |
-| 8 | /ps | 查看后台任务 |
-| 9 | /stop | 停止卡住的命令 |
-| 10 | /compact | 对话太长时压缩上下文 |
+| 1 | `codex --version` | Check whether installation succeeded |
+| 2 | `codex login status` | Check whether you are signed in |
+| 3 | pwd / cd | Confirm current project directory |
+| 4 | git status | Check project state |
+| 5 | `codex doctor` | Check environment issues |
+| 6 | /permissions | Check permission settings |
+| 7 | /diff | View file changes |
+| 8 | /ps | View background tasks |
+| 9 | /stop | Stop a stuck command |
+| 10 | /compact | Compact context when the conversation is too long |
 
 
 ---
 
 ### Codex IDE Extension
 
-把 Codex 直接装进你的代码编辑器里。
+Install Codex directly inside your code editor.
 
-你不用单独打开 Codex App，也不用一直切到终端，而是可以在 VS Code、Cursor、Windsurf 这类编辑器侧边栏里直接使用 Codex。
-
-
-#### 怎么理解 Codex IDE Extension
+You do not need to open Codex App separately or keep switching to the terminal. Instead, you can use Codex directly from the sidebar in editors such as VS Code, Cursor, and Windsurf.
 
 
-| 概念 | 简单来说 |
+#### How to understand Codex IDE Extension
+
+
+| Concept | Simple meaning |
 | --- | --- |
-| IDE | 写代码的软件，比如 VS Code、Cursor、Windsurf |
-| Codex IDE Extension | 装在编辑器里的 Codex |
-| 侧边栏 | Codex 出现的位置，像一个聊天面板 |
-| 当前文件 | 你正在编辑器里打开的文件 |
-| 选中代码 | 你鼠标选中的那一段代码 |
-| 上下文 | Codex 能参考的文件、代码、报错和任务说明 |
+| IDE | Software used to write code, such as VS Code, Cursor, or Windsurf |
+| Codex IDE Extension | Codex installed inside the editor |
+| Sidebar | Where Codex appears, similar to a chat panel |
+| Current file | The file currently open in your editor |
+| Selected code | The code segment selected with your mouse |
+| Context | Files, code, errors, and task descriptions Codex can reference |
 
 
-简单说：
+In simple terms:
 
 ```text
-Codex IDE = 在写代码软件里直接叫 Codex 帮你干活
+Codex IDE = call Codex directly inside your coding software to help you work
 ```
 
-#### Codex IDE Extension 适合谁
+#### Who Codex IDE Extension is for
 
 
-| 人群 | 是否适合 |
+| User type | Fit |
 | --- | --- |
-| 用 VS Code 的人 | 适合 |
-| 用 Cursor 的人 | 适合 |
-| 用 Windsurf 的人 | 适合 |
-| 想边看代码边修改的人 | 适合 |
-| 想让 Codex 只看当前文件的人 | 适合 |
-| 完全不想碰编辑器的人 | 不太适合 |
-| 更喜欢图形化任务管理的人 | 更适合 Codex App |
-| 更喜欢终端的人 | 更适合 Codex CLI |
+| People using VS Code | Suitable |
+| People using Cursor | Suitable |
+| People using Windsurf | Suitable |
+| People who want to modify code while reading it | Suitable |
+| People who want Codex to look only at the current file | Suitable |
+| People who do not want to touch an editor at all | Less suitable |
+| People who prefer graphical task management | Better suited to Codex App |
+| People who prefer terminals | Better suited to Codex CLI |
 
 
-#### Codex IDE Extension 支持哪些编辑器
+#### Which editors Codex IDE Extension supports
 
 
-| 编辑器 | 说明 |
+| Editor | Notes |
 | --- | --- |
-| VS Code | 最常见的新手代码编辑器 |
-| VS Code Insiders | VS Code 的测试版 |
-| Cursor | AI 编辑器，基于 VS Code |
-| Windsurf | AI 编辑器，也兼容 VS Code 插件体系 |
-| JetBrains IDE | 比如 IntelliJ、PyCharm、WebStorm、Rider |
+| VS Code | The most common beginner code editor |
+| VS Code Insiders | The preview version of VS Code |
+| Cursor | AI editor based on VS Code |
+| Windsurf | AI editor compatible with the VS Code extension ecosystem |
+| JetBrains IDE | Examples include IntelliJ, PyCharm, WebStorm, Rider |
 
 
-新手优先推荐：
+Beginner recommendation:
 
 ```text
-VS Code 或 Cursor
+VS Code or Cursor
 ```
 
-#### Codex IDE Extension 怎么安装
+#### How to install Codex IDE Extension
 
 
-| 步骤 | 操作 |
+| Step | Action |
 | --- | --- |
-| 1 | 打开 VS Code / Cursor / Windsurf |
-| 2 | 进入扩展市场 Extensions |
-| 3 | 搜索 Codex |
-| 4 | 安装 OpenAI 的 Codex 扩展 |
-| 5 | 安装完成后重启编辑器 |
-| 6 | 在侧边栏找到 Codex 图标 |
-| 7 | 点击 Codex，登录账号 |
-| 8 | 打开项目文件夹，开始使用 |
+| 1 | Open VS Code / Cursor / Windsurf |
+| 2 | Go to the Extensions marketplace |
+| 3 | Search for Codex |
+| 4 | Install OpenAI's Codex extension |
+| 5 | Restart the editor after installation |
+| 6 | Find the Codex icon in the sidebar |
+| 7 | Click Codex and sign in |
+| 8 | Open a project folder and start using it |
 
 
-如果你在 Cursor 里找不到 Codex 图标，可能是侧边栏图标被折叠了。可以先检查左侧或右侧活动栏，把 Codex 固定出来。
+If you cannot find the Codex icon in Cursor, the sidebar icon may be collapsed. Check the left or right activity bar and pin Codex there.
 
 ---
 
-#### 第一次登录
+#### First login
 
-安装完成后，Codex IDE Extension 会提示你登录。
+After installation, Codex IDE Extension prompts you to sign in.
 
-常见登录方式有两种：
+There are two common sign-in methods:
 
 
-| 登录方式 | 适合谁 | 小白建议 |
+| Login method | Best for | Beginner recommendation |
 | --- | --- | --- |
-| ChatGPT 账号登录 | 普通用户、小白 | 推荐 |
-| API Key 登录 | 开发者、自动化、特殊场景 | 不建议一开始用 |
+| ChatGPT account sign-in | Ordinary users, beginners | Recommended |
+| API key sign-in | Developers, automation, special scenarios | Not recommended at first |
 
 
-小白优先选择：
+Beginners should choose:
 
 ```text
 Sign in with ChatGPT
 ```
 
-也就是用你的 ChatGPT 账号登录。
+That means signing in with your ChatGPT account.
 
-API Key 登录更适合懂 API 计费和环境变量的开发者。
+API key sign-in is more suitable for developers who understand API billing and environment variables.
 
 ---
 
-#### Codex IDE Extension 在哪里打开
+#### Where to open Codex IDE Extension
 
-安装成功后，Codex 通常会出现在编辑器侧边栏。
+After successful installation, Codex usually appears in the editor sidebar.
 
-常见位置：
+Common locations:
 
 
-| 编辑器 | 可能位置 |
+| Editor | Possible location |
 | --- | --- |
-| VS Code | 默认在右侧边栏，或左侧活动栏 |
-| Cursor | 可能在左侧 / 右侧，也可能被折叠 |
-| Windsurf | 通常在扩展侧边栏里 |
-| JetBrains | 插件面板或工具窗口中 |
+| VS Code | Right sidebar by default, or left activity bar |
+| Cursor | May be on the left or right, or collapsed |
+| Windsurf | Usually in the extension sidebar |
+| JetBrains | Plugin panel or tool window |
 
 
-如果找不到，可以尝试：
+If you cannot find it, try:
 
 ```text
-1. 重启编辑器
-2. 打开 Extensions，确认 Codex 已安装
-3. 查看左侧活动栏是否有 Codex 图标
-4. 查看右侧边栏是否有 Codex 面板
-5. 在命令面板里搜索 Codex
+1. Restart the editor
+2. Open Extensions and confirm Codex is installed
+3. Check whether the Codex icon appears in the left activity bar
+4. Check whether the Codex panel appears in the right sidebar
+5. Search for Codex in the command palette
 ```
 
 ---
 
-#### Codex IDE Extension 能做什么
+#### What Codex IDE Extension can do
 
 
-| 功能 | 简单来说 | 示例 |
+| Feature | Simple meaning | Example |
 | --- | --- | --- |
-| 读当前文件 | 看你正在打开的代码 | 解释这个文件 |
-| 读选中代码 | 只看你选中的部分 | 解释这段函数 |
-| 修改代码 | 直接帮你改文件 | 把按钮改成蓝色 |
-| 运行命令 | 在项目里执行命令 | npm run build |
-| 修复报错 | 根据错误信息修改 | 修复构建失败 |
-| 生成文档 | 写 README 或注释 | 根据项目写 README |
-| 切换模型 | 换更强或更快的模型 | GPT-5.5 / mini |
-| 调整推理 | 控制思考深度 | 低 / 中 / 高 |
-| 控制权限 | 控制能不能改文件、联网 | Chat / Agent / Full Access |
-| 委托云端 | 把大任务交给 Cloud | Run in the cloud |
+| Read current file | Inspect the code you are currently viewing | Explain this file |
+| Read selected code | Look only at the selected part | Explain this function |
+| Modify code | Edit files directly for you | Change the button to blue |
+| Run commands | Execute commands in the project | npm run build |
+| Fix errors | Modify based on error information | Fix build failure |
+| Generate documentation | Write README or comments | Write a README based on the project |
+| Switch models | Use a stronger or faster model | GPT-5.5 / mini |
+| Adjust reasoning | Control thinking depth | Low / Medium / High |
+| Control permissions | Control file editing and network access | Chat / Agent / Full Access |
+| Delegate to cloud | Send large tasks to Cloud | Run in the cloud |
 
 
 ### Codex Web
 
-在网页里使用的云端 Codex。
+Codex Web is the cloud-based Codex used in a browser.
 
-它不需要你一直开着本地电脑，也不一定要在终端里操作，而是可以连接 GitHub 仓库，让 Codex 在云端环境里读取代码、执行任务、修改文件，并生成可 review 的结果。
+It does not require your local computer to remain open, and it does not necessarily require terminal operations. You can connect a GitHub repository and let Codex read code, execute tasks, modify files, and generate reviewable results in a cloud environment.
 
-#### 怎么理解 Codex Web
+#### How to understand Codex Web
 
 
-| 概念 | 简单来说 |
+| Concept | Simple meaning |
 | --- | --- |
-| Codex Web | 网页版 Codex |
-| Cloud Task | 云端任务，不一定在你电脑上跑 |
-| Repository | GitHub 上的代码仓库 |
-| Branch | 代码分支，像一个独立修改版本 |
-| Pull Request | 把 Codex 改好的代码提交给你 review |
-| Environment | Codex 在云端运行项目所需的环境 |
-| Setup Script | 云端环境启动前要执行的安装命令 |
-| Maintenance Script | 可选的维护脚本，比如更新依赖或准备数据 |
+| Codex Web | The web version of Codex |
+| Cloud Task | A cloud task that does not necessarily run on your computer |
+| Repository | A code repository on GitHub |
+| Branch | A code branch, like an independent modification version |
+| Pull Request | A request that submits Codex's changes for your review |
+| Environment | The environment Codex needs to run your project in the cloud |
+| Setup Script | Installation commands executed before the cloud environment starts |
+| Maintenance Script | Optional maintenance scripts, such as updating dependencies or preparing data |
 
 
-一句话：
+In one sentence:
 
 ```text
-Codex Web = 让 Codex 在云端帮你处理 GitHub 项目。
+Codex Web = let Codex handle GitHub projects for you in the cloud.
 ```
 
 ---
 
-#### Codex Web 适合谁
+#### Who Codex Web is for
 
 
-| 人群 | 是否适合 |
+| User type | Fit |
 | --- | --- |
-| 有 GitHub 仓库的人 | 适合 |
-| 想让 Codex 云端处理任务的人 | 适合 |
-| 想让 Codex 创建 PR 的人 | 适合 |
-| 团队项目开发者 | 适合 |
-| 不想一直占用本地电脑的人 | 适合 |
-| 完全没有 GitHub 的小白 | 不太适合 |
-| 只是做本地 HTML 练习的人 | 更适合 Codex App |
-| 不会 Git / GitHub 的人 | 建议先学基础 |
+| People with GitHub repositories | Suitable |
+| People who want Codex to process tasks in the cloud | Suitable |
+| People who want Codex to create PRs | Suitable |
+| Team project developers | Suitable |
+| People who do not want to keep a local computer occupied | Suitable |
+| Complete beginners with no GitHub | Less suitable |
+| People doing only local HTML practice | Better suited to Codex App |
+| People who do not know Git / GitHub | Learn the basics first |
 
 
-小白建议：
+Beginner recommendation:
 
 ```text
-刚开始做本地练习，用 Codex App。
-项目已经放到 GitHub 后，再学 Codex Web。
+Start local practice with Codex App.
+After the project is on GitHub, learn Codex Web.
 ```
 
 ---
 
-#### Codex Web 入口在哪里
+#### Where to find Codex Web
 
-Codex Web 的入口是：
+Codex Web entry point:
 
 ```text
 chatgpt.com/codex
 ```
 
-打开后，你需要：
+After opening it, you need to:
 
 
-| 步骤 | 操作 |
+| Step | Action |
 | --- | --- |
-| 1 | 登录 ChatGPT 账号 |
-| 2 | 进入 Codex 页面 |
-| 3 | 连接 GitHub 账号 |
-| 4 | 选择要处理的仓库 |
-| 5 | 创建一个云端任务 |
-| 6 | 等 Codex 在云端运行 |
-| 7 | 查看结果和 diff |
-| 8 | 满意后创建 Pull Request |
+| 1 | Sign in to your ChatGPT account |
+| 2 | Enter the Codex page |
+| 3 | Connect your GitHub account |
+| 4 | Choose the repository to work on |
+| 5 | Create a cloud task |
+| 6 | Wait for Codex to run in the cloud |
+| 7 | Review the result and diff |
+| 8 | Create a Pull Request when satisfied |
 
 
 ---
 
-#### Codex Web 和本地 Codex 有什么区别
+#### Difference between Codex Web and local Codex
 
 
-| 对比 | Codex Web | Codex App / CLI / IDE |
+| Comparison | Codex Web | Codex App / CLI / IDE |
 | --- | --- | --- |
-| 运行位置 | 云端 | 本地电脑 |
-| 项目来源 | GitHub 仓库 | 本地文件夹或 Git 仓库 |
-| 是否需要电脑一直开着 | 不一定 | 通常需要 |
-| 是否适合 PR 流程 | 很适合 | 也可以，但更偏本地 |
-| 是否适合小白练习 | 一般 | App 更适合 |
-| 是否依赖 GitHub | 通常需要 | 不一定 |
-| 适合任务 | 仓库任务、PR、团队协作 | 本地开发、快速修改、调试 |
+| Where it runs | Cloud | Local computer |
+| Project source | GitHub repository | Local folder or Git repository |
+| Does your computer need to stay on? | Not necessarily | Usually yes |
+| Suitable for PR workflows | Very suitable | Also possible, but more local-oriented |
+| Suitable for beginner practice | Average | App is better suited |
+| Depends on GitHub? | Usually yes | Not necessarily |
+| Suitable tasks | Repository tasks, PRs, team collaboration | Local development, quick edits, debugging |
 
 
-简单理解：
+Simple understanding:
 
 ```text
-本地 Codex = 在你电脑上干活
-Codex Web = 在云端帮 GitHub 仓库干活
+Local Codex = works on your computer
+Codex Web = works in the cloud for GitHub repositories
 ```
 
 ---
 
-#### 第一次使用 Codex Web 的流程
+#### First-use flow for Codex Web
 
 
-| 步骤 | 操作 | 简单来说 |
+| Step | Action | Simple meaning |
 | --- | --- | --- |
-| 1 | 打开 Codex Web | 进入网页版 Codex |
-| 2 | 登录 ChatGPT | 确认你的账号 |
-| 3 | 连接 GitHub | 允许 Codex 访问你的代码仓库 |
-| 4 | 选择仓库 | 选一个要处理的项目 |
-| 5 | 选择分支 | 选择从哪个版本开始改 |
-| 6 | 输入任务 | 告诉 Codex 要做什么 |
-| 7 | 等待运行 | Codex 在云端处理 |
-| 8 | 查看结果 | 看改了哪些文件 |
-| 9 | Review diff | 检查新增和删除内容 |
-| 10 | 创建 PR | 满意后提交给自己或团队 review |
+| 1 | Open Codex Web | Enter web Codex |
+| 2 | Sign in to ChatGPT | Confirm your account |
+| 3 | Connect GitHub | Allow Codex to access your repositories |
+| 4 | Choose a repository | Select a project to work on |
+| 5 | Choose a branch | Select the version to start from |
+| 6 | Enter a task | Tell Codex what to do |
+| 7 | Wait for execution | Codex works in the cloud |
+| 8 | View result | See which files changed |
+| 9 | Review diff | Inspect added and deleted content |
+| 10 | Create PR | Submit for review by yourself or the team when satisfied |
 
 
 ---
 
-#### 连接 GitHub 是什么意思
+#### What connecting GitHub means
 
-连接 GitHub 的意思是：
+Connecting GitHub means:
 
-让 Codex Web 有权限访问你指定的 GitHub 仓库。
+Giving Codex Web permission to access the GitHub repositories you specify.
 
-它需要读取仓库代码，才能完成任务。
+It needs to read repository code to complete tasks.
 
-比如你让 Codex Web 做：
+For example, if you ask Codex Web:
 
 ```text
-请帮我修复首页按钮点击无反应的问题。
+Please fix the issue where the homepage button does not respond to clicks.
 ```
 
-它需要先读取你的项目代码，再判断按钮逻辑在哪里，然后修改相关文件。
+It needs to read your project code first, determine where the button logic is, and then modify the relevant files.
 
-简单来说：
+In simple terms:
 
 ```text
-GitHub = 放代码的云盘
-Codex Web = 进入这个代码云盘帮你改项目
+GitHub = cloud drive for code
+Codex Web = enters that code cloud drive to help you modify the project
 ```
 
-注意：
+Notes:
 
 ```text
-不要随便授权不信任的账号或组织。
-不要一上来让 Codex 访问所有仓库。
-能只授权某几个仓库，就只授权需要的仓库。
+Do not casually authorize accounts or organizations you do not trust.
+Do not grant Codex access to all repositories at the beginning.
+If you can authorize only a few repositories, authorize only the ones needed.
 ```
 
 ---
 
-#### Repository 仓库是什么
+#### What is a repository?
 
-Repository 简称 repo，可以理解成：
+Repository, often shortened to repo, can be understood as:
 
-一个完整代码项目。
+A complete code project.
 
-比如：
+For example:
 
 ```text
 my-landing-page
@@ -3433,160 +3425,160 @@ xiaohongshu-cover-generator
 my-react-app
 ```
 
-这些都可以是 GitHub 上的仓库。
+All of these can be repositories on GitHub.
 
-Codex Web 通常围绕一个仓库创建任务。
+Codex Web usually creates tasks around one repository.
 
-简单来说：
+In simple terms:
 
 ```text
-仓库 = 一个放在 GitHub 上的项目文件夹
+Repository = a project folder stored on GitHub
 ```
 
 ---
 
-#### Branch 分支是什么
+#### What is a branch?
 
-Branch 可以理解成：
+A branch can be understood as:
 
-代码的一个独立版本。
+An independent version of the code.
 
-比如：
+For example:
 
 ```text
-main = 正式版本
-feature/homepage = 首页修改版本
-fix/button-bug = 修复按钮 bug 的版本
+main = official version
+feature/homepage = homepage modification version
+fix/button-bug = version for fixing the button bug
 ```
 
-Codex Web 通常不会直接乱改正式分支，而是基于某个分支去做任务，最后生成可检查的修改。
+Codex Web usually does not casually modify the official branch directly. It works from a branch and then generates inspectable changes.
 
-简单来说：
+In simple terms:
 
 ```text
-main = 原稿
-新分支 = 复制一份出来修改
-PR = 把修改后的版本提交给你检查
+main = original draft
+new branch = a copy created for modification
+PR = submit the modified version for your review
 ```
 
 ---
 
-#### Pull Request 是什么
+#### What is a Pull Request?
 
-Pull Request，简称 PR。
+Pull Request is often shortened to PR.
 
-小白可以理解成：
+Beginners can understand it as:
 
-Codex 改完代码后，不是直接把代码合进正式项目，而是先提交一份“修改申请”。
+After Codex finishes modifying code, it does not directly merge the code into the official project. Instead, it submits a “change request.”
 
-你可以在 PR 里看到：
-
-```text
-改了哪些文件
-新增了哪些代码
-删除了哪些代码
-有没有测试通过
-Codex 的总结说明
-是否可以合并
-```
-
-PR 的好处是：
+Inside a PR, you can see:
 
 ```text
-先检查，再合并。
+Which files changed
+Which code was added
+Which code was deleted
+Whether tests passed
+Codex's summary
+Whether it can be merged
 ```
 
-所以 Codex Web 很适合真实项目和团队项目。
+The benefit of a PR is:
+
+```text
+Review first, then merge.
+```
+
+This makes Codex Web well suited to real projects and team projects.
 
 ---
 
-#### Codex Web 怎么创建任务
+#### How to create a task in Codex Web
 
-创建任务时，最好写清楚：
-
-```text
-目标：让 Codex 做什么
-范围：只改哪些地方
-限制：哪些地方不能动
-验证：完成后怎么检查
-```
-
-示例：
+When creating a task, write clearly:
 
 ```text
-请修复首页按钮点击无反应的问题。
-
-要求：
-1. 先分析按钮点击逻辑在哪里
-2. 只修改和按钮相关的文件
-3. 不要重构整个项目
-4. 不要删除现有功能
-5. 修复后运行构建或测试命令验证
-6. 完成后说明修改了哪些文件
+Goal: what Codex should do
+Scope: which areas it may modify
+Constraints: which areas must not be touched
+Validation: how to check completion
 ```
 
-不推荐写：
+Example:
 
 ```text
-帮我优化一下项目。
+Please fix the issue where the homepage button does not respond to clicks.
+
+Requirements:
+1. First analyze where the button click logic is
+2. Modify only files related to the button
+3. Do not refactor the whole project
+4. Do not delete existing functionality
+5. After the fix, run build or test commands to verify
+6. After completion, explain which files were modified
 ```
 
-太模糊，Codex 容易不知道从哪里下手。
+Not recommended:
+
+```text
+Help me optimize the project.
+```
+
+This is too vague, and Codex may not know where to begin.
 
 ---
 
-#### Codex Web 如何运行项目
+#### How Codex Web runs a project
 
-Codex Web 会在云端创建一个运行环境。
+Codex Web creates a runtime environment in the cloud.
 
-它通常会：
+It usually:
 
 ```text
-1. 拉取 GitHub 仓库代码
-2. 切到指定分支或提交
-3. 执行 setup script 安装依赖
-4. 根据你的任务读取文件
-5. 修改代码
-6. 运行测试或构建命令
-7. 生成 diff 和总结
+1. Pulls code from the GitHub repository
+2. Switches to the specified branch or commit
+3. Runs the setup script to install dependencies
+4. Reads files based on your task
+5. Modifies code
+6. Runs tests or build commands
+7. Generates a diff and summary
 ```
 
-如果项目需要安装依赖，就要配置好 setup script。
+If the project needs dependencies, configure the setup script correctly.
 
-比如前端项目可能需要：
+For example, a frontend project may need:
 
 ```text
 npm install
 ```
 
-或者：
+Or:
 
 ```text
 pnpm install
 ```
 
-如果没有正确配置环境，Codex 可能会因为缺依赖而运行失败。
+If the environment is not configured correctly, Codex may fail because dependencies are missing.
 
 ---
 
-#### Environment 环境是什么
+#### What is an Environment?
 
-Environment 可以理解成：
+Environment can be understood as:
 
-Codex Web 在云端运行项目的电脑配置。
+The cloud computer configuration Codex Web uses to run your project.
 
-它需要知道：
+It needs to know:
 
 ```text
-用什么语言
-怎么安装依赖
-怎么启动项目
-怎么运行测试
-需要哪些环境变量
-是否需要特殊工具
+Which language to use
+How to install dependencies
+How to start the project
+How to run tests
+Which environment variables are required
+Whether special tools are needed
 ```
 
-比如一个前端项目可能需要：
+For example, a frontend project may require:
 
 ```text
 Node.js
@@ -3595,7 +3587,7 @@ package.json
 npm run build
 ```
 
-一个 Python 项目可能需要：
+A Python project may require:
 
 ```text
 Python
@@ -3604,821 +3596,821 @@ requirements.txt
 pytest
 ```
 
-简单来说：
+In simple terms:
 
 ```text
-Environment = Codex 在云端跑项目时需要的工具箱。
+Environment = the toolbox Codex needs to run the project in the cloud.
 ```
 
 ---
 
-#### Setup Script 是什么
+#### What is a Setup Script?
 
-Setup Script 可以理解成：
+Setup Script can be understood as:
 
-Codex Web 每次准备云端环境时，先执行的一段安装命令。
+A set of installation commands Codex Web runs each time it prepares the cloud environment.
 
-比如：
+For example:
 
 ```text
 npm install
 ```
 
-或者：
+Or:
 
 ```text
 pip install -r requirements.txt
 ```
 
-它的作用是：
+Its purpose is:
 
 ```text
-把项目需要的依赖先装好。
+Install the dependencies needed by the project first.
 ```
 
-如果 setup script 写错了，Codex 可能会跑不起来项目。
+If the setup script is wrong, Codex may fail to run the project.
 
-小白建议：
+Beginner recommendation:
 
 ```text
-先用最简单的安装命令。
-不要在 setup script 里写危险命令。
-不要把密码和 API Key 写进去。
+Start with the simplest installation command.
+Do not put dangerous commands in the setup script.
+Do not put passwords or API keys in it.
 ```
 
 ---
 
-#### Codex Web 的网络访问
+#### Network access in Codex Web
 
-Codex Web 的云端环境不等于完全自由联网。
+The cloud environment of Codex Web does not mean unrestricted internet access.
 
-通常：
-
-```text
-安装依赖阶段可能允许联网
-真正执行 agent 任务阶段可能默认限制联网
-```
-
-简单来说：
+Usually:
 
 ```text
-安装依赖可以联网，干活时不一定能随便联网。
+Network access may be allowed during dependency installation
+Network access may be restricted by default during the actual agent task
 ```
 
-这样做是为了安全，避免任务过程中随意访问外部网络。
+In simple terms:
 
-如果你的任务必须联网，要看工作区和环境设置是否允许。
+```text
+Dependency installation may access the internet; task execution may not freely access the internet.
+```
+
+This improves safety and prevents arbitrary external network access during task execution.
+
+If your task must access the network, check whether workspace and environment settings allow it.
 
 ---
 
-#### Codex Web 的权限要注意什么
+#### Codex Web permissions to watch
 
-Codex Web 主要涉及这些权限：
+Codex Web mainly involves these permissions:
 
 
-| 权限 | 注意点 |
+| Permission | What to watch |
 | --- | --- |
-| GitHub 仓库权限 | 它能读哪些仓库 |
-| 分支权限 | 它能不能创建分支 |
-| PR 权限 | 它能不能创建 Pull Request |
-| Cloud 权限 | 工作区是否允许使用 Codex Cloud |
-| 环境变量 | 不要泄露 API Key、token、密码 |
-| 外部网络 | 是否允许云端任务联网 |
+| GitHub repository permission | Which repositories it can read |
+| Branch permission | Whether it can create branches |
+| PR permission | Whether it can create Pull Requests |
+| Cloud permission | Whether the workspace allows Codex Cloud |
+| Environment variables | Do not leak API keys, tokens, or passwords |
+| External network | Whether cloud tasks can access the internet |
 
 
-新手安全建议：
+Beginner safety recommendations:
 
 ```text
-只授权需要的仓库。
-不要授权全部仓库。
-不要把 .env、API Key、密码、token 写进任务。
-不要让 Codex 自动合并 PR。
-先 review，再合并。
+Authorize only the repositories needed.
+Do not authorize all repositories.
+Do not put .env, API keys, passwords, or tokens in tasks.
+Do not let Codex automatically merge PRs.
+Review first, then merge.
 ```
 
 ---
 
-#### Codex Web 适合做什么
+#### What Codex Web is good for
 
 
-| 场景 | 示例 |
+| Scenario | Example |
 | --- | --- |
-| 修复 GitHub 仓库里的 bug | 修按钮、修构建失败、修测试失败 |
-| 做小功能 | 增加一个页面、增加一个表单 |
-| 写文档 | README、使用说明、部署说明 |
-| 代码 review | 检查当前 PR 或 diff |
-| 修 CI 报错 | 根据构建日志修问题 |
-| 多任务后台处理 | 让 Codex 云端跑，不占用本地电脑 |
-| 团队协作 | 通过 PR 让团队 review |
+| Fix bugs in GitHub repositories | Fix buttons, build failures, test failures |
+| Build small features | Add a page, add a form |
+| Write documentation | README, usage guide, deployment guide |
+| Code review | Inspect the current PR or diff |
+| Fix CI errors | Fix issues based on build logs |
+| Background processing for multiple tasks | Let Codex run in the cloud without occupying the local computer |
+| Team collaboration | Let the team review through PRs |
 
 
-特别适合：
+Especially suitable for:
 
 ```text
-GitHub 项目
-团队项目
-需要 PR 流程的项目
-不想本地一直开着电脑的任务
+GitHub projects
+Team projects
+Projects requiring a PR flow
+Tasks where you do not want to keep a local computer running
 ```
 
 ---
 
-#### Codex Web 不适合什么
+#### What Codex Web is not good for
 
-新手不建议一开始用 Codex Web 做：
+Beginners should not start with Codex Web for:
 
 ```text
-没有 GitHub 的本地小练习
-完全不会 Git 的项目
-真实生产环境部署
-数据库迁移
-支付系统修改
-自动合并 PR
-删除大量文件
-处理敏感密钥
+Local small exercises without GitHub
+Projects where you do not know Git at all
+Real production deployment
+Database migrations
+Payment system changes
+Automatic PR merging
+Deleting large numbers of files
+Handling sensitive secrets
 ```
 
-这些不是不能做，而是风险更高。
+These are not impossible, but the risk is higher.
 
-小白建议：
-
-```text
-先用 Codex App 做本地练习。
-会 GitHub 后，再用 Codex Web 处理仓库任务。
-```
-
----
-
-#### Codex Web 和 Codex Cloud 是一回事吗
-
-可以这样理解：
+Beginner recommendation:
 
 ```text
-Codex Web = 你在网页上操作的界面
-Codex Cloud = 背后帮你跑任务的云端能力
-```
-
-也就是说：
-
-```text
-你在 Codex Web 上输入任务，
-Codex Cloud 在云端环境里帮你执行。
-```
-
-小白可以不纠结这两个词。
-
-日常理解成：
-
-```text
-Codex Web = 网页入口
-Cloud task = 云端任务
+Use Codex App for local practice first.
+After learning GitHub, use Codex Web for repository tasks.
 ```
 
 ---
 
-#### 第一个 Codex Web 任务建议
+#### Are Codex Web and Codex Cloud the same thing?
 
-新手第一次不要选复杂项目。
-
-建议选择一个简单 GitHub 仓库，比如：
+You can understand them like this:
 
 ```text
-简单 HTML 页面
-React 小项目
-个人主页
-README 项目
-小工具页面
+Codex Web = the interface you operate in the browser
+Codex Cloud = the cloud capability that runs tasks behind the scenes
 ```
 
-任务可以写：
+That is:
 
 ```text
-请帮我检查这个项目的 README 是否清楚。
-
-要求：
-1. 阅读当前项目结构
-2. 说明 README 缺少哪些内容
-3. 补充安装步骤、启动命令和项目结构说明
-4. 不要修改代码逻辑
-5. 完成后创建一个 PR
+You enter a task in Codex Web,
+Codex Cloud executes it in a cloud environment.
 ```
 
-这个任务风险低，适合熟悉 Codex Web 的流程。
+Beginners do not need to worry too much about the terminology.
+
+For daily use:
+
+```text
+Codex Web = web entry point
+Cloud task = cloud task
+```
 
 ---
 
-#### 常见问题
+#### Recommended first Codex Web task
+
+Do not choose a complex project for the first attempt.
+
+Choose a simple GitHub repository, such as:
+
+```text
+Simple HTML page
+Small React project
+Personal homepage
+README project
+Small utility page
+```
+
+Task example:
+
+```text
+Please check whether this project's README is clear.
+
+Requirements:
+1. Read the current project structure
+2. Explain what content is missing from the README
+3. Add installation steps, startup commands, and project structure notes
+4. Do not modify code logic
+5. Create a PR after completion
+```
+
+This task is low-risk and suitable for learning the Codex Web flow.
+
+---
+
+#### Common issues
 
 
-| 问题 | 可能原因 | 解决方法 |
+| Issue | Possible cause | Solution |
 | --- | --- | --- |
-| 找不到仓库 | GitHub 没授权，或没给仓库权限 | 重新检查 GitHub 授权 |
-| Codex 无法创建 PR | 没有分支或 PR 权限 | 检查 GitHub 权限 |
-| 任务运行失败 | setup script 错误或依赖安装失败 | 检查环境配置 |
-| Codex 不知道怎么启动项目 | README 或 package.json 不清楚 | 补充项目说明 |
-| 运行测试失败 | 项目本身有 bug 或依赖不完整 | 让 Codex 先分析失败原因 |
-| 额度消耗快 | 任务大、模型强、反复运行 | 缩小任务范围，先让它计划 |
-| 改动太多 | 任务太模糊 | 明确限制只改哪些文件 |
-| 结果不满意 | 需求不清楚或环境失败 | 追加评论，让 Codex 修改 |
+| Cannot find repository | GitHub not authorized, or repository permission not granted | Recheck GitHub authorization |
+| Codex cannot create PR | No branch or PR permission | Check GitHub permissions |
+| Task execution fails | Setup script error or dependency installation failure | Check environment configuration |
+| Codex does not know how to start the project | README or package.json is unclear | Add project documentation |
+| Tests fail | Project has bugs or incomplete dependencies | Ask Codex to analyze failure causes first |
+| Quota consumed quickly | Large task, strong model, repeated runs | Narrow the task scope and plan first |
+| Too many changes | Task is too vague | Clearly limit which files may be changed |
+| Unsatisfactory result | Requirements unclear or environment failed | Add comments and ask Codex to revise |
 
 
 ---
 
-#### 新手安全规则
+#### Beginner safety rules
 
 ```text
-1. 不要一上来授权所有 GitHub 仓库。
-2. 不要让 Codex 自动合并 PR。
-3. 不要把 API Key、密码、token 写进任务。
-4. 不要把 .env 文件提交到仓库。
-5. 复杂任务先让 Codex 给计划。
-6. PR 里一定要看 diff。
-7. 看不懂的改动不要合并。
-8. 生产项目不要直接让 Codex 自动部署。
-9. 先用简单仓库练习。
-10. 满意后再 merge。
+1. Do not authorize all GitHub repositories at the beginning.
+2. Do not let Codex automatically merge PRs.
+3. Do not put API keys, passwords, or tokens in tasks.
+4. Do not commit .env files to the repository.
+5. Ask Codex for a plan first on complex tasks.
+6. Always inspect the diff in PRs.
+7. Do not merge changes you do not understand.
+8. Do not let Codex automatically deploy production projects.
+9. Practice with simple repositories first.
+10. Merge only after you are satisfied.
 ```
 
 ---
 
 ---
 
-## 第三篇：核心功能详解
+## Part 3: Core capabilities in depth
 
-### 自动化
+### Automations
 
-#### 什么是自动化
+#### What are automations?
 
-**Codex 自动化 = 让 Codex 不只是“听你指挥”，而是能按规则定期帮你巡查项目、发现问题、处理问题。**
+**Codex automations mean Codex does not merely “follow your commands,” but can regularly inspect a project, discover issues, and handle problems according to rules.**
 
-就像你给项目请了一个“AI 值班工程师”：
+It is like hiring an “AI on-call engineer” for your project:
 
-> 平时它不打扰你，
->  有问题它来提醒你，
->  简单问题它先尝试修，
->  最后让你审核决定。
+> Most of the time, it does not interrupt you.  
+> When there is an issue, it reminds you.  
+> For simple issues, it tries to fix them first.  
+> In the end, you review and decide.
 
 
-#### 如何使用自动化
+#### How to use automations
 
-可以用“每周 Codex 会话自动复盘”举例，让 Codex 越来越好用。
+A “weekly Codex session review” is a good example of how automations can make Codex more useful over time.
 
-你可以让 Codex 定期检查最近一段时间的会话记录、任务结果和常见问题，沉淀成一份可复用的工作流档案。
+You can ask Codex to periodically review recent session history, task results, and recurring issues, then distill them into a reusable workflow profile.
 
-示例提示词可以这样写：
+Example prompt:
 
 ```text
-请检索并复盘最近一周的 Codex 会话记录与执行日志，维护一份“Codex 会话复盘与个人风格档案”。
+Please search and review the Codex session history and execution logs from the past week, and maintain a “Codex Session Review and Personal Style Profile.”
 
-要求：
-1. 优先使用可用的会话历史检索能力；如果需要读取日志，只做搜索、元数据提取和相关片段抽取，不要整文件载入大型 session 文件。
-2. 不要复现原始日志、隐私内容、密钥、内部 reasoning 或长对话原文。
-3. 总结执行经验：哪些做法导致了问题，最终正确做法是什么，适合什么场景复用。
-4. 总结我的偏好：UI 设计偏好、产品理念、交互原则、内容系统偏好和工作流偏好。
-5. 整理可复用规则清单：把复盘结论改写成后续 Codex 会话可以遵循的简洁规则。
-6. 更新文档时去重、合并相近规则，保留日期范围或任务类型作为来源线索。
-7. 如有适合长期复用的规则，请建议是否加入项目级或用户级 AGENTS.md。
+Requirements:
+1. Prefer available session-history retrieval capabilities. If logs need to be read, perform only search, metadata extraction, and relevant snippet extraction. Do not load entire large session files.
+2. Do not reproduce raw logs, private content, secrets, internal reasoning, or long original conversations.
+3. Summarize execution lessons: which practices caused issues, what the final correct approach was, and which scenarios can reuse it.
+4. Summarize my preferences: UI design preferences, product principles, interaction principles, content-system preferences, and workflow preferences.
+5. Organize reusable rules: rewrite review conclusions into concise rules that later Codex sessions can follow.
+6. When updating documents, deduplicate and merge similar rules, while preserving date ranges or task types as source clues.
+7. If any rules are suitable for long-term reuse, recommend whether they should be added to project-level or user-level AGENTS.md.
 ```
 
 <p align="center">
-  <img src="assets/images/image-039-1274ebbc52.png" alt="Codex平台的自动化页面" width="860">
+  <img src="assets/images/image-039-1274ebbc52.png" alt="Automation page on the Codex platform" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-040-9839b03471.png" alt="Codex桌面端界面，左侧为功能导航栏，其中“自动化”选项被选中" width="860">
+  <img src="assets/images/image-040-9839b03471.png" alt="Codex desktop interface with the Automations option selected in the left navigation" width="860">
 </p>
 
-### 插件
+### Plugins
 
-给 Codex 额外安装的“能力包”
+Plugins are additional “capability packages” installed for Codex.
 
-#### 什么是插件
+#### What is a plugin?
 
-Codex 本身已经能读代码、改代码、运行命令；插件是在这个基础上，让它连接更多工具、使用固定流程，或者获得某些专项能力。
+Codex can already read code, modify code, and run commands. Plugins extend that baseline by connecting more tools, applying fixed workflows, or adding specialized capabilities.
 
-比如：
+For example:
 
 
-| 插件类型 | 能让 Codex 做什么 |
+| Plugin type | What it lets Codex do |
 | --- | --- |
-| Chrome 插件 | 打开网页、检查页面、配合浏览器调试 |
-| Gmail 插件 | 总结邮件、草拟回复 |
-| Google Drive 插件 | 读取文档、表格、幻灯片 |
-| Slack 插件 | 总结频道消息、草拟团队回复 |
-| Security 插件 | 检查代码安全问题 |
-| Computer Use 插件 | 操作电脑上的应用 |
+| Chrome plugin | Open webpages, inspect pages, and debug with the browser |
+| Gmail plugin | Summarize emails and draft replies |
+| Google Drive plugin | Read documents, spreadsheets, and slides |
+| Slack plugin | Summarize channel messages and draft team replies |
+| Security plugin | Check code security issues |
+| Computer Use plugin | Operate applications on the computer |
 
 
-#### 插件、Skill、MCP 三者关系（先看这一张表）
+#### Relationship between Plugins, Skills, and MCP (start with this table)
 
-插件、Skill、MCP 是本篇最容易混淆的三个概念。它们不是互相替代，而是各管一层，下面这张总表请先记住，后面各节不再重复对比。
+Plugin, Skill, and MCP are the three easiest concepts to confuse in this part. They do not replace each other; each works at a different layer. Remember the summary table below first, and later sections will not repeat the same comparison.
 
-| 对比 | 插件 Plugin | Skill | MCP |
+| Comparison | Plugin | Skill | MCP |
 | --- | --- | --- | --- |
-| 一句话 | 能力安装包 | 一套固定工作方法 | 连接外部工具的接口 |
-| 解决什么问题 | 安装、打包、分发能力 | 同类任务「怎么做」 | 「连接什么工具或数据」 |
-| 范围 | 最大，可打包 Skill、MCP 等 | 较小，单类任务的流程 | 单个外部工具或数据源的连接 |
-| 类比 | 工具箱 | 工具箱里的说明书 | 给工具箱接电的插座 |
-| 谁来用 | 普通用户也能一键安装 | 普通用户也能用 | 更偏开发者和团队配置 |
-| 举例 | GitHub 插件、Figma 插件 | README Skill、代码 Review Skill | 数据库 MCP、文档 MCP |
+| One sentence | Installable capability package | A fixed working method | Interface for connecting external tools |
+| Problem solved | Installing, packaging, and distributing capabilities | “How to do” a class of tasks | “Which tool or data to connect” |
+| Scope | Largest; can package Skills, MCP, and more | Smaller; workflow for one task category | Connection to one external tool or data source |
+| Analogy | Toolbox | Manual inside the toolbox | Socket that powers the toolbox |
+| Who uses it | Ordinary users can install with one click | Ordinary users can use it too | More oriented to developer and team configuration |
+| Examples | GitHub plugin, Figma plugin | README Skill, code-review Skill | Database MCP, documentation MCP |
 
-一句话记住：**插件可以把 Skill 和 MCP 打包成更容易安装的能力包；Skill 管「怎么做」，MCP 管「连什么工具」。**
+Remember one sentence: **Plugins can package Skills and MCP into easier-to-install capability bundles; Skills define “how to do it,” while MCP defines “what tool to connect.”**
 
-#### 在 Codex App 里怎么安装插件
+#### How to install plugins in Codex App
 
-##### 打开 Codex App
-
-<p align="center">
-  <img src="assets/images/image-041-2ec5f4e518.png" alt="Codex App中插件页面" width="860">
-</p>
-
-##### 搜索或浏览插件
-
-也可以搜索对应的插件
+##### Open Codex App
 
 <p align="center">
-  <img src="assets/images/image-042-c93789737a.png" alt="Codex App中插件页面" width="860">
+  <img src="assets/images/image-041-2ec5f4e518.png" alt="Plugins page in Codex App" width="860">
 </p>
 
-##### 点开插件详情
+##### Search or browse plugins
+
+You can also search for the plugin you need.
 
 <p align="center">
-  <img src="assets/images/image-043-b5ddc23cd8.png" alt="Codex App中GitHub插件的详情页面" width="860">
+  <img src="assets/images/image-042-c93789737a.png" alt="Plugins page in Codex App" width="860">
 </p>
 
-##### 点击 Add to Codex 或添加按钮
+##### Open plugin details
 
 <p align="center">
-  <img src="assets/images/image-044-d06ab5db7e.png" alt="在Codex App中插件详情页面的界面" width="860">
+  <img src="assets/images/image-043-b5ddc23cd8.png" alt="GitHub plugin detail page in Codex App" width="860">
 </p>
 
-##### 安装完成后，新开一个 thread 使用
+##### Click Add to Codex or the add button
 
 <p align="center">
-  <img src="assets/images/image-045-053d643836.png" alt="Codex App中“hello - Codex”项目页面" width="860">
+  <img src="assets/images/image-044-d06ab5db7e.png" alt="Plugin detail page interface in Codex App" width="860">
 </p>
 
-#### 在 Codex CLI 里怎么安装插件
+##### After installation, open a new thread to use it
 
-进入项目目录后，先启动 Codex：
+<p align="center">
+  <img src="assets/images/image-045-053d643836.png" alt="“hello - Codex” project page in Codex App" width="860">
+</p>
+
+#### How to install plugins in Codex CLI
+
+After entering the project directory, start Codex first:
 
 ```text
 codex
 ```
 
-然后在 Codex CLI 里输入：
+Then enter inside Codex CLI:
 
 ```text
 /plugins
 ```
 
-打开插件列表后，可以：
+After opening the plugin list, you can:
 
 
-| 操作 | 说明 |
+| Action | Description |
 | --- | --- |
-| 搜索插件 | 找你需要的插件 |
-| 查看详情 | 看插件能做什么、需要什么权限 |
-| Install plugin | 安装插件 |
-| Uninstall plugin | 卸载插件 |
-| Space | 对已安装插件启用或停用 |
+| Search plugins | Find the plugin you need |
+| View details | See what the plugin can do and which permissions it needs |
+| Install plugin | Install the plugin |
+| Uninstall plugin | Uninstall the plugin |
+| Space | Enable or disable an installed plugin |
 
 
-#### 常见插件和能力方向
+#### Common plugins and capability areas
 
-插件目录会随着 Codex 版本、工作区和账号权限变化。下面不是固定排名，而是常见能力方向，实际可安装内容以你当前 Codex 插件页显示为准。
+The plugin directory changes depending on Codex version, workspace, and account permissions. The following is not a fixed ranking, but a list of common capability areas. The actual installable content is subject to your current Codex plugin page.
 
-| 类型 | 包含插件 | 适合做什么 |
+| Type | Included plugins | Suitable for |
 | --- | --- | --- |
-| 浏览器与电脑操作 | Chrome、Computer Use | 网页测试、自动点击、软件操作 |
-| 代码与项目协作 | GitHub | 管理仓库、修 bug、创建 PR |
-| 前端与设计 | Build Web Apps、Figma | 生成网页、设计稿转代码 |
-| 办公交付 | Documents、Presentations、Spreadsheets | 文档、PPT、表格分析 |
-| 视频生成 | HyperFrames、Remotion | 用代码或 HTML 生成视频 |
+| Browser and computer operation | Chrome, Computer Use | Web testing, automated clicks, software operation |
+| Code and project collaboration | GitHub | Repository management, bug fixing, PR creation |
+| Frontend and design | Build Web Apps, Figma | Generate webpages, convert designs to code |
+| Office deliverables | Documents, Presentations, Spreadsheets | Documents, PPT, spreadsheet analysis |
+| Video generation | HyperFrames, Remotion | Generate videos using code or HTML |
 
 
-| 序号 | 插件 / 能力 | 主要作用 | 简单来说 |
+| No. | Plugin / capability | Main purpose | Simple meaning |
 | --- | --- | --- | --- |
-| 1 | Chrome | 让 Codex 直接操作浏览器 | 可以打开网页、点击按钮、检查页面效果、测试网页功能 |
-| 2 | GitHub | 代码仓库管理与协作 | 让 Codex 读取仓库、处理 issue、改代码、创建 PR |
-| 3 | Computer Use | 让 Codex 操作电脑 | 像人一样看屏幕、点按钮、操作软件，权限比较高 |
-| 4 | Build Web Apps | 一句话生成前端网页应用 | 输入需求，生成网页、小工具、落地页、Demo |
-| 5 | Figma | 设计稿转代码与原型设计 | 把 Figma 设计稿变成前端页面，适合 UI 开发 |
-| 6 | Documents | AI 帮你交付正式文档 | 生成 README、项目说明、教程文档、产品文档 |
-| 7 | Presentations | AI 生成高质量 PPT | 根据内容生成汇报、课程、产品介绍、方案型 PPT |
-| 8 | Spreadsheets | AI 数据分析与表格处理 | 帮你整理 Excel、分析数据、生成表格结论 |
-| 9 | HyperFrames | HTML 直接生成视频 | 用网页/HTML 结构生成视频内容 |
-| 10 | Remotion | 用代码生成高质量视频 | 用 React/代码方式生成更专业的视频 |
+| 1 | Chrome | Lets Codex operate the browser directly | Open webpages, click buttons, inspect page effects, test web features |
+| 2 | GitHub | Code repository management and collaboration | Let Codex read repositories, handle issues, modify code, create PRs |
+| 3 | Computer Use | Lets Codex operate the computer | See the screen, click buttons, operate software like a person; high permission level |
+| 4 | Build Web Apps | Generate frontend web apps from a sentence | Enter requirements and generate webpages, small tools, landing pages, demos |
+| 5 | Figma | Design-to-code and prototype work | Convert Figma designs into frontend pages; suitable for UI development |
+| 6 | Documents | AI-assisted formal document delivery | Generate README, project docs, tutorials, product documentation |
+| 7 | Presentations | Generate high-quality PPTs | Create reports, courses, product introductions, and proposal decks |
+| 8 | Spreadsheets | AI data analysis and spreadsheet handling | Organize Excel files, analyze data, generate spreadsheet conclusions |
+| 9 | HyperFrames | Generate videos directly from HTML | Use webpage / HTML structures to generate video content |
+| 10 | Remotion | Generate high-quality video with code | Use React / code to create more professional videos |
 
 
 ### Skill
 
-给 Codex 准备的一套「固定工作方法」。
+A Skill is a “fixed working method” prepared for Codex.
 
-Codex 本身会读代码、改代码、运行命令。
+Codex itself can read code, modify code, and run commands.
 
-但如果你经常让它做同一类任务，比如写 README、做代码 Review、生成网页、整理文档，就可以把这套流程做成 Skill。
+But if you often ask it to do the same kind of task, such as writing READMEs, doing code reviews, generating webpages, or organizing documents, you can turn that workflow into a Skill.
 
-#### 什么是 Skill
+#### What is a Skill?
 
 
-| 概念 | 简单来说 |
+| Concept | Simple meaning |
 | --- | --- |
-| Skill | 一套固定工作方法 |
-| Prompt | 这一次任务的提示词 |
-| Workflow | 做事流程 |
-| Template | 固定模板 |
-| Instruction | 给 Codex 的长期规则 |
-| Resource | Skill 里附带的参考资料 |
-| Script | Skill 里可选的自动化脚本 |
+| Skill | A fixed working method |
+| Prompt | The prompt for this task |
+| Workflow | The work process |
+| Template | A fixed template |
+| Instruction | Long-term rules for Codex |
+| Resource | Reference material included in the Skill |
+| Script | Optional automation script included in the Skill |
 
 
-比如你每次都想让 Codex 写 README，并且 README 必须包含：
+For example, if you always want Codex to write a README that must include:
 
 ```text
-项目介绍
-安装步骤
-启动命令
-文件结构
-常见问题
+Project introduction
+Installation steps
+Startup commands
+File structure
+FAQ
 ```
 
-那就可以做一个 README Skill。
+You can create a README Skill.
 
-以后你不用每次重新解释规则，只要调用这个 Skill，Codex 就会按这套流程写。
+After that, you do not need to explain the rules from scratch each time. Call the Skill, and Codex follows that workflow.
 
 
 ---
 
-#### Skill 还是 MCP？什么时候用哪个
+#### Skill or MCP? When to use which
 
-插件、Skill、MCP 的整体区别，见前面「插件、Skill、MCP 三者关系」总表。这里只解决最常见的纠结：一个需求到底该用 Skill 还是 MCP。
+For the overall difference between Plugins, Skills, and MCP, see the earlier summary table “Relationship between Plugins, Skills, and MCP.” This section answers the most common practical question: should a given requirement use Skill or MCP?
 
-记住一句话：**「怎么做」的问题用 Skill，「连接什么工具」的问题用 MCP。**
+Remember one sentence: **Use Skills for “how to do it”; use MCP for “what tool to connect.”**
 
-| 你的需求 | 用 Skill 还是 MCP |
+| Your need | Use Skill or MCP |
 | --- | --- |
-| 写 README、固定文档输出格式 | Skill |
-| 做代码 Review、UI Review | Skill |
-| 生成落地页、把修 bug 流程标准化 | Skill |
-| 查最新开发文档、新版本 API | MCP |
-| 连接数据库 | MCP |
-| 读取 Figma 设计稿 | MCP |
-| 读取 GitHub issue / PR | MCP |
-| 连接 Notion、内部知识库、公司内部工具 | MCP |
+| Write README and use a fixed document output format | Skill |
+| Perform code review or UI review | Skill |
+| Generate landing pages or standardize a bug-fix workflow | Skill |
+| Look up latest developer documentation or new API versions | MCP |
+| Connect a database | MCP |
+| Read Figma designs | MCP |
+| Read GitHub issues / PRs | MCP |
+| Connect Notion, internal knowledge bases, or company internal tools | MCP |
 
-#### Skill 和普通提示词有什么区别
+#### Difference between Skill and ordinary prompts
 
-只做一次的任务 = 直接写提示词 经常重复做的任务 = 适合做 Skill
+One-time task = write a prompt directly. Frequently repeated task = suitable for a Skill.
 
 
-| 对比维度 | 普通提示词 | Skill |
+| Dimension | Ordinary prompt | Skill |
 | --- | --- | --- |
-| 使用方式 | 每次手动输入 | 保存成固定能力 |
-| 稳定性 | 容易漏要求 | 更稳定 |
-| 适合场景 | 临时任务 | 重复任务 |
-| 复用性 | 低 | 高 |
-| 内容结构 | 一段提示词 | 指令、模板、资料、脚本 |
-| 适合谁 | 所有人 | 经常重复做同类任务的人 |
+| Usage | Manually entered each time | Saved as a fixed capability |
+| Stability | Easy to miss requirements | More stable |
+| Best for | Temporary tasks | Repeated tasks |
+| Reusability | Low | High |
+| Structure | A prompt | Instructions, templates, materials, scripts |
+| Best for whom | Everyone | People who repeatedly do similar tasks |
 
 
-#### Skill 适合什么时候用
+#### When Skills are suitable
 
 
-| 情况 | 是否适合做 Skill |
+| Situation | Suitable for a Skill? |
 | --- | --- |
-| 同一类任务经常重复做 | 适合 |
-| 每次都要写一堆规则 | 适合 |
-| 想让 Codex 输出更稳定 | 适合 |
-| 团队里多人要用同一套流程 | 适合 |
-| 一次性小任务 | 不一定需要 |
-| 临时改一句文案 | 不需要 |
-| 只是问一个概念 | 不需要 |
+| The same type of task is repeated often | Suitable |
+| You write many rules every time | Suitable |
+| You want Codex output to be more stable | Suitable |
+| Multiple team members need the same process | Suitable |
+| One-off small task | Not necessarily needed |
+| Temporary copy change | Not needed |
+| Asking a concept question | Not needed |
 
 
-#### Skill 通常包含什么
+#### What a Skill usually contains
 
 
-| 内容 | 作用 |
+| Content | Purpose |
 | --- | --- |
-| instructions | 告诉 Codex 怎么做 |
-| resources | 放参考资料、模板、标准 |
-| scripts | 可选脚本，用来自动处理任务 |
-| examples | 示例输入和示例输出 |
-| checklist | 检查清单，防止漏步骤 |
+| instructions | Tell Codex how to work |
+| resources | Store references, templates, and standards |
+| scripts | Optional scripts for automated processing |
+| examples | Example inputs and outputs |
+| checklist | Checklist to prevent missing steps |
 
 
-#### Skill 的基本结构
+#### Basic Skill structure
 
-一个简单 Skill 可以这样写：
-
-```text
-# Skill 名称
-
-## 适用场景
-这个 Skill 适合用来做什么。
-
-## 工作目标
-Codex 最终要交付什么结果。
-
-## 工作流程
-1. 先分析输入内容
-2. 再确认任务类型
-3. 然后按固定步骤处理
-4. 最后输出结果和检查清单
-
-## 输出格式
-规定 Codex 最后应该怎么输出。
-
-## 注意事项
-哪些事情不能做，哪些风险要提醒。
-```
-
-比如 README Skill：
+A simple Skill can look like this:
 
 ```text
-# README 生成 Skill
+# Skill name
 
-## 适用场景
-用于根据当前项目生成 README 文档。
+## Applicable scenarios
+What this Skill is suitable for.
 
-## 工作目标
-输出一份结构清晰、适合新手阅读的 README。
+## Work goal
+What Codex should ultimately deliver.
 
-## 工作流程
-1. 阅读项目结构
-2. 查看 package.json 或主要入口文件
-3. 判断项目类型
-4. 生成项目介绍
-5. 补充安装步骤和启动命令
-6. 说明文件结构
-7. 输出常见问题
+## Workflow
+1. Analyze the input content first
+2. Confirm the task type
+3. Process it through fixed steps
+4. Output the result and checklist
 
-## 输出格式
-使用 Markdown 格式。
+## Output format
+Specify how Codex should output the final result.
 
-## 注意事项
-不要编造不存在的功能。
-不确定的地方要明确标注。
+## Notes
+What must not be done, and which risks should be flagged.
 ```
 
-#### 在 Codex App 里怎么添加 Skill
-
-在 Codex App 里添加 Skill，可以分成两种情况：
+For example, a README Skill:
 
 ```text
-1. 使用已有 Skill
-2. 创建自己的 Skill
+# README Generation Skill
+
+## Applicable scenarios
+Used to generate README documentation based on the current project.
+
+## Work goal
+Output a clearly structured README suitable for beginners.
+
+## Workflow
+1. Read the project structure
+2. Inspect package.json or main entry files
+3. Determine the project type
+4. Generate project introduction
+5. Add installation steps and startup commands
+6. Explain file structure
+7. Output FAQ
+
+## Output format
+Use Markdown format.
+
+## Notes
+Do not invent functionality that does not exist.
+Clearly mark uncertain information.
 ```
 
-##### 使用已有 Skill
+#### How to add a Skill in Codex App
 
-在插件里面的技能可以看到系统推荐的一些Skill
+Adding a Skill in Codex App can be divided into two cases:
+
+```text
+1. Use an existing Skill
+2. Create your own Skill
+```
+
+##### Use an existing Skill
+
+In the plugin section, you can see some Skills recommended by the system.
 
 <p align="center">
-  <img src="assets/images/image-046-d0b772835b.png" alt="Codex App中技能相关界面" width="860">
+  <img src="assets/images/image-046-d0b772835b.png" alt="Skill-related interface in Codex App" width="860">
 </p>
 
-##### 创建自己的 Skill
+##### Create your own Skill
 
-如果你想自己创建一个 Skill，可以在 Codex App 的 thread 里使用：
+To create your own Skill, use the following in a Codex App thread:
 
 ```text
 $skill-creator
 ```
 
-它相当于一个 Skill 创建助手，会帮你把一套重复流程整理成 Skill。
+It acts as a Skill creation assistant and helps turn a repeated process into a Skill.
 
-操作步骤：
+Steps:
 
 
-| 步骤 | 操作 |
+| Step | Action |
 | --- | --- |
-| 1 | 打开 Codex App |
-| 2 | 选择一个项目 |
-| 3 | 新建一个 thread |
-| 4 | 输入 `$skill-creator` |
-| 5 | 告诉它你想创建什么 Skill |
-| 6 | 提供使用场景、规则、示例输出 |
-| 7 | 让 Codex 生成 Skill 文件 |
-| 8 | 检查生成结果 |
-| 9 | 之后在新 thread 里使用这个 Skill |
+| 1 | Open Codex App |
+| 2 | Choose a project |
+| 3 | Create a new thread |
+| 4 | Enter `$skill-creator` |
+| 5 | Tell it what Skill you want to create |
+| 6 | Provide scenarios, rules, and example output |
+| 7 | Let Codex generate the Skill file |
+| 8 | Inspect the generated result |
+| 9 | Use this Skill in a new thread later |
 
 
-示例提示词：
+Example prompt:
 
 ```text
 $skill-creator
 
-请帮我创建一个 README Skill。
+Please help me create a README Skill.
 
-这个 Skill 的作用：
-根据当前项目自动生成适合小白阅读的 README。
+Purpose of this Skill:
+Automatically generate a beginner-friendly README based on the current project.
 
-触发场景：
-当我说“生成 README”“写项目说明”“整理项目文档”时使用。
+Trigger scenarios:
+Use it when I say “generate README,” “write project description,” or “organize project documentation.”
 
-工作流程：
-1. 先阅读项目结构
-2. 查看 package.json、README、入口文件
-3. 判断项目类型
-4. 生成项目简介
-5. 写安装步骤
-6. 写启动命令
-7. 说明主要文件夹作用
-8. 补充常见问题
-9. 不确定的地方不要编造
+Workflow:
+1. Read the project structure first
+2. Inspect package.json, README, and entry files
+3. Determine the project type
+4. Generate a project summary
+5. Write installation steps
+6. Write startup commands
+7. Explain the purpose of major folders
+8. Add FAQ
+9. Do not invent anything uncertain
 
-输出格式：
-使用 Markdown。
+Output format:
+Use Markdown.
 
-必须包含：
-- 项目简介
-- 功能特点
-- 安装步骤
-- 启动命令
-- 文件结构
-- 常见问题
-- 后续优化方向
+Must include:
+- Project summary
+- Features
+- Installation steps
+- Startup commands
+- File structure
+- FAQ
+- Future improvement directions
 ```
 
 
-##### 推荐安装的 Skill
+##### Recommended Skills to install
 
 
-| Skill / 项目 | 主要作用 | GitHub 地址 |
+| Skill / project | Main purpose | GitHub URL |
 | --- | --- | --- |
-| Superpowers | 给 Coding Agent 加一整套“软件开发方法论”：先澄清需求、写规格、做实现计划，再按 TDD / 任务拆分推进开发。适合 Codex、Claude Code、Cursor、Gemini CLI 等工程型 Agent。 | https://github.com/obra/superpowers |
-| skill-creator | 创建 Skill 的辅助 Skill。Codex 内置或可用的 Skill 以你当前环境显示为准；不同来源的同名 Skill 可能实现不同。 | 以当前 Codex Skill 列表为准 |
-| baoyu-skills | 宝玉整理的一组实用 Skills，偏内容创作和日常效率：小红书图文、文章配图、漫画、公众号发布、X/微博发布、网页转 Markdown、YouTube 字幕、AI 生图等。仓库说明里写的是给 Claude Code、Codex 等 AI Agents 提效用，并建议按需安装。 | https://github.com/JimLiu/baoyu-skills |
-| Agent Reach | 给 Agent 装“联网能力”：读网页、YouTube、RSS、GitHub、Twitter/X、B站、Reddit、小红书、LinkedIn 等，还带诊断和多后端路由。简单说就是让本地 Agent 能更方便地搜网、读平台内容。 | https://github.com/Panniantong/Agent-Reach |
-| find-skills | “找 Skill 的 Skill”。当你问“有没有某某功能的 Skill”时，它会帮你搜索、发现、安装 Agent Skills；底层配合 npx skills find / add / check / update 使用。 | https://github.com/vercel-labs/skills/tree/main/skills/find-skills |
+| Superpowers | Adds a full software-development methodology to coding agents: clarify requirements, write specifications, create implementation plans, then proceed through TDD and task decomposition. Suitable for engineering agents such as Codex, Claude Code, Cursor, and Gemini CLI. | https://github.com/obra/superpowers |
+| skill-creator | A helper Skill for creating Skills. Whether it is built into Codex or available depends on your current environment; Skills with the same name from different sources may have different implementations. | Based on your current Codex Skill list |
+| baoyu-skills | A practical set of Skills organized by Baoyu, focused on content creation and daily productivity: Xiaohongshu posts, article visuals, comics, WeChat publishing, X/Weibo publishing, webpage-to-Markdown, YouTube subtitles, AI image generation, and more. The repository notes that it improves efficiency for AI agents such as Claude Code and Codex, and recommends installing only what you need. | https://github.com/JimLiu/baoyu-skills |
+| Agent Reach | Gives agents “web access”: reads webpages, YouTube, RSS, GitHub, Twitter/X, Bilibili, Reddit, Xiaohongshu, LinkedIn, and more; includes diagnostics and multi-backend routing. In simple terms, it makes it easier for local agents to search the web and read platform content. | https://github.com/Panniantong/Agent-Reach |
+| find-skills | A “Skill for finding Skills.” When you ask whether there is a Skill for a certain function, it helps search, discover, and install Agent Skills; it works with `npx skills find / add / check / update`. | https://github.com/vercel-labs/skills/tree/main/skills/find-skills |
 
 
-#### 在 Codex CLI 里怎么添加 Skill
+#### How to add Skills in Codex CLI
 
-在 Codex CLI 里添加 Skill，主要有 3 种方式：
+There are three main ways to add Skills in Codex CLI:
 
 ```text
-1. 使用已有 Skill
-2. 用 $skill-creator 创建 Skill
-3. 手动创建 SKILL.md 文件
+1. Use an existing Skill
+2. Create a Skill with $skill-creator
+3. Manually create a SKILL.md file
 ```
 
-##### 添加 Skill 的 3 种方式
+##### Three ways to add Skills
 
 
-| 方式 | 适合谁 | 简单来说 | 推荐程度 |
+| Method | Best for | Simple meaning | Recommendation |
 | --- | --- | --- | --- |
-| 使用已有 Skill | 刚入门用户 | 直接调用现成技能 | 推荐 |
-| `$skill-creator` 创建 | 想把提示词变成 Skill 的人 | 让 Codex 帮你整理 Skill | 最推荐 |
-| 手动创建 `SKILL.md` | 熟悉文件结构的人 | 自己写 Skill 文件 | 进阶 |
+| Use an existing Skill | Beginners | Directly call a ready-made Skill | Recommended |
+| Create with `$skill-creator` | Users who want to turn prompts into Skills | Let Codex organize the Skill for you | Most recommended |
+| Manually create `SKILL.md` | Users familiar with file structure | Write the Skill file yourself | Advanced |
 
 
 ---
 
-###### 方式一：使用已有 Skill
+###### Method 1: Use an existing Skill
 
-进入项目目录后，先启动 Codex CLI：
+After entering the project directory, start Codex CLI:
 
 ```text
-cd 项目目录
+cd project-directory
 codex
 ```
 
-进入 Codex CLI 后，可以输入：
+After entering Codex CLI, you can type:
 
 ```text
 /skills
 ```
 
-或者直接输入：
+Or directly type:
 
 ```text
 $
 ```
 
-Codex 会显示当前可用的 Skill。
+Codex shows the currently available Skills.
 
-如果你已经知道 Skill 名称，也可以直接在任务里点名使用：
+If you already know the Skill name, you can call it directly in the task:
 
 ```text
-请使用 $readme-skill，根据当前项目生成 README。
+Please use $readme-skill to generate a README based on the current project.
 ```
 
-或者：
+Or:
 
 ```text
-$ui-review-skill 请检查当前首页的视觉问题，并给出修改建议。
+$ui-review-skill Please check the visual issues on the current homepage and provide improvement suggestions.
 ```
 
 ---
 
-###### 已有 Skill 的使用方式
+###### Ways to use existing Skills
 
 
-| 用法 | 示例 | 适合场景 |
+| Usage | Example | Suitable scenario |
 | --- | --- | --- |
-| /skills | 打开 Skill 列表 | 不知道有哪些 Skill 时 |
-| 输入 $ | 快速选择 Skill | 想快速调用时 |
-| `$skill-name` | `$readme-skill` | 明确知道 Skill 名称时 |
-| 自然语言描述 | 请用 README Skill 写项目说明 | 不确定具体名称时 |
+| /skills | Open the Skill list | When you do not know which Skills are available |
+| Type $ | Quickly select a Skill | When you want to call one quickly |
+| `$skill-name` | `$readme-skill` | When you know the exact Skill name |
+| Natural language | Please use README Skill to write project documentation | When you are unsure of the exact name |
 
 
 ---
 
-###### 方式二：用 `$skill-creator` 创建 Skill
+###### Method 2: Create a Skill with `$skill-creator`
 
-如果你想把一套重复流程保存成 Skill，可以用：
+If you want to save a repeated process as a Skill, use:
 
 ```text
 $skill-creator
 ```
 
-它相当于一个 Skill 创建助手，会问你：
+It acts as a Skill creation assistant and asks you:
 
 
-| 问题 | 目的 |
+| Question | Purpose |
 | --- | --- |
-| 这个 Skill 是做什么的 | 明确用途 |
-| 什么时候触发 | 写清楚适用场景 |
-| 要不要包含脚本 | 判断是否只是指令型 Skill |
-| 输出格式是什么 | 保证结果稳定 |
-| 有哪些限制 | 避免乱改、乱编、乱执行 |
+| What does this Skill do? | Clarify the purpose |
+| When should it be triggered? | Define applicable scenarios |
+| Should it include scripts? | Determine whether it is only instruction-based |
+| What is the output format? | Ensure stable results |
+| What constraints exist? | Avoid uncontrolled edits, fabrication, or execution |
 
 
 ---
 
-###### `$skill-creator` 使用流程
+###### `$skill-creator` flow
 
 
-| 步骤 | 操作 | 目的 |
+| Step | Action | Purpose |
 | --- | --- | --- |
-| 1 | 进入项目目录 | 确保 Skill 生成在正确项目里 |
-| 2 | 运行 `codex` | 打开 Codex CLI |
-| 3 | 输入 `$skill-creator` | 启动 Skill 创建助手 |
-| 4 | 描述 Skill 用途 | 告诉它要做什么 |
-| 5 | 补充触发场景 | 告诉它什么时候用 |
-| 6 | 补充工作流程 | 固定 Codex 的执行步骤 |
-| 7 | 补充输出格式 | 保证结果稳定 |
-| 8 | 检查生成结果 | 确认 `SKILL.md` 是否合理 |
-| 9 | 重新打开或继续使用 | 测试 Skill 是否生效 |
+| 1 | Enter the project directory | Ensure the Skill is generated in the correct project |
+| 2 | Run `codex` | Open Codex CLI |
+| 3 | Enter `$skill-creator` | Start the Skill creation assistant |
+| 4 | Describe the Skill purpose | Tell it what to do |
+| 5 | Add trigger scenarios | Tell it when to use the Skill |
+| 6 | Add workflow | Fix Codex's execution steps |
+| 7 | Add output format | Ensure stable results |
+| 8 | Inspect generated result | Confirm whether `SKILL.md` is reasonable |
+| 9 | Reopen or continue using it | Test whether the Skill works |
 
 
 ---
 
-###### `$skill-creator` 示例提示词
+###### `$skill-creator` example prompt
 
 ```text
 $skill-creator
 
-请帮我创建一个 README Skill。
+Please help me create a README Skill.
 
-这个 Skill 的作用：
-根据当前项目自动生成一份适合小白阅读的 README。
+Purpose of this Skill:
+Automatically generate a beginner-friendly README based on the current project.
 
-触发场景：
-当我说“生成 README”“写项目说明”“整理项目文档”“写安装教程”时使用。
+Trigger scenarios:
+Use it when I say “generate README,” “write project description,” “organize project documentation,” or “write installation tutorial.”
 
-工作流程：
-1. 先阅读项目结构
-2. 查看 package.json、README、入口文件
-3. 判断项目类型
-4. 生成项目简介
-5. 写安装步骤
-6. 写启动命令
-7. 说明主要文件夹作用
-8. 补充常见问题
-9. 不确定的地方不要编造
+Workflow:
+1. Read the project structure first
+2. Inspect package.json, README, and entry files
+3. Determine the project type
+4. Generate project summary
+5. Write installation steps
+6. Write startup commands
+7. Explain the purpose of main folders
+8. Add FAQ
+9. Do not invent uncertain information
 
-输出格式：
-使用 Markdown。
+Output format:
+Use Markdown.
 
-必须包含：
-- 项目简介
-- 功能特点
-- 安装步骤
-- 启动命令
-- 文件结构
-- 常见问题
-- 后续优化方向
+Must include:
+- Project summary
+- Features
+- Installation steps
+- Startup commands
+- File structure
+- FAQ
+- Future improvement directions
 
-注意事项：
-不要编造不存在的功能。
-不要读取或输出 API Key、密码、token、私钥。
+Notes:
+Do not invent functionality that does not exist.
+Do not read or output API keys, passwords, tokens, or private keys.
 ```
 
 ---
 
-###### 方式三：手动创建 Skill 文件
+###### Method 3: Manually create a Skill file
 
-Skill 本质上是一个文件夹，里面必须有一个：
+A Skill is essentially a folder that must contain:
 
 ```text
 SKILL.md
 ```
 
-最简单的结构是：
+The simplest structure is:
 
 ```text
 .agents
@@ -4427,7 +4419,7 @@ SKILL.md
         └── SKILL.md
 ```
 
-也可以放脚本、参考资料和资源文件：
+It can also contain scripts, references, and resource files:
 
 ```text
 .agents
@@ -4441,447 +4433,447 @@ SKILL.md
 
 ---
 
-###### Skill 文件结构说明
+###### Skill file structure
 
 
-| 文件 / 文件夹 | 是否必须 | 作用 |
+| File / folder | Required? | Purpose |
 | --- | --- | --- |
-| `SKILL.md` | 必须 | 写 Skill 的名称、描述和具体指令 |
-| scripts/ | 可选 | 放可执行脚本 |
-| references/ | 可选 | 放参考文档、标准、说明 |
-| assets/ | 可选 | 放模板、图片、资源文件 |
+| `SKILL.md` | Required | Defines Skill name, description, and detailed instructions |
+| scripts/ | Optional | Stores executable scripts |
+| references/ | Optional | Stores reference documents, standards, and notes |
+| assets/ | Optional | Stores templates, images, and resource files |
 
 
 ---
 
-###### 一个最简单的 `SKILL.md` 示例
+###### A minimal `SKILL.md` example
 
 ```text
 ---
 name: readme-skill
-description: 当用户需要生成 README、项目说明、安装教程、启动步骤时使用。
+description: Use when the user needs to generate a README, project description, installation tutorial, or startup steps.
 ---
 
-你是一个 README 文档生成助手。
+You are a README documentation assistant.
 
-任务：
-根据当前项目生成一份适合新手阅读的 README。
+Task:
+Generate a README suitable for beginners based on the current project.
 
-工作流程：
-1. 阅读项目结构
-2. 查看 package.json、README、入口文件
-3. 判断项目类型
-4. 生成项目介绍
-5. 写安装步骤
-6. 写启动命令
-7. 说明文件结构
-8. 补充常见问题
-9. 不确定的地方不要编造
+Workflow:
+1. Read the project structure
+2. Inspect package.json, README, and entry files
+3. Determine the project type
+4. Generate project introduction
+5. Write installation steps
+6. Write startup commands
+7. Explain file structure
+8. Add FAQ
+9. Do not invent uncertain information
 
-输出格式：
-使用 Markdown。
+Output format:
+Use Markdown.
 
-必须包含：
-- 项目简介
-- 功能特点
-- 安装步骤
-- 启动命令
-- 文件结构
-- 常见问题
-- 后续优化方向
+Must include:
+- Project summary
+- Features
+- Installation steps
+- Startup commands
+- File structure
+- FAQ
+- Future improvement directions
 ```
 
-#### 添加 Skill 后怎么使用
+#### How to use a Skill after adding it
 
-添加 Skill 后，有两种常见用法：
+After adding a Skill, there are two common usage patterns:
 
 
-| 用法 | 示例 |
+| Usage | Example |
 | --- | --- |
-| 明确指定 Skill | 请使用 `$readme-skill` 生成 README |
-| 让 Codex 自动判断 | 帮我写一份项目 README |
+| Explicitly specify the Skill | Please use `$readme-skill` to generate a README |
+| Let Codex infer automatically | Help me write a project README |
 
 
-如果 Skill 的 description 写得清楚，Codex 会更容易自动判断什么时候该用它。
+If the Skill description is clear, Codex can more easily infer when to use it.
 
-比如：
-
-```text
-description: 当用户需要生成 README、项目说明、安装教程、启动步骤时使用。
-```
-
-这个描述就很清楚。
-
-不建议写得太模糊：
+For example:
 
 ```text
-description: 帮我写东西。
+description: Use when the user needs to generate a README, project description, installation tutorial, or startup steps.
 ```
 
-这样 Codex 不知道什么时候该调用它。
+This description is clear.
 
-#### Skill 放在哪里更合适
+Do not write it too vaguely:
+
+```text
+description: Help me write things.
+```
+
+Codex will not know when to call it.
+
+#### Where Skills should be stored
 
 
-| 放置位置 | 适合场景 | 简单来说 |
+| Location | Suitable scenario | Simple meaning |
 | --- | --- | --- |
-| 项目里的 .agents/skills | 只给当前项目用 | 项目专属 Skill |
-| 用户级 Skill 目录 | 自己多个项目都想用 | 个人通用 Skill |
-| 团队 / 管理员配置 | 团队成员统一使用 | 团队共享 Skill |
-| 插件里 | 想打包分发给别人安装 | 正式能力包 |
+| `.agents/skills` inside a project | Only for the current project | Project-specific Skill |
+| User-level Skill directory | You want to use it across multiple personal projects | Personal general-purpose Skill |
+| Team / admin configuration | Team members need the same workflow | Shared team Skill |
+| Inside a plugin | You want to package and distribute it for others | Formal capability package |
 
 
 ### MCP
 
-**只有进阶AI编程才需要了解，普通人可以直接跳过**
+**Only advanced AI programming users need to understand this. Ordinary users can skip it.**
 
-让 Codex 连接外部工具的接口。
+MCP is an interface that lets Codex connect to external tools.
 
-Codex 本身可以读代码、改代码、运行命令。
+Codex itself can read code, modify code, and run commands.
 
-MCP 的作用是让 Codex 连接更多外部工具、数据源或服务。
+MCP lets Codex connect to more external tools, data sources, or services.
 
-#### 什么是 MCP
+#### What is MCP?
 
 
-| 概念 | 简单来说 |
+| Concept | Simple meaning |
 | --- | --- |
-| MCP | 连接外部工具的标准接口 |
-| MCP Server | 提供工具能力的服务 |
-| Tool | Codex 可以调用的具体功能 |
-| Config | MCP 的配置文件 |
-| STDIO Server | 通过本地命令启动的 MCP 服务 |
-| HTTP Server | 通过网址连接的 MCP 服务 |
-| Context | 外部工具提供给 Codex 的上下文信息 |
+| MCP | A standard interface for connecting external tools |
+| MCP Server | A service that provides tool capabilities |
+| Tool | A specific function Codex can call |
+| Config | MCP configuration file |
+| STDIO Server | An MCP service started through a local command |
+| HTTP Server | An MCP service connected through a URL |
+| Context | Context information provided to Codex by external tools |
 
 
-生活化理解：
+Everyday analogy:
 
 ```text
-Codex = 一个会干活的人
-MCP = 给他接上不同工具的插座
-MCP Server = 插在插座上的工具箱
-Tool = 工具箱里的具体工具
+Codex = a person who can work
+MCP = sockets that connect different tools to that person
+MCP Server = toolbox plugged into the socket
+Tool = a specific tool inside the toolbox
 ```
 
-比如一个文档 MCP，可以让 Codex 读取文档。
+For example, a documentation MCP can let Codex read documents.
 
-一个数据库 MCP，可以让 Codex 查询数据库。
+A database MCP can let Codex query a database.
 
-一个设计工具 MCP，可以让 Codex 获取设计稿信息。
+A design-tool MCP can let Codex retrieve design information.
 
 
 ---
 
-#### MCP 适合做什么
+#### What MCP is suitable for
 
 
-| 场景 | MCP 可以怎么用 |
+| Scenario | How MCP can help |
 | --- | --- |
-| 查开发文档 | 连接文档 MCP，让 Codex 查新版本 API |
-| 连接数据库 | 让 Codex 查询数据库结构或测试数据 |
-| 连接设计工具 | 让 Codex 读取设计稿、组件信息 |
-| 连接项目管理工具 | 读取 issue、任务、需求说明 |
-| 连接内部系统 | 调用公司内部工具或数据源 |
-| 连接知识库 | 让 Codex 根据团队文档工作 |
-| 连接自动化工具 | 让 Codex 调用额外脚本或服务 |
+| Look up developer documentation | Connect a documentation MCP so Codex can check latest API docs |
+| Connect a database | Let Codex query database schema or test data |
+| Connect design tools | Let Codex read design files and component information |
+| Connect project management tools | Read issues, tasks, and requirement descriptions |
+| Connect internal systems | Call company internal tools or data sources |
+| Connect knowledge bases | Let Codex work based on team documentation |
+| Connect automation tools | Let Codex call additional scripts or services |
 
 
-小白可以这样判断：
+Beginners can judge it like this:
 
 ```text
-普通写代码，不一定需要 MCP。
-需要 Codex 访问外部工具或外部数据时，才考虑 MCP。
+Ordinary coding does not necessarily need MCP.
+Consider MCP only when Codex needs to access external tools or external data.
 ```
 
-#### MCP Server 是什么
+#### What is an MCP Server?
 
-MCP Server 可以理解成：
+An MCP Server can be understood as:
 
-给 Codex 提供工具能力的服务。
+A service that provides tool capabilities to Codex.
 
-比如：
+For example:
 
 
-| MCP Server 类型 | 能提供什么 |
+| MCP Server type | What it can provide |
 | --- | --- |
-| 文档 MCP | 查询开发文档、API 文档 |
-| 数据库 MCP | 查询表结构、读取测试数据 |
-| GitHub MCP | 读取 issue、PR、仓库信息 |
-| Figma MCP | 读取设计稿信息 |
-| Notion MCP | 读取知识库页面 |
-| 浏览器 MCP | 访问网页、获取页面信息 |
-| 内部工具 MCP | 连接公司自己的系统 |
+| Documentation MCP | Query developer docs and API docs |
+| Database MCP | Query table structure and read test data |
+| GitHub MCP | Read issues, PRs, and repository information |
+| Figma MCP | Read design information |
+| Notion MCP | Read knowledge-base pages |
+| Browser MCP | Access webpages and retrieve page information |
+| Internal-tool MCP | Connect company internal systems |
 
 
-简单来说：
+In simple terms:
 
 ```text
-MCP Server = Codex 可以调用的外部工具服务。
+MCP Server = an external tool service Codex can call.
 ```
 
-#### 在 Codex App 里怎么使用 MCP
+#### How to use MCP in Codex App
 
-##### Codex App 使用 MCP 的基本流程
+##### Basic flow for using MCP in Codex App
 
 
-| 步骤 | 操作 | 简单来说 |
+| Step | Action | Simple meaning |
 | --- | --- | --- |
-| 1 | 打开 Codex App | 进入桌面版 Codex |
-| 2 | 进入 Settings | 打开设置 |
-| 3 | 找到 MCP servers | 进入 MCP 工具管理区 |
-| 4 | 查看 recommended servers | 查看官方或系统推荐的 MCP |
-| 5 | 添加 custom server | 添加自己的 MCP server |
-| 6 | 按提示完成授权 | 有些 MCP 需要登录外部账号 |
-| 7 | 回到项目 thread | 在任务里调用 MCP |
-| 8 | 查看结果和权限请求 | 确认 Codex 调用了什么工具 |
+| 1 | Open Codex App | Enter desktop Codex |
+| 2 | Go to Settings | Open settings |
+| 3 | Find MCP servers | Enter MCP tool management |
+| 4 | View recommended servers | See official or system-recommended MCPs |
+| 5 | Add custom server | Add your own MCP server |
+| 6 | Complete authorization as prompted | Some MCPs require signing in to external accounts |
+| 7 | Return to project thread | Call MCP in a task |
+| 8 | Review result and permission requests | Confirm which tools Codex called |
 
 
 <p align="center">
-  <img src="assets/images/image-047-afc2022a08.png" alt="Codex App中MCP Server的设置界面" width="860">
+  <img src="assets/images/image-047-afc2022a08.png" alt="MCP Server settings interface in Codex App" width="860">
 </p>
 
-##### 添加 MCP 时通常需要填什么
+##### What you usually fill in when adding MCP
 
 
-| 配置项 | 作用 | 简单来说 |
+| Configuration item | Purpose | Simple meaning |
 | --- | --- | --- |
-| Name | MCP 名称 | 给这个工具起名字 |
-| Command / URL | 启动命令或服务地址 | Codex 通过它连接工具 |
-| Type | MCP 类型 | 本地命令型或远程 HTTP 型 |
-| Env | 环境变量 | 放 token、配置项等 |
-| Auth | 授权方式 | 是否需要登录外部账号 |
-| Enabled tools | 启用哪些工具 | 只打开需要的功能 |
+| Name | MCP name | Name this tool |
+| Command / URL | Startup command or service address | Codex uses this to connect to the tool |
+| Type | MCP type | Local command or remote HTTP type |
+| Env | Environment variables | Store tokens, configuration items, and more |
+| Auth | Authorization method | Whether signing in to an external account is required |
+| Enabled tools | Which tools are enabled | Enable only needed functions |
 
 
 <p align="center">
-  <img src="assets/images/image-048-d6664c35fe.png" alt="Codex App中添加MCP时的设置界面" width="860">
+  <img src="assets/images/image-048-d6664c35fe.png" alt="Settings interface when adding MCP in Codex App" width="860">
 </p>
 
-##### 添加 MCP 后怎么使用
+##### How to use MCP after adding it
 
-添加完成后，回到 Codex App 的 thread，直接描述任务即可。
+After adding MCP, return to the Codex App thread and describe the task directly.
 
 
-| 用法 | 示例 |
+| Usage | Example |
 | --- | --- |
-| 直接描述需求 | 请查一下 Next.js App Router 的最新用法 |
-| 明确要求使用 MCP | 请使用可用的 MCP 工具查询这个库的文档 |
-| 指定某个 MCP | 请用 context7 查询 Next.js 的最新文档 |
-| 先查看可用工具 | 当前有哪些 MCP 工具可以用？ |
+| Describe the need directly | Please look up the latest usage of Next.js App Router |
+| Explicitly ask to use MCP | Please use available MCP tools to query this library's documentation |
+| Specify an MCP | Please use context7 to query the latest Next.js documentation |
+| View available tools first | Which MCP tools are currently available? |
 
 
-示例提示词：
+Example prompt:
 
 ```text
-请使用可用的 MCP 文档工具，
-查询 Next.js App Router 的最新用法，
-然后告诉我当前项目应该怎么修改。
+Please use the available MCP documentation tool
+to query the latest usage of Next.js App Router,
+then tell me how the current project should be modified.
 ```
 
-或者：
+Or:
 
 ```text
-请用 Figma MCP 读取这个设计稿，
-分析页面结构，并给我生成前端实现计划。
+Please use Figma MCP to read this design file,
+analyze the page structure, and generate a frontend implementation plan for me.
 ```
 
-#### 在 Codex CLI 里怎么使用 MCP
+#### How to use MCP in Codex CLI
 
-在 Codex CLI 里使用 MCP，可以理解成：
+Using MCP in Codex CLI means:
 
-给终端版 Codex 接入外部工具。
+Connecting external tools to terminal Codex.
 
-比如：
+For example:
 
 ```text
-文档 MCP：让 Codex 查询开发文档
-GitHub MCP：让 Codex 读取 issue、PR、仓库信息
-Figma MCP：让 Codex 读取设计稿
-数据库 MCP：让 Codex 查询数据库结构
+Documentation MCP: lets Codex query developer documentation
+GitHub MCP: lets Codex read issues, PRs, and repository information
+Figma MCP: lets Codex read design files
+Database MCP: lets Codex query database schema
 ```
 
-小白可以这样理解：
+Beginners can understand it this way:
 
 ```text
-Codex CLI = 终端里的 AI 编程助手
-MCP = 给 Codex CLI 接外部工具的接口
+Codex CLI = AI programming assistant in the terminal
+MCP = interface for connecting external tools to Codex CLI
 ```
 
 ---
 
-##### CLI 使用 MCP 的基本流程
+##### Basic CLI flow for using MCP
 
 
-| 步骤 | 操作 | 简单来说 |
+| Step | Action | Simple meaning |
 | --- | --- | --- |
-| 1 | 打开终端 | PowerShell / Terminal |
-| 2 | 进入项目目录 | 让 Codex 知道当前项目 |
-| 3 | 添加 MCP server | 给 Codex 接入外部工具 |
-| 4 | 检查 MCP 是否添加成功 | 确认工具已经可用 |
-| 5 | 启动 Codex CLI | 进入 Codex 对话界面 |
-| 6 | 用 /mcp 查看工具 | 看当前能用哪些 MCP |
-| 7 | 在任务里调用 MCP | 让 Codex 使用外部工具 |
-| 8 | 查看结果和权限提示 | 确认是否安全 |
+| 1 | Open terminal | PowerShell / Terminal |
+| 2 | Enter project directory | Let Codex know the current project |
+| 3 | Add MCP server | Connect an external tool to Codex |
+| 4 | Check whether MCP was added successfully | Confirm the tool is available |
+| 5 | Start Codex CLI | Enter the Codex conversation interface |
+| 6 | Use /mcp to view tools | See which MCPs are available |
+| 7 | Call MCP in a task | Let Codex use the external tool |
+| 8 | Review results and permission prompts | Confirm safety |
 
 
 ---
 
-##### 常用 MCP 终端命令
+##### Common MCP terminal commands
 
 
-| 命令 | 作用 | 简单来说 |
+| Command | Purpose | Simple meaning |
 | --- | --- | --- |
-| `codex mcp --help` | 查看 MCP 命令帮助 | 不知道怎么用时先看 |
-| `codex mcp list` | 查看已配置 MCP server | 看现在接了哪些外部工具 |
-| `codex mcp add` | 添加 MCP server | 给 Codex 增加一个外部工具 |
-| `codex mcp remove` | 删除 MCP server | 不用了就移除 |
-| `codex mcp get` | 查看某个 MCP server 详情 | 看具体配置 |
-| `codex mcp login` | 登录需要授权的 MCP | 给某些远程 MCP 授权 |
-| `codex mcp logout` | 退出某个 MCP 授权 | 取消连接状态 |
-| /mcp | 在 Codex 会话里查看 MCP | 看当前会话能调用哪些工具 |
+| `codex mcp --help` | View MCP command help | Check first when unsure how to use it |
+| `codex mcp list` | View configured MCP servers | See which external tools are connected |
+| `codex mcp add` | Add an MCP server | Add an external tool to Codex |
+| `codex mcp remove` | Remove an MCP server | Remove it when no longer needed |
+| `codex mcp get` | View details of a specific MCP server | See the exact configuration |
+| `codex mcp login` | Sign in to an MCP that requires authorization | Authorize certain remote MCPs |
+| `codex mcp logout` | Sign out of an MCP authorization | Disconnect authorization |
+| /mcp | View MCP inside a Codex session | See which tools the current session can call |
 
 
 ---
 
-##### 添加 MCP 的基本格式
+##### Basic format for adding MCP
 
-添加 MCP 的基本命令通常是：
-
-```text
-codex mcp add 名称 -- 启动命令
-```
-
-简单来说：
+The basic command for adding MCP is usually:
 
 ```text
-名称 = 你给这个 MCP 起的名字
-启动命令 = 这个 MCP 怎么启动
+codex mcp add name -- startup-command
 ```
 
-示例：
+In simple terms:
+
+```text
+name = the name you give this MCP
+startup-command = how this MCP starts
+```
+
+Example:
 
 ```text
 codex mcp add context7 -- npx -y @upstash/context7-mcp
 ```
 
-这条命令可以理解成：
+This command means:
 
 ```text
-给 Codex 添加一个叫 context7 的 MCP。
-它通过 npx 启动 @upstash/context7-mcp 这个工具。
+Add an MCP named context7 to Codex.
+It starts the @upstash/context7-mcp tool through npx.
 ```
 
 ---
 
-##### 查看已经添加的 MCP
+##### View added MCP servers
 
-添加后可以运行：
+After adding one, run:
 
 ```text
 codex mcp list
 ```
 
-作用：
+Purpose:
 
 ```text
-查看当前 Codex CLI 已经配置了哪些 MCP server。
+View which MCP servers are currently configured for Codex CLI.
 ```
 
-如果能看到你刚添加的名称，说明配置已经写入。
+If you see the name you just added, the configuration has been written.
 
 ---
 
-##### 进入 Codex 后查看 MCP
+##### View MCP after entering Codex
 
-先进入项目目录：
+First enter the project directory:
 
 ```text
-cd 项目目录
+cd project-directory
 ```
 
-然后启动 Codex：
+Then start Codex:
 
 ```text
 codex
 ```
 
-进入 Codex CLI 后，输入：
+After entering Codex CLI, type:
 
 ```text
 /mcp
 ```
 
-作用：
+Purpose:
 
 ```text
-查看当前会话里可用的 MCP 工具。
+View MCP tools available in the current session.
 ```
 
-如果 MCP 没显示，可能是：
+If the MCP does not appear, possible causes include:
 
 
-| 问题 | 可能原因 |
+| Issue | Possible cause |
 | --- | --- |
-| 没添加成功 | `codex mcp add` 命令失败 |
-| MCP 启动失败 | 依赖没装或命令错误 |
-| 名称写错 | 调用时写错 server 名 |
-| 需要授权 | 还没登录外部服务 |
-| 配置没刷新 | 需要重启 Codex CLI |
+| Not added successfully | `codex mcp add` command failed |
+| MCP failed to start | Dependency not installed or command incorrect |
+| Name typo | Server name was written incorrectly when calling |
+| Authorization required | External service not yet signed in |
+| Configuration not refreshed | Need to restart Codex CLI |
 
 
 ---
 
-##### 在任务里调用 MCP
+##### Call MCP in tasks
 
-配置好 MCP 后，不一定要记复杂命令。
+After MCP is configured, you do not need to remember complex commands.
 
-你可以直接在 Codex CLI 里说：
+You can simply say inside Codex CLI:
 
 ```text
-请使用可用的 MCP 工具，查询 Next.js App Router 的最新文档。
+Please use available MCP tools to query the latest documentation for Next.js App Router.
 ```
 
-也可以指定某个 MCP：
+You can also specify an MCP:
 
 ```text
-请用 context7 查询 Next.js App Router 的最新用法，
-然后告诉我当前项目应该怎么修改。
+Please use context7 to query the latest usage of Next.js App Router,
+then tell me how the current project should be modified.
 ```
 
-如果是 Figma 类 MCP，可以这样说：
+For Figma-type MCP, you can say:
 
 ```text
-请用 Figma MCP 读取这个设计稿，
-分析页面结构，并给我生成前端实现计划。
+Please use Figma MCP to read this design file,
+analyze the page structure, and generate a frontend implementation plan for me.
 ```
 
-如果是 GitHub 类 MCP，可以这样说：
+For GitHub-type MCP, you can say:
 
 ```text
-请用 GitHub MCP 查看这个仓库最近的 open issue，
-帮我整理出优先级最高的 3 个问题。
+Please use GitHub MCP to check the recent open issues in this repository,
+and summarize the top 3 highest-priority problems.
 ```
 
 ---
 
-##### MCP 配置文件在哪里
+##### Where the MCP configuration file is
 
-Codex 的 MCP 配置会写进配置文件里。
+Codex writes MCP configuration into a configuration file.
 
-常见位置是：
+A common location is:
 
 ```text
 ~/.codex/config.toml
 ```
 
-简单来说：
+In simple terms:
 
 ```text
-config.toml = Codex 的配置文件
+config.toml = Codex's configuration file
 ```
 
-里面可能会有类似这样的配置：
+It may contain configuration like this:
 
 ```text
 [mcp_servers.context7]
@@ -4889,16 +4881,16 @@ command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
 ```
 
-这表示：
+This means:
 
 ```text
-有一个 MCP server 叫 context7。
-启动命令是 npx -y @upstash/context7-mcp。
+There is an MCP server named context7.
+The startup command is npx -y @upstash/context7-mcp.
 ```
 
-如果你不熟悉配置文件，前期不要手动乱改。
+If you are not familiar with configuration files, do not edit them randomly at first.
 
-优先使用：
+Prefer using:
 
 ```text
 codex mcp add
@@ -4908,550 +4900,550 @@ codex mcp remove
 
 ---
 
-##### 添加远程 MCP
+##### Add remote MCP
 
-有些 MCP 不是本地命令启动，而是通过网址连接。
+Some MCPs are not started by local commands, but connected through URLs.
 
-这类一般叫远程 MCP / HTTP MCP。
+These are often called remote MCP / HTTP MCP.
 
-可能会需要：
+They may require:
 
 
-| 配置项 | 简单来说 |
+| Configuration item | Simple meaning |
 | --- | --- |
-| URL | 远程 MCP 服务地址 |
-| Auth | 是否需要登录 |
-| Token | 访问凭证 |
-| OAuth | 浏览器授权登录 |
+| URL | Remote MCP service address |
+| Auth | Whether login is required |
+| Token | Access credential |
+| OAuth | Browser-based authorization login |
 
 
-如果需要登录，可以使用：
+If login is required, use:
 
 ```text
-codex mcp login MCP名称
+codex mcp login MCP-name
 ```
 
-不用了可以：
+When no longer needed:
 
 ```text
-codex mcp logout MCP名称
+codex mcp logout MCP-name
 ```
 
-新手建议：
+Beginner recommendation:
 
 ```text
-先用不需要复杂授权的文档类 MCP。
-后面再尝试需要登录的远程 MCP。
+Start with documentation MCPs that do not require complex authorization.
+Try remote MCPs that require login later.
 ```
 
 ---
 
-##### 删除不用的 MCP
+##### Remove unused MCP
 
-如果某个 MCP 不用了，可以删除：
+If an MCP is no longer needed, remove it:
 
 ```text
-codex mcp remove 名称
+codex mcp remove name
 ```
 
-比如：
+For example:
 
 ```text
 codex mcp remove context7
 ```
 
-删除后再检查：
+Then check again:
 
 ```text
 codex mcp list
 ```
 
-确认它已经不在列表里。
+Confirm it is no longer in the list.
 
-### 代码管理 （Git 与 GitHub 工作流）
+### Code management (Git and GitHub workflows)
 
-用 Codex 做真实项目时，一定要懂一点 Git 和 GitHub。
+When using Codex on real projects, you must understand some Git and GitHub basics.
 
-小白可以先这样理解：
-
-```text
-Git = 本地代码版本管理工具
-GitHub = 把代码放到网上协作的平台
-Codex = 帮你读代码、改代码、跑命令的 AI 编程助手
-```
-
-一句话：
+Beginners can start with this:
 
 ```text
-Git 负责记录代码变化。
-GitHub 负责远程保存和协作。
-Codex 负责帮你完成具体编程任务。
+Git = local code version-control tool
+GitHub = online platform for storing and collaborating on code
+Codex = AI programming assistant that helps read code, modify code, and run commands
 ```
 
-#### Git 和 GitHub 有什么区别
+In one sentence:
+
+```text
+Git records code changes.
+GitHub stores code remotely and supports collaboration.
+Codex helps you complete specific programming tasks.
+```
+
+#### Difference between Git and GitHub
 
 
-| 对比 | Git | GitHub |
+| Comparison | Git | GitHub |
 | --- | --- | --- |
-| 简单来说 | 本地版本管理工具 | 代码云盘 + 协作平台 |
-| 主要作用 | 记录代码每次改了什么 | 远程保存代码、团队协作 |
-| 使用位置 | 你的电脑里 | 浏览器 / 云端 |
-| 核心能力 | commit、branch、diff、merge | repository、issue、pull request |
-| 是否必须联网 | 不需要 | 需要 |
-| 和 Codex 的关系 | Codex 改完代码后，用 Git 检查和保存 | Codex Web / Cloud 常和 GitHub 配合 |
+| Simple meaning | Local version-control tool | Code cloud drive + collaboration platform |
+| Main purpose | Record what changed each time | Store code remotely and support team collaboration |
+| Where used | On your computer | Browser / cloud |
+| Core capabilities | commit, branch, diff, merge | repository, issue, pull request |
+| Requires internet? | No | Yes |
+| Relationship with Codex | After Codex modifies code, use Git to inspect and save changes | Codex Web / Cloud often works with GitHub |
 
 
-##### 小白必须先懂的 Git 概念
+##### Git concepts beginners must understand first
 
 
-| 概念 | 简单来说 | 作用 |
+| Concept | Simple meaning | Purpose |
 | --- | --- | --- |
-| Repository | 一个代码仓库 | 存放整个项目 |
-| Commit | 一次代码存档 | 记录这次改了什么 |
-| Branch | 分支 | 在不影响主线的情况下改代码 |
-| Diff | 改动对比 | 看新增、删除、修改了什么 |
-| Stage | 暂存区 | 准备把哪些改动保存进 commit |
-| Merge | 合并 | 把一个分支的改动合到另一个分支 |
-| Conflict | 冲突 | 两边改了同一处代码，需要手动选择 |
-| Push | 推送 | 把本地代码上传到 GitHub |
-| Pull | 拉取 | 把 GitHub 上的新代码同步到本地 |
-| Clone | 克隆 | 从 GitHub 下载一个项目到本地 |
+| Repository | A code repository | Stores the whole project |
+| Commit | A code snapshot | Records what changed this time |
+| Branch | Branch | Modify code without affecting the main line |
+| Diff | Change comparison | See what was added, deleted, or modified |
+| Stage | Staging area | Prepare which changes go into a commit |
+| Merge | Merge | Bring changes from one branch into another |
+| Conflict | Conflict | Both sides changed the same code and need manual choice |
+| Push | Push | Upload local code to GitHub |
+| Pull | Pull | Sync new code from GitHub to local |
+| Clone | Clone | Download a project from GitHub to local |
 
 
 ---
 
-##### 小白必须先懂的 GitHub 概念
+##### GitHub concepts beginners must understand first
 
 
-| 概念 | 简单来说 | 作用 |
+| Concept | Simple meaning | Purpose |
 | --- | --- | --- |
-| Repository | GitHub 上的项目仓库 | 存代码 |
-| Issue | 问题 / 需求记录 | 记录 bug、需求、任务 |
-| Pull Request / PR | 代码合并申请 | 改完代码后申请合并 |
-| Main Branch | 主分支 | 项目的稳定版本 |
-| Feature Branch | 功能分支 | 用来开发新功能 |
-| Review | 代码检查 | 合并前检查代码 |
-| Actions | 自动化流程 | 自动测试、构建、部署 |
-| README | 项目说明书 | 告诉别人项目怎么用 |
-| .gitignore | 忽略文件清单 | 防止上传无关或敏感文件 |
+| Repository | Project repository on GitHub | Stores code |
+| Issue | Bug / requirement record | Records bugs, requirements, tasks |
+| Pull Request / PR | Code merge request | Request merging after code changes |
+| Main Branch | Main branch | Stable version of the project |
+| Feature Branch | Feature branch | Used to develop new features |
+| Review | Code review | Inspect code before merging |
+| Actions | Automation workflows | Automated testing, build, deployment |
+| README | Project manual | Tells others how to use the project |
+| .gitignore | Ignore-file list | Prevents uploading irrelevant or sensitive files |
 
 
 ---
 
-#### 为什么用 Codex 更需要 Git
+#### Why Git matters even more when using Codex
 
 
-| 场景 | 为什么需要 Git |
+| Scenario | Why Git is needed |
 | --- | --- |
-| Codex 改了很多代码 | 可以查看具体改了哪里 |
-| Codex 改错了 | 可以回退到之前版本 |
-| Codex 删除了不该删的内容 | 可以用 Git 找回 |
-| 多次让 Codex 修改 | 每次 commit 保存一个阶段 |
-| 想让 Codex 大胆试方案 | 用 branch 或 worktree 隔离风险 |
-| 要把项目放到 GitHub | 需要 push 到远程仓库 |
-| 团队协作 | 需要 PR、review、merge |
+| Codex modifies a lot of code | You can inspect exactly what changed |
+| Codex makes a wrong change | You can roll back to a previous version |
+| Codex deletes content it should not delete | You can recover it with Git |
+| You ask Codex to modify repeatedly | Each commit saves one stage |
+| You want Codex to try ideas boldly | Use branches or worktrees to isolate risk |
+| You want to put a project on GitHub | You need to push to a remote repository |
+| Team collaboration | Requires PR, review, and merge |
 
 
-一句话：
+In one sentence:
 
 ```text
-没有 Git，Codex 改错了你很难回退。
-有了 Git，Codex 可以放心试，你可以随时检查和恢复。
+Without Git, it is hard to roll back if Codex makes a wrong change.
+With Git, Codex can try more safely, and you can inspect and recover at any time.
 ```
 
 ---
 
-#### 如何在 Codex 中使用 Git
+#### How to use Git with Codex
 
 
-| 步骤 | 操作 | 目的 |
+| Step | Action | Purpose |
 | --- | --- | --- |
-| 1 | 初始化 Git | 让项目开始被 Git 管理 |
-| 2 | 写好 .gitignore | 防止上传垃圾文件和密钥 |
-| 3 | 先 commit 一次 | 保存干净版本 |
-| 4 | 新建分支 | 给 Codex 一个安全实验区 |
-| 5 | 让 Codex 修改代码 | 完成具体任务 |
-| 6 | 查看 diff | 检查 Codex 改了什么 |
-| 7 | 运行项目 / 构建 | 确认没出错 |
-| 8 | 满意后 commit | 保存这次修改 |
-| 9 | push 到 GitHub | 上传远程仓库 |
-| 10 | 创建 PR | 合并前再检查一次 |
+| 1 | Initialize Git | Start managing the project with Git |
+| 2 | Write .gitignore | Prevent uploading junk files and secrets |
+| 3 | Commit once first | Save a clean version |
+| 4 | Create a branch | Give Codex a safe experimentation area |
+| 5 | Let Codex modify code | Complete the specific task |
+| 6 | Inspect diff | Check what Codex changed |
+| 7 | Run project / build | Confirm nothing is broken |
+| 8 | Commit when satisfied | Save this modification |
+| 9 | Push to GitHub | Upload to remote repository |
+| 10 | Create PR | Review again before merging |
 
 
-##### 在 Codex 对话框中输入：把项目初始化成一个 Git 工程，并排除不需要的文件
+##### Enter in the Codex dialog: initialize the project as a Git project and exclude unnecessary files
 
 <p align="center">
-  <img src="assets/images/image-049-1201459d2a.png" alt="在Codex中使用Git的界面" width="860">
+  <img src="assets/images/image-049-1201459d2a.png" alt="Using Git in Codex" width="860">
 </p>
 
 
 ---
 
-##### Codex 会帮我们直接写好 .gitignore 文件
+##### Codex will help write the .gitignore file directly
 
 <p align="center">
-  <img src="assets/images/image-050-c05fba79fd.png" alt="在Codex中使用Git的界面" width="860">
+  <img src="assets/images/image-050-c05fba79fd.png" alt="Using Git in Codex" width="860">
 </p>
 
-#### 如何在 Codex 中使用 GitHub
+#### How to use GitHub with Codex
 
-##### 使用前需要准备什么
+##### What to prepare before using it
 
 
-| 准备项 | 作用 | 简单来说 |
+| Item | Purpose | Simple meaning |
 | --- | --- | --- |
-| GitHub 账号 | 保存远程代码 | 代码云盘账号 |
-| Git | 本地版本管理 | 记录代码变化 |
-| GitHub 仓库 | 放项目代码 | 一个远程项目文件夹 |
-| 本地项目 | Codex 要修改的代码 | 电脑里的项目文件夹 |
-| GitHub 登录权限 | 允许 push / PR | 证明这是你的仓库 |
-| .gitignore | 防止上传无关文件 | 不上传垃圾文件和密钥 |
+| GitHub account | Store remote code | Code cloud-drive account |
+| Git | Local version management | Record code changes |
+| GitHub repository | Store project code | A remote project folder |
+| Local project | Code Codex will modify | Project folder on your computer |
+| GitHub login permission | Allow push / PR | Prove this is your repository |
+| .gitignore | Prevent uploading irrelevant files | Do not upload junk files or secrets |
 
 
-##### 标准上传流程
+##### Standard upload flow
 
 
-| 步骤 | 操作 | 目的 |
+| Step | Action | Purpose |
 | --- | --- | --- |
-| 1 | 在 GitHub 新建仓库 | 创建一个远程项目空间 |
-| 2 | 复制仓库地址 | 后面要连接本地项目 |
-| 3 | 将地址复制给 Codex | 让 Codex 知道要上传到哪个仓库 |
-| 4 | 推送到 GitHub | 正式上传代码 |
+| 1 | Create a repository on GitHub | Create a remote project space |
+| 2 | Copy the repository URL | Used to connect the local project later |
+| 3 | Paste the URL to Codex | Tell Codex which repository to upload to |
+| 4 | Push to GitHub | Upload code officially |
 
 
-###### 创建 GitHub 仓库
+###### Create a GitHub repository
 
 <p align="center">
-  <img src="assets/images/image-051-7fe82d6fc2.png" alt="GitHub创建仓库页面" width="860">
+  <img src="assets/images/image-051-7fe82d6fc2.png" alt="GitHub repository creation page" width="860">
 </p>
 
-###### 复制仓库地址
+###### Copy the repository URL
 
 <p align="center">
-  <img src="assets/images/image-052-d903af3360.png" alt="在GitHub上创建仓库时复制仓库地址的操作界面" width="860">
+  <img src="assets/images/image-052-d903af3360.png" alt="Interface for copying a repository URL while creating a GitHub repository" width="860">
 </p>
 
-###### 将地址复制给 Codex
+###### Paste the URL to Codex
 
 <p align="center">
-  <img src="assets/images/image-053-1cdc6096db.png" alt="Codex平台中“做一个首页”项目的页面" width="860">
+  <img src="assets/images/image-053-1cdc6096db.png" alt="Page for the “build a home page” project on the Codex platform" width="860">
 </p>
 
-###### 推送到 GitHub
+###### Push to GitHub
 
-#### 代码回滚
+#### Code rollback
 
-##### 修改代码
+##### Modify code
 
-先让 AI 修改一下代码
+First ask the AI to modify some code.
 
 <p align="center">
-  <img src="assets/images/image-054-220c086985.png" alt="Codex平台中“做一个首页”项目的界面" width="860">
+  <img src="assets/images/image-054-220c086985.png" alt="Interface for the “build a home page” project on the Codex platform" width="860">
 </p>
 
-##### 提交到 Git，保存好当前版本
+##### Commit to Git and save the current version
 
 <p align="center">
-  <img src="assets/images/image-055-05e59b1fdc.png" alt="Codex平台中使用Git进行代码管理的操作界面" width="860">
+  <img src="assets/images/image-055-05e59b1fdc.png" alt="Code-management operation interface using Git on the Codex platform" width="860">
 </p>
 
-##### 继续修改代码
+##### Continue modifying code
 
 <p align="center">
-  <img src="assets/images/image-056-ea768961ca.png" alt="在Codex中使用Git的代码回滚操作界面" width="860">
+  <img src="assets/images/image-056-ea768961ca.png" alt="Git rollback operation interface in Codex" width="860">
 </p>
 
-##### 打开 IDE 查看代码并且回退代码
+##### Open the IDE to inspect code and roll it back
 
-先打开 IDE 查看代码
+First open the IDE to inspect the code.
 
 <p align="center">
-  <img src="assets/images/image-057-f9516b1833.png" alt="在Codex中使用Git的界面" width="860">
+  <img src="assets/images/image-057-f9516b1833.png" alt="Using Git in Codex" width="860">
 </p>
 
-##### 复制版本号
+##### Copy the version number
 
 <p align="center">
-  <img src="assets/images/image-058-72172c5bd0.png" alt="在VS Code中使用Codex进行代码回滚的操作界面" width="860">
+  <img src="assets/images/image-058-72172c5bd0.png" alt="Code rollback operation in VS Code using Codex" width="860">
 </p>
 
-##### 复制给 Codex，让它回退代码到指定版本
+##### Paste it to Codex and ask it to roll back code to the specified version
 
 <p align="center">
-  <img src="assets/images/image-059-9cdba830ef.png" alt="在Codex中使用Git进行代码回滚的操作界面" width="860">
+  <img src="assets/images/image-059-9cdba830ef.png" alt="Git code rollback operation interface in Codex" width="860">
 </p>
 
 #### Git Worktree
 
-给同一个 Git 项目，额外开一个独立工作副本。
+A worktree creates an additional independent working copy for the same Git project.
 
-相当于一个草稿本，效果满意后再合并回正式项目。
+It works like a draft copy. After you are satisfied with the result, merge it back into the official project.
 
-##### 为什么需要 Worktree
+##### Why Worktree is useful
 
-普通 Git 分支虽然可以切换，但每次只能在一个文件夹里操作一个分支。
+Ordinary Git branches can be switched, but only one branch can be operated in one folder at a time.
 
-Worktree 的好处是：
+The advantages of Worktree:
 
 
-| 场景 | Worktree 的作用 |
+| Scenario | What Worktree does |
 | --- | --- |
-| 想让 Codex 大胆改代码 | 给它单独开一个副本 |
-| 不想影响当前项目 | 主项目保持不动 |
-| 想同时做多个任务 | 每个任务一个 worktree |
-| 想比较多个方案 | 方案 A / B / C 分开放 |
-| 改坏了不想要 | 直接丢掉 worktree |
-| 做大改动 / 重构 | 降低污染主项目的风险 |
+| You want Codex to modify code boldly | Give it a separate copy |
+| You do not want to affect the current project | Keep the main project unchanged |
+| You want to work on multiple tasks at once | One worktree per task |
+| You want to compare multiple approaches | Put options A / B / C separately |
+| A change is broken and unwanted | Discard the worktree directly |
+| Large change / refactor | Reduce the risk of polluting the main project |
 
 
-##### 创建 Worktree
+##### Create a Worktree
 
 <p align="center">
-  <img src="assets/images/image-060-1e3fd3edad.png" alt="Codex移动版界面中“hello - Codex”项目的操作菜单" width="860">
+  <img src="assets/images/image-060-1e3fd3edad.png" alt="Action menu for the “hello - Codex” project in the Codex mobile interface" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-061-1e67e75a88.png" alt="Codex平台界面，左侧为项目列表，其中“hello - codex_2”项目被红色框突出显示" width="860">
+  <img src="assets/images/image-061-1e67e75a88.png" alt="Codex platform interface showing the project list on the left, with “hello - codex_2” highlighted" width="860">
 </p>
 
-##### 使用分支进行任务
+##### Use a branch for the task
 
 <p align="center">
-  <img src="assets/images/image-062-677190e8ff.png" alt="Gitpod界面中“hello - codex_2”分支的代码编辑区域" width="860">
+  <img src="assets/images/image-062-677190e8ff.png" alt="Code editor area for the “hello - codex_2” branch in the Gitpod interface" width="860">
 </p>
 
-##### 合并回主干
+##### Merge back to main
 
-检查效果满意后，就可以合并回主干，并把这个分支删除。
+After you are satisfied with the result, merge it back into main and delete the branch.
 
 <p align="center">
-  <img src="assets/images/image-063-8c0f374e82.png" alt="在GitHub上使用Worktree进行代码管理的操作界面" width="860">
+  <img src="assets/images/image-063-8c0f374e82.png" alt="GitHub interface for code management using Worktree" width="860">
 </p>
 
-### 云端运行
+### Cloud execution
 
-Codex 的云端任务适合在你不方便一直开着本地电脑时继续处理工作；如果你的账号和客户端支持移动端入口，也可以在外出时查看或推进部分任务。
+Codex cloud tasks are suitable when you cannot keep your local computer running. If your account and client support mobile entry points, you can also view or advance part of the task while away.
 
 ```text
-把代码任务交给 Codex，让它在云端环境里自己跑。
+Hand code tasks to Codex and let it run them in a cloud environment.
 ```
 
-小白可以这样理解：
+Beginners can understand it this way:
 
 
-| 模式 | 运行位置 | 简单来说 |
+| Mode | Where it runs | Simple meaning |
 | --- | --- | --- |
-| Local | 你的电脑本地项目 | Codex 直接改你电脑里的代码 |
-| Worktree | 你的电脑本地副本 | Codex 在安全副本里改代码 |
-| Cloud | OpenAI 云端环境 | Codex 在云端拉取 GitHub 仓库并处理任务 |
+| Local | Local project on your computer | Codex directly modifies code on your computer |
+| Worktree | Local copy on your computer | Codex modifies code in a safe copy |
+| Cloud | OpenAI cloud environment | Codex pulls a GitHub repository and processes tasks in the cloud |
 
 
-#### Codex 云端运行是什么
+#### What is Codex cloud execution?
 
-Codex 云端运行，本质上是：
+Codex cloud execution is essentially:
 
 
-| 内容 | 说明 |
+| Item | Description |
 | --- | --- |
-| 运行环境 | 云端容器 |
-| 代码来源 | GitHub 仓库 |
-| 工作方式 | Codex 在云端读取、修改、运行、验证代码 |
-| 最终结果 | 生成修改结果、diff，必要时创建 PR |
-| 适合任务 | 修 bug、改功能、写文档、代码 review、处理 issue |
-| 不适合任务 | 本地私密文件、没有上传 GitHub 的项目、高风险生产操作 |
+| Runtime environment | Cloud container |
+| Code source | GitHub repository |
+| Working style | Codex reads, modifies, runs, and verifies code in the cloud |
+| Final result | Generates modification results and diffs, and creates PRs when needed |
+| Suitable tasks | Bug fixes, feature changes, documentation, code review, issue handling |
+| Not suitable for | Local private files, projects not uploaded to GitHub, high-risk production operations |
 
 
 ---
 
-#### 云端运行和本地运行的区别
+#### Difference between cloud execution and local execution
 
 
-| 对比 | 本地运行 Local / Worktree | 云端运行 Cloud |
+| Comparison | Local / Worktree | Cloud |
 | --- | --- | --- |
-| 代码位置 | 你电脑里 | GitHub 仓库 |
-| 运行位置 | 你的电脑 | 云端容器 |
-| 是否占用电脑 | 会占用 | 基本不占用 |
-| 是否需要 GitHub | 不一定 | 通常需要 |
-| 是否适合后台任务 | 一般 | 很适合 |
-| 是否适合并行任务 | 一般 | 很适合 |
-| 权限风险 | 主要是本机文件权限 | 主要是仓库、环境变量、网络权限 |
-| 适合新手吗 | 更适合先学 | 学会 GitHub 后再用 |
+| Code location | On your computer | GitHub repository |
+| Runtime location | Your computer | Cloud container |
+| Occupies your computer? | Yes | Mostly no |
+| Requires GitHub? | Not necessarily | Usually yes |
+| Suitable for background tasks? | Average | Very suitable |
+| Suitable for parallel tasks? | Average | Very suitable |
+| Permission risk | Mainly local file permissions | Mainly repository, environment variable, and network permissions |
+| Suitable for beginners? | Better to learn first | Use after learning GitHub |
 
 
-#### 云端运行操作步骤
+#### Cloud execution steps
 
-##### 推送代码到GitHub上面
+##### Push code to GitHub
 
 <p align="center">
-  <img src="assets/images/image-064-c6cc5dc4d9.png" alt="在GitHub上推送代码到仓库的操作界面" width="860">
+  <img src="assets/images/image-064-c6cc5dc4d9.png" alt="Interface for pushing code to a GitHub repository" width="860">
 </p>
 
-##### 打开Codex Web
+##### Open Codex Web
 
 <p align="center">
-  <img src="assets/images/image-065-7be7472fae.png" alt="Codex操作界面，在界面某处的下拉菜单中，“打开Codex web”选项被红色框线突出显示" width="860">
-</p>
-
-<p align="center">
-  <img src="assets/images/image-066-e3aead10bc.png" alt="Codex云端界面" width="860">
-</p>
-
-##### 选择我们要修改的仓库
-
-选择好过后直接让Codex给我们工作就行了
-
-<p align="center">
-  <img src="assets/images/image-067-e4aba35bff.png" alt="Codex云端运行操作步骤中选择我们要修改的仓库界面" width="860">
-</p>
-
-##### 修改完成后上传到 GitHub 仓库
-
-<p align="center">
-  <img src="assets/images/image-068-81826d70e0.png" alt="Codex云端运行操作步骤中修改完成后上传到GitHub仓库的界面" width="860">
+  <img src="assets/images/image-065-7be7472fae.png" alt="Codex interface with the “Open Codex web” option highlighted in a dropdown menu" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-069-cfd1040092.png" alt="一个GitHub仓库页面，显示了用户Vink567在“Polish landing page design #2”仓库的代码提交记录" width="860">
+  <img src="assets/images/image-066-e3aead10bc.png" alt="Codex cloud interface" width="860">
 </p>
 
-##### 本地修改前先同步 GitHub 仓库里的最新代码
+##### Choose the repository we want to modify
 
-如果云端任务已经把修改推回 GitHub，本地继续开发前要先同步最新代码，避免在旧版本上继续修改导致冲突。具体是 Codex 自动帮你应用变更，还是你手动 `git pull` / `codex apply`，取决于当前入口和任务类型。
+After choosing it, ask Codex to work on it.
 
 <p align="center">
-  <img src="assets/images/image-070-548c4bfced.png" alt="Codex云端运行操作界面" width="860">
+  <img src="assets/images/image-067-e4aba35bff.png" alt="Repository selection interface in Codex cloud execution steps" width="860">
 </p>
 
-### 记忆系统
+##### Upload the completed changes to the GitHub repository
 
-让 Codex 记住一些长期有用的信息，方便以后继续工作。
+<p align="center">
+  <img src="assets/images/image-068-81826d70e0.png" alt="Interface for uploading completed changes to a GitHub repository in Codex cloud execution steps" width="860">
+</p>
 
-#### 项目级AGENTS.md
+<p align="center">
+  <img src="assets/images/image-069-cfd1040092.png" alt="A GitHub repository page showing code commits by Vink567 in the “Polish landing page design #2” repository" width="860">
+</p>
+
+##### Sync the latest GitHub repository code before modifying locally
+
+If a cloud task has already pushed changes back to GitHub, sync the latest code before continuing local development to avoid conflicts caused by editing an old version. Whether Codex automatically applies the changes for you or you manually run `git pull` / `codex apply` depends on the current entry point and task type.
+
+<p align="center">
+  <img src="assets/images/image-070-548c4bfced.png" alt="Codex cloud execution interface" width="860">
+</p>
+
+### Memory system
+
+Let Codex remember some long-term useful information so it can continue work more easily later.
+
+#### Project-level AGENTS.md
 
 ```text
-写给 Codex 看的项目规则说明书。
+A project rules manual written for Codex.
 ```
 
-小白可以这样理解：
+Beginners can understand it this way:
 
 
-| 文件 | 主要读者 | 作用 |
+| File | Main reader | Purpose |
 | --- | --- | --- |
-| README.md | 人 | 告诉人这个项目是什么、怎么安装、怎么使用 |
-| AGENTS.md | Codex / AI Agent | 告诉 AI 在这个项目里应该怎么工作 |
-| .gitignore | Git | 告诉 Git 哪些文件不要上传 |
+| README.md | Humans | Tells people what the project is, how to install it, and how to use it |
+| AGENTS.md | Codex / AI Agent | Tells AI how to work in this project |
+| .gitignore | Git | Tells Git which files not to upload |
 
 
-##### AGENTS.md 放在哪里
+##### Where to put AGENTS.md
 
 
-| 放置位置 | 作用范围 | 简单来说 |
+| Location | Scope | Simple meaning |
 | --- | --- | --- |
-| 项目根目录 AGENTS.md | 整个项目 | 当前项目的总规则 |
-| 子目录里的 AGENTS.md | 当前子目录及相关任务 | 某个模块的专属规则 |
-| 用户级 `~/.codex/AGENTS.md` | 你所有项目 | 个人通用规则 |
-| 项目级 AGENTS.md + 用户级 AGENTS.md | 叠加生效 | 个人习惯 + 当前项目规则 |
+| Project root AGENTS.md | Entire project | Main rules for the current project |
+| AGENTS.md in a subdirectory | Current subdirectory and related tasks | Module-specific rules |
+| User-level `~/.codex/AGENTS.md` | All your projects | Personal general rules |
+| Project-level AGENTS.md + user-level AGENTS.md | Both apply | Personal habits + current project rules |
 
 
-##### 如何写 AGENTS.md
+##### How to write AGENTS.md
 
-可以直接交给AI来写，让AI总结这个项目的核心内容制作成 AGENTS.md
+You can hand it directly to AI and ask AI to summarize the core content of the project into AGENTS.md.
 
-###### 前端项目 AGENTS.md 模板
+###### Frontend project AGENTS.md template
 
 ```text
 # AGENTS.md
 
-## 项目说明
+## Project description
 
-这是一个前端网页项目，用于构建产品页面、工具页面或个人作品展示页面。
+This is a frontend web project used to build product pages, tool pages, or personal portfolio pages.
 
-## 技术栈
+## Tech stack
 
 - React
 - Vite
 - Tailwind CSS
 - JavaScript / TypeScript
 
-## 常用命令
+## Common commands
 
-- 安装依赖：`npm install`
-- 启动项目：`npm run dev`
-- 构建项目：`npm run build`
+- Install dependencies: `npm install`
+- Start project: `npm run dev`
+- Build project: `npm run build`
 
-## 项目结构
+## Project structure
 
-- `src/`：主要源代码
-- `src/components/`：通用组件
-- `src/pages/`：页面文件
-- `src/assets/`：图片、图标等静态资源
-- `public/`：公开静态文件
+- `src/`: main source code
+- `src/components/`: shared components
+- `src/pages/`: page files
+- `src/assets/`: static assets such as images and icons
+- `public/`: public static files
 
-## 代码规范
+## Code conventions
 
-- 优先使用 React 函数组件
-- 优先使用 Tailwind CSS 写样式
-- 不要引入 Bootstrap
-- 不要大范围重构无关代码
-- 修改时保持文件结构清晰
-- 中文文案要自然、简洁、适合普通用户阅读
+- Prefer React function components
+- Prefer Tailwind CSS for styling
+- Do not introduce Bootstrap
+- Do not broadly refactor unrelated code
+- Keep file structure clear when modifying
+- Chinese copy should be natural, concise, and suitable for general users
 
-## UI 规则
+## UI rules
 
-- 页面要有清晰的信息层级
-- 按钮、卡片、标题、留白要统一
-- 移动端要基本可用
-- 不要过度渐变、阴影和 AI 模板感
-- 优先做真实产品感，而不是 Demo 感
+- Pages should have clear information hierarchy
+- Buttons, cards, headings, and spacing should be consistent
+- Mobile should be basically usable
+- Do not overuse gradients, shadows, or AI-template aesthetics
+- Prioritize a real product feel rather than a demo feel
 
-## 禁止事项
+## Prohibited actions
 
-- 不要修改 `.env`、`.env.local`
-- 不要输出 API Key、token、密码
-- 不要删除已有核心功能
-- 不要随意新增大型依赖
-- 不要直接改动和当前任务无关的文件
+- Do not modify `.env` or `.env.local`
+- Do not output API keys, tokens, or passwords
+- Do not delete existing core functionality
+- Do not add large dependencies casually
+- Do not directly modify files unrelated to the current task
 
-## 完成任务后
+## After completing a task
 
-每次修改完成后，请输出：
+After each modification, output:
 
-1. 修改了哪些文件
-2. 每个文件改了什么
-3. 为什么这样改
-4. 是否需要运行 `npm run build`
-5. 提醒我检查 diff
+1. Which files changed
+2. What changed in each file
+3. Why the change was made
+4. Whether `npm run build` needs to be run
+5. Remind me to inspect the diff
 ```
 
-###### 好的 AGENTS.md 有什么特点
+###### Characteristics of a good AGENTS.md
 
 
-| 特点 | 说明 |
+| Characteristic | Description |
 | --- | --- |
-| 具体 | 写清楚技术栈、命令、目录 |
-| 简洁 | 不要写成长篇废话 |
-| 可执行 | Codex 看了知道怎么做 |
-| 有限制 | 明确哪些文件不能碰 |
-| 有验证 | 写清楚运行什么命令检查 |
-| 有完成标准 | 让 Codex 知道交付什么 |
-| 可维护 | 项目变化后及时更新 |
+| Specific | Clearly states tech stack, commands, directories |
+| Concise | Does not become long-winded noise |
+| Actionable | Codex knows what to do after reading it |
+| Constrained | Clearly states which files cannot be touched |
+| Verifiable | Specifies which commands to run for checks |
+| Has completion criteria | Lets Codex know what to deliver |
+| Maintainable | Updated promptly as the project changes |
 
 
-#### 全局级AGENTS.md
+#### Global AGENTS.md
 
-##### 打开Codex的设置，找到个性化
+##### Open Codex settings and find personalization
 
 <p align="center">
-  <img src="assets/images/image-071-c36b13b759.png" alt="Codex的个性化设置界面" width="860">
+  <img src="assets/images/image-071-c36b13b759.png" alt="Codex personalization settings interface" width="860">
 </p>
 
-##### 输入指令，这里的指令会作为你的个人通用偏好影响后续 Codex 会话
+##### Enter instructions; these instructions become your general personal preferences for future Codex sessions
 
-使用AI编程的时候最怕AI乱删东西，可以用以下指令
+When using AI programming tools, one of the biggest concerns is that AI may delete things carelessly. You can use the following instruction:
 
-禁止批量删除文件或目录。
+Do not batch-delete files or directories.
 
-不要使用：
+Do not use:
 
 - `del /s`
 - `rd /s`
@@ -5459,713 +5451,713 @@ Codex 云端运行，本质上是：
 - `Remove-Item -Recurse`
 - `rm -rf`
 
-需要删除文件时，只能一次删除一个明确路径的文件。
+When deleting files is necessary, delete only one file at one explicit path at a time.
 
-正确示例：
+Correct example:
 
 ```powershell
 Remove-Item "C:\path\to\file.txt"
 ```
 
-如果需要批量删除文件，应停止操作，并向用户请求，让用户手动删除。
+If batch deletion is needed, stop the operation and ask the user to delete manually.
 
-## 第四篇：标准工作流
+## Part 4: Standard workflow
 
-### 从需求到交付的完整链路
+### The complete path from requirement to delivery
 
-很多人刚开始用 Codex，会直接一句话丢给它：
+When many people first start using Codex, they throw a one-line request at it:
 
-> 帮我做一个网站。
-> 帮我改这个功能。
-> 帮我优化这个项目。
+> Build me a website.  
+> Change this feature for me.  
+> Optimize this project.
 
-这样不是不行，但很容易出现一个问题：
-**AI 改得很快，但你不知道它到底改了什么，也不知道能不能放心交付。**
+This can work, but it often creates a problem:
+**AI changes things very quickly, but you do not know exactly what it changed or whether the result is safe to deliver.**
 
-所以真正稳定的方式，不是让 Codex 一口气乱改，而是按照一套固定工作流来推进。
+So the truly stable approach is not to let Codex modify everything at once. It is to move forward through a fixed workflow.
 
-你可以把它理解成：
+You can understand it this way:
 
-> 需求不是直接变成交付物，中间必须经过“理解、计划、修改、验证、检查、验收”这几步。
+> A requirement does not become a deliverable directly. It must pass through “understanding, planning, modification, validation, review, and acceptance.”
 
-#### 标准六步法
+#### Standard six-step method
 
 
-| 步骤 | 名称 | 简单来说 | 目的 |
+| Step | Name | Simple meaning | Purpose |
 | --- | --- | --- | --- |
-| 1 | 需求拆解 | 先让 Codex 知道要做的项目是什么 | 避免不了解结构就乱改 |
-| 2 | 制定计划 | 先列出要做什么，确认后再动手 | 避免一步改太多、方向跑偏 |
-| 3 | 小步实现 | 一次只改一小块 | 降低出错概率，方便回滚 |
-| 4 | 测试 | 改完后运行检查并手动验证 | 确认代码没有明显报错 |
-| 5 | 代码审查 | 看 diff，检查改得对不对、有没有风险 | 防止 AI 改到不该改的地方 |
-| 6 | 提交与复盘 | 提交代码并沉淀经验 | AI 负责执行，人负责拍板 |
+| 1 | Requirement breakdown | First let Codex understand what the project and task are | Avoid modifying blindly without understanding structure |
+| 2 | Create a plan | List what needs to be done and confirm before acting | Avoid changing too much at once or going in the wrong direction |
+| 3 | Implement in small steps | Change only one small piece at a time | Reduce error probability and make rollback easier |
+| 4 | Test | Run checks and manually validate after changes | Confirm the code has no obvious errors |
+| 5 | Code review | Inspect diff and check correctness and risk | Prevent AI from modifying areas it should not touch |
+| 6 | Commit and review | Commit code and distill lessons | AI executes; humans make final decisions |
 
 
-##### 第一步：需求拆解
+##### Step 1: Requirement breakdown
 
-在让 Codex 修改项目之前，第一件事不是写代码，而是先拆需求。
+Before asking Codex to modify a project, the first step is not writing code. It is breaking down the requirement.
 
-很多人用 Codex 容易翻车，不是因为 Codex 不会写代码，而是因为一开始需求没说清楚。
+Many Codex failures happen not because Codex cannot write code, but because the requirement was unclear at the beginning.
 
-比如你只说：
+For example, if you only say:
 
-> 帮我优化首页。
+> Optimize the homepage.
 
-Codex 可能会理解成：
+Codex may interpret it as:
 
-- 改 UI
-- 改文案
-- 改布局
-- 改组件结构
-- 改路由
-- 甚至顺手删掉一些它觉得“没用”的代码
+- Change UI
+- Change copy
+- Change layout
+- Change component structure
+- Change routes
+- Even delete code it considers “unused”
 
-所以在正式动手前，应该先把需求拆成几个关键问题。
+So before actual implementation, break the requirement into several key questions.
 
-###### 背景是什么
+###### What is the background?
 
-先说明这个任务为什么要做。
+First explain why this task needs to be done.
 
 
-| 问题 | 示例 |
+| Question | Example |
 | --- | --- |
-| 现在项目处于什么阶段 | 这是一个已经上线的官网页面 |
-| 当前遇到什么情况 | 首页转化率低，用户不知道产品卖点 |
-| 为什么现在要改 | 准备发布新版，需要优化首屏表达 |
-| 这个需求属于什么类型 | UI 优化 / Bug 修复 / 新功能 / 重构 |
+| What stage is the project in now? | This is an already launched official website page |
+| What is the current situation? | Homepage conversion is low, and users do not understand the product value |
+| Why change it now? | A new release is coming, and the hero message needs improvement |
+| What type of requirement is this? | UI improvement / bug fix / new feature / refactor |
 
 
-###### 要解决什么问题
+###### What problem should be solved?
 
-需求要尽量具体，不要只写“优化”“美化”“改好一点”。
+Requirements should be as specific as possible. Do not write only “optimize,” “make it prettier,” or “improve it.”
 
 
-| 模糊说法 | 更清楚的说法 |
+| Vague wording | Clearer wording |
 | --- | --- |
-| 优化首页 | 优化首页首屏标题、副标题和 CTA 按钮 |
-| 页面不好看 | 调整卡片间距、字体层级和按钮样式 |
-| 登录有问题 | 修复点击登录按钮后没有跳转的问题 |
-| 做一个后台 | 新增用户列表页，包含搜索、筛选和分页 |
+| Optimize homepage | Improve the homepage hero title, subtitle, and CTA button |
+| Page does not look good | Adjust card spacing, typography hierarchy, and button style |
+| Login has a problem | Fix the issue where clicking the login button does not navigate |
+| Build an admin panel | Add a user list page with search, filtering, and pagination |
 
 
-好的需求应该能回答：
+A good requirement should answer:
 
-> 这次到底要解决哪一个具体问题？
+> Which specific problem is this task solving?
 
-示例：
+Example:
 
 ```text
-这次主要解决三个问题：
-1. 首屏标题表达不清楚
-2. CTA 按钮不明显
-3. 移动端首屏内容太拥挤
+This task mainly solves three problems:
+1. The hero title is unclear
+2. The CTA button is not prominent
+3. The mobile hero content is too crowded
 ```
 
-###### 哪些文件可能相关
+###### Which files may be related?
 
-如果你知道大概文件位置，最好提前告诉 Codex。
+If you roughly know where the files are, tell Codex in advance.
 
-这样可以减少它全项目乱找、乱改的概率。
+This reduces the chance of it searching and modifying the whole project randomly.
 
 
-| 场景 | 可能相关文件 |
+| Scenario | Possibly related files |
 | --- | --- |
-| 改首页 | app/page.tsx、pages/index.tsx、components/Hero.tsx |
-| 改样式 | globals.css、tailwind.config.js、相关组件文件 |
-| 改登录 | login/page.tsx、auth.ts、middleware.ts |
-| 改接口 | api 目录、server 目录、lib 目录 |
-| 改文案 | 页面组件、配置文件、i18n 文件 |
+| Modify homepage | app/page.tsx, pages/index.tsx, components/Hero.tsx |
+| Modify styles | globals.css, tailwind.config.js, related component files |
+| Modify login | login/page.tsx, auth.ts, middleware.ts |
+| Modify API | api directory, server directory, lib directory |
+| Modify copy | Page components, configuration files, i18n files |
 
 
-###### 哪些功能不能动
+###### Which features must not be touched?
 
-这一点非常重要。
+This is very important.
 
-Codex 很容易为了完成当前任务，顺手改掉其他地方。
+Codex may easily change other areas while trying to complete the current task.
 
-所以要提前告诉它：
+Tell it in advance:
 
 
-| 不能动的内容 | 说明 |
+| What must not be touched | Explanation |
 | --- | --- |
-| 登录逻辑 | 只改 UI，不改认证流程 |
-| 接口地址 | 不要改 API 请求路径 |
-| 数据结构 | 不要改数据库字段 |
-| 路由结构 | 不要改已有页面路径 |
-| 已有组件 | 除非必要，不要大规模重构 |
-| 依赖版本 | 不要随便升级或新增依赖 |
+| Login logic | Only change UI; do not change authentication flow |
+| API URLs | Do not change API request paths |
+| Data structure | Do not change database fields |
+| Route structure | Do not change existing page paths |
+| Existing components | Do not perform broad refactors unless necessary |
+| Dependency versions | Do not upgrade or add dependencies casually |
 
 
-这一步的核心是给 Codex 画边界。
+The core of this step is drawing boundaries for Codex.
 
 ---
 
 
-###### 什么结果算完成
+###### What counts as done?
 
-不要只说“做完就行”，要告诉 Codex 什么叫完成。
+Do not only say “finish it.” Tell Codex what “done” means.
 
 
-| 需求类型 | 完成标准 |
+| Requirement type | Completion criteria |
 | --- | --- |
-| UI 优化 | 页面视觉明显改善，移动端不乱 |
-| Bug 修复 | 原来的报错消失，相关功能可正常使用 |
-| 新功能 | 用户能完整走通操作流程 |
-| 性能优化 | 构建正常，页面加载没有明显变慢 |
-| 文案优化 | 标题、副标题、按钮文案更清楚 |
+| UI improvement | Visual clarity improves, and mobile layout is not broken |
+| Bug fix | Original error disappears, and related feature works normally |
+| New feature | User can complete the full operation flow |
+| Performance optimization | Build succeeds, and page loading is not noticeably slower |
+| Copy improvement | Title, subtitle, and button copy become clearer |
 
 
-示例：
+Example:
 
 ```text
-完成标准：
-1. 首页首屏能清楚表达产品用途
-2. CTA 按钮更明显
-3. 移动端显示正常
-4. 不影响其他页面
-5. 项目可以正常运行和构建
+Completion criteria:
+1. Homepage hero clearly explains what the product does
+2. CTA button is more prominent
+3. Mobile display works normally
+4. Other pages are unaffected
+5. Project can run and build normally
 ```
 
-###### 需要哪些测试
+###### What tests are needed?
 
-改完之后不能只看 Codex 说“完成了”，还要提前说明需要怎么验证。
+After changes, do not rely only on Codex saying “done.” Explain in advance how the result should be verified.
 
 
-| 测试类型 | 适用场景 |
+| Test type | Applicable scenario |
 | --- | --- |
-| 页面预览 | UI 修改、页面布局调整 |
-| 控制台检查 | 前端页面、交互功能 |
-| 构建测试 | Next.js、React、Vue 项目 |
-| 单元测试 | 有测试文件的项目 |
-| 手动流程测试 | 登录、支付、表单、上传等流程 |
-| 移动端测试 | 响应式页面、小红书首图、移动网页 |
+| Page preview | UI changes, layout changes |
+| Console check | Frontend pages, interactive features |
+| Build test | Next.js, React, Vue projects |
+| Unit tests | Projects with test files |
+| Manual flow test | Login, payment, forms, uploads, and similar flows |
+| Mobile test | Responsive pages, Xiaohongshu cover images, mobile webpages |
 
 
 ---
 
 
-###### 有哪些风险
+###### What risks exist?
 
-需求拆解时，还要提前让 Codex 判断风险。
+During requirement breakdown, ask Codex to identify risks in advance.
 
-这样它不会一边改一边乱试。
+This prevents it from modifying and experimenting blindly.
 
 
-| 风险 | 说明 |
+| Risk | Explanation |
 | --- | --- |
-| 影响范围过大 | 小需求被改成大重构 |
-| 样式污染 | 改了全局 CSS，影响其他页面 |
-| 依赖风险 | 新增不必要依赖，项目变复杂 |
-| 逻辑风险 | 为了修一个问题，改坏其他流程 |
-| 数据风险 | 改接口、字段、数据库相关内容 |
-| 兼容风险 | 桌面端正常，移动端出问题 |
+| Impact scope too large | A small requirement becomes a large refactor |
+| Style pollution | Global CSS changes affect other pages |
+| Dependency risk | Unnecessary dependencies make the project more complex |
+| Logic risk | Fixing one issue breaks other flows |
+| Data risk | API, field, or database-related changes |
+| Compatibility risk | Desktop works, mobile breaks |
 
 
-###### 需求拆解提示词模板
+###### Requirement breakdown prompt template
 
-实际使用 Codex 时，可以直接复制这段：
+In actual Codex use, you can copy this directly:
 
 ```text
-请先帮我做需求拆解，不要立刻修改代码。
+Please first break down the requirement. Do not modify code immediately.
 
-需求：
-【这里写你的需求】
+Requirement:
+[Write your requirement here]
 
-请按下面结构分析：
+Please analyze using the following structure:
 
-1. 背景是什么
-- 当前项目大概是什么
-- 为什么要做这个需求
-- 这个需求属于新功能、Bug 修复、UI 优化，还是重构
+1. What is the background?
+- What the current project roughly is
+- Why this requirement needs to be done
+- Whether this requirement is a new feature, bug fix, UI improvement, or refactor
 
-2. 要解决什么问题
-- 当前具体问题是什么
-- 本次要解决到什么程度
-- 哪些内容不是本次范围
+2. What problem should be solved?
+- What the specific current problem is
+- How far this task should solve it
+- Which content is out of scope
 
-3. 哪些文件可能相关
-- 请根据项目结构判断可能涉及哪些文件
-- 先列出来，不要直接修改
+3. Which files may be related?
+- Based on the project structure, determine which files may be involved
+- List them first; do not modify directly
 
-4. 哪些功能不能动
-- 不要改哪些逻辑
-- 不要动哪些接口
-- 不要影响哪些页面或组件
+4. Which features must not be touched?
+- Which logic should not be changed
+- Which APIs should not be touched
+- Which pages or components should not be affected
 
-5. 什么结果算完成
-- 功能完成标准
-- 页面完成标准
-- 代码完成标准
+5. What counts as done?
+- Functional completion criteria
+- Page completion criteria
+- Code completion criteria
 
-6. 需要哪些测试
-- 需要运行什么命令
-- 需要手动检查哪些页面
-- 需要重点验证哪些流程
+6. What tests are needed?
+- Which commands need to be run
+- Which pages need manual checks
+- Which flows need special validation
 
-7. 有哪些风险
-- 可能影响哪些功能
-- 是否有样式污染风险
-- 是否有重构过度风险
-- 是否有新增依赖风险
+7. What risks exist?
+- Which features may be affected
+- Whether there is style pollution risk
+- Whether there is over-refactor risk
+- Whether there is dependency-addition risk
 
-最后，请给我一个简短的执行建议：
-- 建议先做哪一步
-- 是否需要我确认后再修改
+Finally, give me a short execution recommendation:
+- Which step should be done first
+- Whether I should confirm before you modify
 ```
 
-##### 第二步：让 Codex 制定计划
+##### Step 2: Ask Codex to create a plan
 
-需求拆解完成后，不要马上让 Codex 写代码。
+After requirement breakdown, do not let Codex write code immediately.
 
-这一步要让 Codex 先制定计划。
+This step asks Codex to create a plan first.
 
-你可以把它理解成：
+You can understand it as:
 
-> 先让 AI 说清楚它准备怎么做，再决定要不要让它动手。
+> First let AI explain how it intends to work, then decide whether to let it act.
 
-很多项目翻车，不是因为 Codex 不会改，而是因为它一上来就开始改。
+Many projects go wrong not because Codex cannot change the code, but because it starts changing immediately.
 
-等你发现方向不对时，它可能已经改了很多文件，回头检查和回滚都很麻烦。
+By the time you notice the direction is wrong, it may have already changed many files, making review and rollback difficult.
 
-所以第二步的核心是：
+So the core of Step 2 is:
 
-> 先计划，后执行。
-> 先确认，后修改。
+> Plan first, execute later.  
+> Confirm first, modify later.
 
-###### 先不要写代码
+###### Do not write code yet
 
-这一点要写在提示词最前面。
+Put this at the very beginning of the prompt.
 
-因为 Codex 的默认倾向是：看到需求后直接开始解决问题。
+Codex's default tendency is to solve a problem immediately after seeing a requirement.
 
-但在真实项目里，直接改代码风险很高。
+But in real projects, directly changing code is risky.
 
 
-| 直接写代码的问题 | 可能后果 |
+| Problem with writing code directly | Possible consequence |
 | --- | --- |
-| 没理解项目结构 | 改错文件 |
-| 没确认需求边界 | 做了不该做的功能 |
-| 没判断影响范围 | 误伤旧功能 |
-| 没列测试方式 | 改完不知道怎么验收 |
-| 一次改太多 | 出错后不好回滚 |
+| Project structure not understood | Wrong file changed |
+| Requirement boundary not confirmed | Features outside scope are implemented |
+| Impact scope not assessed | Existing functionality is accidentally affected |
+| Test method not listed | No clear acceptance criteria after change |
+| Too many changes at once | Hard to roll back after errors |
 
 
-示例提示词：
+Example prompt:
 
 ```text
-先不要写代码，也不要修改任何文件。
-请先根据当前需求和项目结构，制定一个修改计划。
-等我确认后，再开始执行。
+Do not write code yet, and do not modify any files.
+Please create a modification plan based on the current requirement and project structure.
+Wait for my confirmation before execution.
 ```
 
-###### 开启计划模式
+###### Enable plan mode
 
-可以参考前文 Codex App 基础使用里的「计划模式」小节。实际使用时，也可以直接在 Codex CLI 或 App 输入 `/plan`，先让 Codex 输出计划，再决定是否执行。
+See the earlier “Plan mode” section under basic Codex App usage. In real use, you can also enter `/plan` directly in Codex CLI or App to ask Codex to output a plan first, then decide whether to execute.
 
 
-##### 第三步：小步实现
+##### Step 3: Implement in small steps
 
-计划确认后，才进入真正的代码修改阶段。
+After confirming the plan, enter the actual code modification stage.
 
-但这里有一个非常重要的原则：
+But there is one very important principle:
 
-> 不要让 Codex 一次性把所有东西都改完。
+> Do not let Codex finish everything in one pass.
 
-很多人用 Codex 翻车，就是因为一上来就让它“全部实现”。
+Many Codex failures happen because users ask it to “implement everything” at the start.
 
-结果它可能会同时改页面、改组件、改样式、改接口、改配置，最后项目虽然看起来变了，但你很难判断到底哪里出了问题。
+It may change pages, components, styles, APIs, and configuration at the same time. The project may look different afterward, but it becomes hard to determine where problems came from.
 
-所以更稳定的方式是：
+A more stable approach is:
 
-> 一次只改一个功能点。
-> 改完一小步，就检查一小步。
+> Modify only one functional point at a time.  
+> After each small step, inspect that small step.
 
-###### 一次只改一个功能点
+###### Modify only one functional point at a time
 
-小步实现的核心是控制修改范围。
+The core of small-step implementation is controlling modification scope.
 
-比如你要优化首页，不要一次性说：
+For example, if you want to improve the homepage, do not say:
 
 ```text
-请帮我优化整个首页。
+Please optimize the entire homepage.
 ```
 
-更推荐拆成这样：
+Break it down instead:
 
 
-| 步骤 | 修改内容 |
+| Step | Modification |
 | --- | --- |
-| 第一步 | 只优化首屏标题和副标题 |
-| 第二步 | 只调整 CTA 按钮 |
-| 第三步 | 只优化移动端布局 |
-| 第四步 | 只补充产品卖点卡片 |
-| 第五步 | 只处理最终样式细节 |
+| Step 1 | Improve only the hero title and subtitle |
+| Step 2 | Adjust only the CTA button |
+| Step 3 | Improve only the mobile layout |
+| Step 4 | Add only product value cards |
+| Step 5 | Handle final style details only |
 
 
-这样每一步都很清楚，出问题也容易定位。
+Each step is clear, and problems are easier to locate.
 
-###### 不要让 Codex 顺手重构无关代码
+###### Do not let Codex opportunistically refactor unrelated code
 
-Codex 有时候会觉得某些代码“不够优雅”，然后顺手帮你重构。
+Sometimes Codex decides that some code is “not elegant enough” and refactors it on the side.
 
-但真实项目里，顺手重构是很危险的。
+In real projects, opportunistic refactoring is dangerous.
 
 
-| Codex 的顺手操作 | 可能带来的问题 |
+| Codex's opportunistic action | Possible problem |
 | --- | --- |
-| 重命名组件 | 导致引用路径出错 |
-| 拆分文件 | 增加维护成本 |
-| 改全局样式 | 影响其他页面 |
-| 优化旧逻辑 | 破坏原本可用功能 |
-| 升级依赖 | 引发兼容问题 |
-| 删除它认为无用的代码 | 实际可能是业务逻辑 |
+| Rename components | Breaks import paths |
+| Split files | Increases maintenance cost |
+| Change global styles | Affects other pages |
+| Optimize old logic | Breaks previously working functionality |
+| Upgrade dependencies | Triggers compatibility issues |
+| Delete code it considers unused | May actually be business logic |
 
 
-所以在小步实现时，要明确限制：
+When implementing in small steps, set clear constraints:
 
 ```text
-本次只实现当前功能点。
-不要顺手重构无关代码。
-不要修改命名、目录结构、依赖版本和全局配置。
-如果你发现代码可以优化，请先记录为建议，不要直接修改。
+For this step, implement only the current functional point.
+Do not opportunistically refactor unrelated code.
+Do not change naming, directory structure, dependency versions, or global configuration.
+If you find code that could be improved, record it as a suggestion first. Do not modify it directly.
 ```
 
-这句话很重要。
+This sentence is important.
 
-Codex 可以提建议，但不能私自扩大改动范围。
+Codex can make suggestions, but it must not expand the change scope on its own.
 
 ---
 
-###### 不要接受大面积无解释修改
+###### Do not accept broad unexplained changes
 
-如果 Codex 一次性改了很多文件，而且没有解释清楚原因，就要暂停。
+If Codex changes many files at once and does not explain why, pause.
 
-尤其是看到这些情况时，要提高警惕：
+Be especially alert when you see:
 
 
-| 情况 | 处理方式 |
+| Situation | Response |
 | --- | --- |
-| 改动文件数量突然很多 | 要求解释每个文件为什么改 |
-| 删除了大量代码 | 要求说明删除原因 |
-| 新增了不认识的依赖 | 要求说明必要性 |
-| 修改了配置文件 | 要求说明影响范围 |
-| 改了和需求无关的页面 | 要求回退无关修改 |
-| 代码风格大变 | 要求保持原项目风格 |
+| Suddenly many files changed | Ask it to explain why each file changed |
+| Large amounts of code deleted | Ask it to explain the reason for deletion |
+| Unknown dependency added | Ask why it is necessary |
+| Configuration file modified | Ask for impact scope |
+| Pages unrelated to the requirement changed | Ask it to revert unrelated modifications |
+| Code style changed drastically | Ask it to preserve the original project style |
 
 
-###### 遇到不确定先停下来问
+###### Pause and ask when uncertain
 
-小步实现不是让 Codex 什么都问，而是遇到关键不确定时必须停下来。
+Small-step implementation does not mean Codex must ask about everything. But when there is key uncertainty, it must stop and ask.
 
-比如：
+For example:
 
 
-| 不确定情况 | 为什么要停 |
+| Uncertain situation | Why pause |
 | --- | --- |
-| 不确定该改哪个文件 | 防止改错位置 |
-| 不确定业务规则 | 防止逻辑做错 |
-| 不确定是否能删旧代码 | 防止误删功能 |
-| 不确定是否新增依赖 | 防止项目复杂化 |
-| 不确定接口含义 | 防止影响数据 |
-| 不确定测试失败原因 | 防止越修越乱 |
+| Unsure which file to modify | Prevents changing the wrong place |
+| Unsure about business rules | Prevents incorrect logic |
+| Unsure whether old code can be deleted | Prevents accidental feature deletion |
+| Unsure whether to add dependency | Prevents project complexity |
+| Unsure about API meaning | Prevents data impact |
+| Unsure why tests fail | Prevents making the issue worse |
 
 
-可以提前给 Codex 加这条规则：
+Add this rule to Codex in advance:
 
 ```text
-如果你遇到以下情况，请先停下来问我，不要自行决定：
+If you encounter any of the following situations, stop and ask me first. Do not decide on your own:
 
-1. 不确定该改哪个文件
-2. 不确定是否要删除旧代码
-3. 不确定是否要新增依赖
-4. 不确定业务逻辑应该怎么处理
-5. 不确定测试失败原因
-6. 发现需要超出原计划的修改
+1. Unsure which file to modify
+2. Unsure whether old code should be deleted
+3. Unsure whether to add a dependency
+4. Unsure how business logic should be handled
+5. Unsure why tests are failing
+6. A change is needed beyond the original plan
 ```
 
-###### 小步实现提示词模板
+###### Small-step implementation prompt template
 
-实际使用时，可以直接复制下面这段：
+In actual use, copy this directly:
 
 ```text
-请开始小步实现。
+Please start small-step implementation.
 
-当前只执行第【1】步：
-【这里写本次只做的一个功能点】
+For now, execute only Step [1]:
+[Write the single functional point for this step here]
 
-要求：
-1. 一次只改这个功能点
-2. 只修改和当前功能直接相关的文件
-3. 不要顺手重构无关代码
-4. 不要修改目录结构
-5. 不要新增不必要依赖
-6. 不要删除已有功能
-7. 不要改计划外的文件
+Requirements:
+1. Modify only this functional point at a time
+2. Modify only files directly related to the current function
+3. Do not opportunistically refactor unrelated code
+4. Do not change directory structure
+5. Do not add unnecessary dependencies
+6. Do not delete existing functionality
+7. Do not modify files outside the plan
 
-修改完成后请停止，并输出：
+After completing the modification, stop and output:
 
-1. 本次修改了哪些文件
-2. 每个文件改了什么
-3. 为什么这些修改是必要的
-4. 有没有改到计划外内容
-5. 有没有潜在风险
-6. 下一步建议做什么
+1. Which files were modified this time
+2. What changed in each file
+3. Why these changes were necessary
+4. Whether any out-of-plan content was changed
+5. Whether there are potential risks
+6. What you recommend next
 
-注意：
-如果遇到不确定的地方，请先停下来问我，不要自行决定。
+Note:
+If you encounter uncertainty, stop and ask me first. Do not decide on your own.
 ```
 
 
-##### 第四步：测试
+##### Step 4: Testing
 
-Codex 完成小步修改后，不能马上进入下一步，必须先测试。
+After Codex completes a small-step change, do not move to the next step immediately. Test first.
 
-很多人用 Codex 最大的问题是：
+The biggest problem many users have with Codex is:
 
-> AI 说完成了，但项目其实没跑通。
-> 页面看起来正常，但某些功能已经坏了。
-> 当前功能修好了，旧功能却被影响了。
+> AI says it is done, but the project does not actually run.  
+> The page looks fine, but some function is broken.  
+> The current feature is fixed, but old functionality is affected.
 
-所以测试的核心是：**不是相信 Codex 说「完成」，而是用结果证明它真的完成。**
+The core of testing is: **do not trust Codex saying “done”; use results to prove that it is done.**
 
-下面这张表覆盖了一次完整测试要做的事，按从快到慢的顺序执行即可：
+The table below covers what a complete testing pass should include. Run it from fastest to slowest:
 
-| 测试类型 | 作用 | 常见命令 | 重点 |
+| Test type | Purpose | Common command | Focus |
 | --- | --- | --- | --- |
-| 单元测试 | 检查函数、组件、模块是否正常 | `npm test` / `pnpm test` / `yarn test` | 失败先说明原因，不要直接改代码 |
-| 类型检查 | TypeScript 项目提前发现类型错误 | `npm run typecheck` / `tsc --noEmit` | 没有该命令就明确说明 |
-| lint | 检查代码规范问题（未使用变量、import 顺序、Hook 用法等） | `npm run lint` | 区分本次新增问题和项目原有问题 |
-| 构建 | 本地能打开不代表能上线，构建才说明能打包 | `npm run build` / `pnpm build` | 失败先总结报错和影响范围 |
-| 手动测试 | UI、表单、登录、支付、上传必须手动点一遍 | —— | 按用户操作路径逐步验证 |
-| 浏览器测试 | 终端看不出来的页面/控制台/接口问题 | —— | 看页面显示、Console 报错、Network、移动端 |
-| 回归测试 | 不只测新功能，还要测旧功能有没有被改坏 | —— | 列出本次修改可能影响的旧页面和组件 |
+| Unit tests | Check whether functions, components, and modules work | `npm test` / `pnpm test` / `yarn test` | Explain failures first; do not directly modify code |
+| Type check | Catch TypeScript errors early | `npm run typecheck` / `tsc --noEmit` | Clearly state if no such command exists |
+| lint | Check code-quality issues such as unused variables, import order, Hook usage | `npm run lint` | Distinguish newly introduced issues from existing project issues |
+| Build | Local preview does not mean production build works | `npm run build` / `pnpm build` | Summarize error and impact scope first if it fails |
+| Manual testing | UI, forms, login, payment, upload must be clicked through manually | — | Validate step by step along the user path |
+| Browser testing | Page, console, and API issues that terminal cannot reveal | — | Check page display, Console errors, Network, mobile |
+| Regression testing | Test not only new features but also whether old features broke | — | List old pages and components that may be affected |
 
-> 两个提醒：很多老项目本身就有 lint 或类型问题，不要让 Codex 把历史问题都顺手重构；回归测试是最容易被小白忽略的一步——改了首页按钮，也可能影响复用同一组件的其他页面。
+> Two reminders: many legacy projects already have lint or type issues, so do not let Codex opportunistically refactor all historical problems; regression testing is the step beginners most easily overlook—changing a homepage button may also affect other pages reusing the same component.
 
-手动测试时，可以让 Codex 把验证步骤列成「操作—预期结果」表格，例如：
+For manual testing, ask Codex to list validation steps as an “operation—expected result” table:
 
-| 步骤 | 操作 | 预期结果 |
+| Step | Operation | Expected result |
 | --- | --- | --- |
-| 1 | 打开首页 | 页面正常加载 |
-| 2 | 点击 CTA 按钮 | 跳转到注册页 |
-| 3 | 缩小到手机宽度 | 页面不变形 |
-| 4 | 打开控制台 | 没有明显红色报错 |
+| 1 | Open homepage | Page loads normally |
+| 2 | Click CTA button | Navigates to registration page |
+| 3 | Resize to phone width | Page layout does not break |
+| 4 | Open console | No obvious red errors |
 
-###### 测试阶段提示词模板
+###### Testing-stage prompt template
 
-实际使用时，可以直接复制这段：
+In actual use, copy this directly:
 
 ```text
-请对本次修改进行测试，不要继续新增功能。
+Please test this modification. Do not continue adding features.
 
-请按下面顺序执行或说明：
+Execute or explain in the following order:
 
-1. 单元测试
-- 项目是否有单元测试
-- 如果有，请运行测试命令
-- 如果失败，请说明失败原因
+1. Unit tests
+- Whether the project has unit tests
+- If yes, run the test command
+- If it fails, explain the failure cause
 
-2. 类型检查
-- 项目是否有 typecheck 命令
-- 如果有，请运行
-- 如果没有，请说明
+2. Type check
+- Whether the project has a typecheck command
+- If yes, run it
+- If not, state that clearly
 
 3. lint
-- 运行 lint 检查
-- 区分本次新增问题和项目原有问题
+- Run lint checks
+- Distinguish newly introduced issues from existing project issues
 
-4. 构建
-- 运行 build 命令
-- 如果失败，请说明报错原因和影响范围
+4. Build
+- Run the build command
+- If it fails, explain the error cause and impact scope
 
-5. 手动测试
-- 列出需要手动测试的页面
-- 列出用户操作步骤
-- 列出每一步预期结果
+5. Manual testing
+- List pages that need manual testing
+- List user operation steps
+- List expected result for each step
 
-6. 浏览器测试
-- 检查页面显示
-- 检查控制台报错
-- 检查移动端布局
-- 检查关键按钮和交互
+6. Browser testing
+- Check page display
+- Check console errors
+- Check mobile layout
+- Check key buttons and interactions
 
-7. 回归测试
-- 检查本次修改是否影响旧功能
-- 列出可能受影响的页面、组件和流程
+7. Regression testing
+- Check whether this modification affects old functionality
+- List pages, components, and flows that may be affected
 
-最后请输出测试总结：
-- 哪些测试通过了
-- 哪些测试失败了
-- 失败原因是什么
-- 是否可以进入下一步
-- 是否需要先修复问题
+Finally, output a testing summary:
+- Which tests passed
+- Which tests failed
+- Why they failed
+- Whether we can proceed to the next step
+- Whether issues should be fixed first
 ```
 
-##### 第五步：代码审查
+##### Step 5: Code review
 
-测试通过后，不代表这次修改就可以直接交付。
+Passing tests does not mean the change can be delivered directly.
 
-还需要做代码审查。
+A code review is still needed.
 
-代码审查可以理解成：
+Code review means:
 
-> 不只是看代码能不能跑，还要看代码改得对不对、稳不稳、有没有风险。
+> Not only checking whether the code can run, but also whether the change is correct, stable, and safe.
 
-Codex 写代码很快，但它也可能出现这些问题：
+Codex writes code quickly, but it can still produce problems such as:
 
 
-| 常见问题 | 说明 |
+| Common issue | Explanation |
 | --- | --- |
-| 功能能跑，但逻辑不对 | 表面正常，真实业务流程有问题 |
-| 改动太大 | 为了一个小需求，改了很多无关代码 |
-| 误删旧逻辑 | 删除了看似没用、实际有用的代码 |
-| 忽略边界条件 | 正常输入能用，异常输入就崩 |
-| 安全问题 | 暴露密钥、权限判断错误、输入未校验 |
-| 风格不统一 | 新代码和原项目写法不一致 |
-| 可维护性差 | 临时写死、硬编码、后续不好改 |
+| Function runs, but logic is wrong | Looks fine on the surface; real business flow is wrong |
+| Change is too broad | Many unrelated files changed for a small requirement |
+| Old logic deleted by mistake | Code that looked unused was actually useful |
+| Boundary conditions ignored | Normal input works, abnormal input crashes |
+| Security issue | Secret exposure, permission check error, unvalidated input |
+| Inconsistent style | New code does not match the project style |
+| Poor maintainability | Hard-coded temporary solution that is hard to change later |
 
 
-所以代码审查不是可选项，而是 Codex 工作流里的关键一步。
+So code review is not optional; it is a key step in the Codex workflow.
 
 ---
 
-###### 两轮审查：Codex 自审 + 人工审查
+###### Two rounds of review: Codex self-review + human review
 
-第一轮先让 Codex 自查刚才的修改（目的不是完全相信它，而是让它先暴露明显问题），最好让它输出成表格：
+First ask Codex to review its own changes (the goal is not to trust it completely, but to expose obvious issues first). Ideally, have it output a table:
 
-| 检查项 | 结果 | 说明 |
+| Check item | Result | Note |
 | --- | --- | --- |
-| 是否改到计划外文件 | 否 | 只修改了首页相关组件 |
-| 是否新增依赖 | 否 | 没有修改 package.json |
-| 是否删除旧逻辑 | 否 | 原有按钮跳转逻辑保留 |
-| 是否存在风险 | 有 | 移动端按钮间距还需人工确认 |
+| Did it modify files outside the plan? | No | Only homepage-related components changed |
+| Did it add dependencies? | No | package.json was not modified |
+| Did it delete old logic? | No | Original button navigation logic preserved |
+| Is there any risk? | Yes | Mobile button spacing still needs human confirmation |
 
-第二轮人工审查。最终交付的人是你，不是 Codex。不要求每行都看懂，但要重点看 diff 的这几处：
+Second comes human review. The person delivering the project is you, not Codex. You do not need to understand every line, but focus on these diff areas:
 
-| 审查重点 | 要看什么 |
+| Review focus | What to inspect |
 | --- | --- |
-| 文件范围 | 是否只改了该改的文件 |
-| 修改 / 删除内容 | 是否符合计划、有没有删掉旧功能 |
-| 命名和结构 | 是否和原项目风格一致 |
-| 业务逻辑 | 是否符合真实需求（能跑 ≠ 逻辑对） |
-| 测试结果 | 是否真的跑过测试 |
+| File scope | Whether only the correct files were changed |
+| Modifications / deletions | Whether they match the plan and do not remove old features |
+| Naming and structure | Whether they match the original project style |
+| Business logic | Whether it matches real requirements (runs ≠ correct logic) |
+| Test results | Whether tests were actually run |
 
-涉及登录、支付、权限、数据库、鉴权等重要代码，建议再用第二个模型做交叉审查——一个模型写，另一个模型专门挑错（只改文案、轻微样式一般不必）。但第二个模型的建议同样不能全盘接受，它帮你发现问题，不替你做最终决定。
+For important code involving login, payment, permissions, databases, authentication, and similar areas, it is recommended to use a second model for cross-review—one model writes, another model finds problems. For copy-only changes or minor styles, this is usually unnecessary. But recommendations from the second model also cannot be accepted blindly; it helps discover problems, while you still make the final decision.
 
-###### 重点盯四类高风险问题
+###### Focus on four high-risk categories
 
-下面四类是 Codex 最容易出问题、也最该重点审的地方：
+The following four categories are where Codex most often goes wrong and where review should focus:
 
-| 类别 | 常见问题 | 审查要点 |
+| Category | Common issue | Review focus |
 | --- | --- | --- |
-| 边界条件 | 正常输入能用、异常输入就崩 | 空数据、接口失败、未登录、权限不足、移动端尺寸、重复点击 |
-| 安全问题 | 涉及用户/接口/权限/支付/上传/数据库时 | 是否暴露密钥 token、权限判断是否缺失、输入是否校验、是否泄露敏感信息、接口是否有鉴权 |
-| 是否误删 | 看似没用、实际有用的代码被删 | 重点看 diff 的删除内容；旧组件、注释、兼容代码、fallback、配置项都可能仍被依赖 |
-| 业务逻辑 | 代码能跑但逻辑错（跳错页、价格算错、越权） | 正常路径、异常路径、权限判断、是否覆盖了旧业务规则 |
+| Boundary conditions | Normal input works, abnormal input crashes | Empty data, API failure, unauthenticated user, insufficient permission, mobile sizes, repeated clicks |
+| Security issues | User/API/permission/payment/upload/database-related code | Whether secrets or tokens are exposed, permission checks missing, input validation missing, sensitive information leaked, API authentication changed |
+| Accidental deletion | Code that looks useless but is actually needed is deleted | Focus on diff deletions; old components, comments, compatibility code, fallback logic, and config items may still be depended on |
+| Business logic | Code runs but logic is wrong, such as wrong navigation, wrong price calculation, privilege escalation | Normal path, error path, permission checks, whether old business rules are preserved |
 
-看到大段删除但 Codex 没解释清楚，就不要直接接受。
+If you see a large deletion and Codex does not clearly explain it, do not accept it directly.
 
-###### 代码审查提示词模板
+###### Code-review prompt template
 
-实际使用时，可以直接复制这一段：
+In actual use, copy this directly:
 
 ```text
-请对本次修改做代码审查，不要继续写代码。
+Please review this modification. Do not continue writing code.
 
-请按下面结构审查：
+Review using the following structure:
 
-1. Codex 自审
-- 本次是否只改了计划内文件
-- 是否有无关重构
-- 是否有新增依赖
-- 是否有硬编码
-- 是否有误删旧逻辑
+1. Codex self-review
+- Whether this change only modified planned files
+- Whether there was unrelated refactoring
+- Whether dependencies were added
+- Whether there is hard coding
+- Whether old logic was accidentally deleted
 
-2. 修改范围审查
-- 修改了哪些文件
-- 每个文件为什么要改
-- 是否存在计划外修改
-- 是否有大面积无解释修改
+2. Modification scope review
+- Which files were modified
+- Why each file needed modification
+- Whether there were out-of-plan changes
+- Whether there were broad unexplained changes
 
-3. 边界条件审查
-- 空数据如何处理
-- 接口失败如何处理
-- 用户未登录如何处理
-- 权限不足如何处理
-- 重复点击如何处理
-- 移动端是否可能异常
+3. Boundary condition review
+- How empty data is handled
+- How API failure is handled
+- How unauthenticated users are handled
+- How insufficient permissions are handled
+- How repeated clicks are handled
+- Whether mobile may behave abnormally
 
-4. 安全问题审查
-- 是否暴露密钥、token、账号密码
-- 是否影响权限判断
-- 是否缺少输入校验
-- 是否可能泄露敏感信息
-- 是否修改了接口鉴权逻辑
+4. Security review
+- Whether secrets, tokens, account passwords were exposed
+- Whether permission checks were affected
+- Whether input validation is missing
+- Whether sensitive information may leak
+- Whether API authentication logic was modified
 
-5. 删除内容审查
-- 删除了哪些代码
-- 删除原因是什么
-- 是否确认没有其他地方依赖
-- 是否可能影响旧功能
+5. Deletion review
+- Which code was deleted
+- Why it was deleted
+- Whether no other place depends on it
+- Whether old functionality may be affected
 
-6. 业务逻辑审查
-- 是否符合需求
-- 正常流程是否正确
-- 异常流程是否正确
-- 是否影响旧业务规则
-- 是否有不确定的业务假设
+6. Business logic review
+- Whether it matches the requirement
+- Whether the normal flow is correct
+- Whether error flows are correct
+- Whether old business rules are affected
+- Whether there are uncertain business assumptions
 
-7. 审查结论
-请最后给出结论：
-- 可以继续
-- 需要小修
-- 需要回退部分修改
-- 需要重新制定计划
+7. Review conclusion
+Finally, give a conclusion:
+- Can continue
+- Needs minor fixes
+- Needs partial rollback
+- Needs a new plan
 
-注意：
-只审查，不要继续修改代码。
-如果发现问题，请先说明问题和建议，等我确认后再改。
+Note:
+Review only. Do not continue modifying code.
+If you find an issue, explain the problem and suggestion first, then wait for my confirmation before changing it.
 ```
 
-##### 第六步：提交与复盘
+##### Step 6: Commit and review
 
-代码测试通过、审查完成后，最后一步不是简单地说“完成了”。
+After code passes testing and review, the final step is not simply saying “done.”
 
-真正完整的 Codex 工作流，还需要做两件事：
+A complete Codex workflow still needs two things:
 
-> 第一，把这次修改正式提交。
-> 第二，把这次经验沉淀下来。
+> First, formally commit the change.  
+> Second, distill the lessons from this change.
 
-很多人用 Codex 只做到“代码能跑”，但没有提交说明、没有 PR 描述、没有记录问题、没有更新文档。
+Many users stop once “the code runs,” but do not write commit notes, PR descriptions, issue records, or documentation updates.
 
-这样短期看没问题，长期就会出现一个麻烦：
+This may look fine in the short term, but over time it creates a problem:
 
-> 每次都像第一次做。
-> 每次都要重新解释。
-> 每次都重复踩坑。
+> Every time feels like the first time.  
+> Every time requires re-explaining.  
+> Every time repeats the same mistakes.
 
-所以第六步的核心是：
+So the core of Step 6 is:
 
-> 交付不是结束，复盘才是下一次效率提升的开始。
+> Delivery is not the end. Review is where the next efficiency gain begins.
 
-###### 生成 commit
+###### Generate commit
 
-当这次修改已经通过测试和审查后，就可以让 Codex 帮你生成 commit。
+After this change has passed testing and review, you can ask Codex to help generate a commit.
 
-commit 不是随便写一句“update”就行，而是要说明这次到底改了什么。
+A commit should not simply say “update.” It should explain what changed.
 
-好的 commit 应该能回答：
+A good commit should answer:
 
 
-| 问题 | 说明 |
+| Question | Explanation |
 | --- | --- |
-| 改了什么 | 本次提交的主要内容 |
-| 为什么改 | 对应什么需求或问题 |
-| 影响哪里 | 涉及哪些模块、页面或功能 |
-| 是否通过测试 | 是否构建、lint、测试通过 |
+| What changed? | Main content of this commit |
+| Why changed? | Which requirement or issue it corresponds to |
+| What is affected? | Which modules, pages, or features are involved |
+| Did tests pass? | Whether build, lint, or tests passed |
 
 
-常见 commit message 格式：
+Common commit message formats:
 
 ```text
 feat: add user profile page
@@ -6175,787 +6167,791 @@ refactor: simplify product card component
 docs: update setup guide
 ```
 
-如果是中文项目，也可以写成：
+For another wording style, keep the type prefix and make the summary concise:
 
 ```text
-feat: 新增用户资料页
-fix: 修复登录后跳转异常
-style: 优化首页移动端布局
-docs: 更新项目使用说明
+feat: add a user profile page
+fix: resolve the redirect issue after login
+style: optimize the home page mobile layout
+docs: update the project usage guide
 ```
 
-###### 写 PR
+###### Write a PR
 
-如果项目使用 GitHub、GitLab 或团队协作流程，提交后通常还要写 PR。
+If the project uses GitHub, GitLab, or a team collaboration flow, a PR is usually needed after the commit.
 
-PR 的作用不是“走形式”，而是让别人快速知道：
+A PR is not “just ceremony.” It helps others quickly understand:
 
 
-| PR 要说明什么 | 作用 |
+| What the PR should explain | Purpose |
 | --- | --- |
-| 这次做了什么 | 方便 reviewer 快速理解 |
-| 为什么要做 | 说明需求背景 |
-| 改了哪些地方 | 降低审查成本 |
-| 怎么测试 | 证明不是随便改 |
-| 有什么风险 | 提前暴露不确定点 |
-| 需要重点看哪里 | 引导 reviewer 审查重点 |
+| What was done | Helps reviewers understand quickly |
+| Why it was done | Explains requirement background |
+| Which areas changed | Reduces review cost |
+| How it was tested | Shows the change was not random |
+| What risks exist | Surfaces uncertainty early |
+| Which areas need special attention | Guides reviewer focus |
 
 
-一个好的 PR 描述可以这样写：
+A good PR description can look like this:
 
 ```text
-## 本次修改
+## Changes in this PR
 
-- 优化首页首屏标题、副标题和 CTA 按钮
-- 调整移动端首屏布局
-- 保留原有跳转逻辑，没有修改接口和路由
+- Improved the homepage hero title, subtitle, and CTA button
+- Adjusted the mobile hero layout
+- Preserved the original navigation logic; did not modify APIs or routes
 
-## 测试结果
+## Test results
 
-- npm run lint 通过
-- npm run build 通过
-- 手动检查首页桌面端和移动端显示正常
-- 点击 CTA 按钮跳转正常
+- npm run lint passed
+- npm run build passed
+- Manually checked homepage display on desktop and mobile
+- CTA button navigation works normally
 
-## 风险说明
+## Risk notes
 
-- 本次涉及首页样式调整，需要重点确认移动端显示
-- 没有新增依赖
-- 没有修改登录、接口、数据库逻辑
+- This change adjusts homepage styles; mobile display should be reviewed carefully
+- No new dependencies added
+- No login, API, or database logic modified
 ```
 
-###### 记录问题
+###### Record issues
 
-复盘时，要把这次过程中遇到的问题记录下来。
+During review, record the issues encountered in this process.
 
-这一步非常重要。
+This step is very important.
 
-因为 Codex 工作流里，真正有价值的不是“这次做完了”，而是：
+In the Codex workflow, the truly valuable thing is not “this task is done,” but:
 
-> 下次遇到类似问题，可以少走弯路。
+> Next time a similar problem appears, you can avoid detours.
 
-需要记录的问题包括：
+Issues to record include:
 
 
-| 问题类型 | 示例 |
+| Issue type | Example |
 | --- | --- |
-| 需求问题 | 一开始需求描述不够清楚 |
-| 计划问题 | Codex 计划里漏掉了移动端 |
-| 修改问题 | Codex 顺手改了无关组件 |
-| 测试问题 | 项目没有 typecheck 命令 |
-| 审查问题 | 发现它误删了 fallback 逻辑 |
-| 沟通问题 | 提示词没有明确“不要新增依赖” |
+| Requirement issue | Initial requirement description was unclear |
+| Planning issue | Codex's plan missed mobile |
+| Modification issue | Codex opportunistically changed unrelated components |
+| Testing issue | Project had no typecheck command |
+| Review issue | It accidentally deleted fallback logic |
+| Communication issue | Prompt did not clearly state “do not add dependencies” |
 
 
-记录格式可以很简单：
-
-```text
-本次问题记录：
-
-1. 问题：Codex 一开始想修改全局样式
-   原因：需求里没有明确限制“只改首页”
-   解决：补充提示词，要求只修改首页相关文件
-
-2. 问题：移动端测试遗漏
-   原因：计划阶段没有列移动端验收标准
-   解决：以后在测试清单里固定加入移动端检查
-
-3. 问题：PR 描述不够清楚
-   原因：没有提前记录测试结果
-   解决：每次测试后直接生成测试总结
-```
-
-###### 总结 Prompt
-
-如果这次使用的提示词效果不错，就应该把它沉淀下来。
-
-这一步的目的很简单：
-
-> 好用的 Prompt，不要每次重新写。
-
-比如这次你发现下面这句话很有用：
+The record can be simple:
 
 ```text
-不要顺手重构无关代码。
-如果发现需要超出计划的修改，请先停下来问我。
+Issue record for this task:
+
+1. Issue: Codex initially wanted to modify global styles
+   Cause: Requirement did not explicitly limit it to “homepage only”
+   Resolution: Added prompt constraints requiring only homepage-related files to be modified
+
+2. Issue: Mobile testing was missed
+   Cause: Plan did not include mobile acceptance criteria
+   Resolution: Add mobile checks to the testing checklist in future
+
+3. Issue: PR description was unclear
+   Cause: Test results were not recorded in advance
+   Resolution: Generate a test summary immediately after each test run
 ```
 
-那就应该记录下来，以后作为固定规则使用。
+###### Summarize prompts
 
-可以整理成表格：
+If a prompt worked well in this task, distill it for future use.
+
+The purpose is simple:
+
+> Do not rewrite useful prompts from scratch each time.
+
+For example, if this sentence was useful:
+
+```text
+Do not opportunistically refactor unrelated code.
+If you find that changes beyond the plan are needed, stop and ask me first.
+```
+
+Record it and reuse it as a fixed rule later.
+
+You can organize it as a table:
 
 
-| 有效 Prompt | 适用场景 | 为什么有效 |
+| Effective prompt | Applicable scenario | Why it works |
 | --- | --- | --- |
-| 先不要写代码，先制定计划 | 所有复杂需求 | 防止 Codex 直接乱改 |
-| 一次只改一个功能点 | 多步骤任务 | 降低出错和回滚成本 |
-| 不要顺手重构无关代码 | 老项目维护 | 防止改动范围扩大 |
-| 修改完成后总结 diff | 每次修改后 | 方便人工审查 |
-| 不确定先停下来问 | 业务逻辑不清楚时 | 防止 AI 自作主张 |
+| Do not write code first; create a plan first | All complex requirements | Prevents Codex from modifying blindly |
+| Modify only one functional point at a time | Multi-step tasks | Reduces error and rollback cost |
+| Do not opportunistically refactor unrelated code | Legacy project maintenance | Prevents scope expansion |
+| Summarize diff after modification | After every modification | Makes human review easier |
+| Stop and ask when uncertain | When business logic is unclear | Prevents AI from making assumptions |
 
 
-###### 更新 AGENTS.md
+###### Update AGENTS.md
 
-如果某些规则以后每次都要遵守，就不要只写在聊天里，最好更新到项目级 `AGENTS.md`。
+If certain rules should be followed every time in the future, do not keep them only in the chat. Add them to the project-level `AGENTS.md`.
 
-`AGENTS.md` 可以理解成：
+`AGENTS.md` can be understood as:
 
-> 写给 Codex 的项目规则说明书。
+> A project rules manual for Codex.
 
-它可以告诉 Codex：
+It can tell Codex:
 
 
-| 内容 | 作用 |
+| Content | Purpose |
 | --- | --- |
-| 项目怎么运行 | 让 Codex 知道启动、测试、构建命令 |
-| 代码风格是什么 | 避免生成不符合项目风格的代码 |
-| 哪些目录不能动 | 防止误改核心文件 |
-| 修改前要怎么做 | 固定“先计划后执行” |
-| 测试要求是什么 | 改完必须跑哪些检查 |
-| 提交要求是什么 | commit 和 PR 怎么写 |
+| How the project runs | Let Codex know startup, test, and build commands |
+| What the code style is | Avoid generating code that does not match the project |
+| Which directories must not be touched | Prevent accidental core-file changes |
+| What to do before modification | Fix “plan before execution” |
+| What tests are required | Which checks must be run after changes |
+| What submission requirements exist | How to write commit and PR |
 
 
-示例内容：
+Example:
 
 ```text
 # AGENTS.md
 
-## 工作规则
+## Working rules
 
-- 修改前必须先阅读项目结构。
-- 修改前必须先制定计划，不要直接写代码。
-- 一次只实现一个功能点。
-- 不要顺手重构无关代码。
-- 不要新增不必要依赖。
-- 不确定业务逻辑时，先提问，不要自行决定。
+- Read the project structure before modifying.
+- Create a plan before modifying; do not write code directly.
+- Implement only one functional point at a time.
+- Do not opportunistically refactor unrelated code.
+- Do not add unnecessary dependencies.
+- When business logic is uncertain, ask first instead of deciding on your own.
 
-## 测试要求
+## Testing requirements
 
-每次修改后至少检查：
+After every modification, check at least:
 
 - npm run lint
 - npm run build
-- 相关页面手动测试
-- 浏览器控制台是否有报错
-- 移动端布局是否正常
+- Manual testing of relevant pages
+- Whether the browser console has errors
+- Whether mobile layout is normal
 
-## 提交要求
+## Submission requirements
 
-提交前需要说明：
+Before submitting, explain:
 
-- 修改了哪些文件
-- 每个文件改了什么
-- 测试是否通过
-- 是否有风险或未完成事项
+- Which files changed
+- What changed in each file
+- Whether tests passed
+- Whether there are risks or unfinished items
 ```
 
-###### 更新项目文档
+###### Update project documentation
 
-除了 `AGENTS.md`，如果这次修改影响了项目使用方式，也要更新项目文档。
+Besides `AGENTS.md`, update project documentation if this change affects how the project is used.
 
-比如：
+For example:
 
 
-| 修改内容 | 需要更新的文档 |
+| Modification | Documentation to update |
 | --- | --- |
-| 新增功能 | README、功能说明 |
-| 新增环境变量 | .env.example、部署文档 |
-| 新增命令 | README、开发指南 |
-| 修改接口 | API 文档 |
-| 修改部署流程 | 部署说明 |
-| 修改配置 | 配置说明 |
-| 新增组件 | 组件使用说明 |
+| New feature | README, feature description |
+| New environment variable | .env.example, deployment documentation |
+| New command | README, developer guide |
+| API change | API documentation |
+| Deployment flow change | Deployment instructions |
+| Configuration change | Configuration documentation |
+| New component | Component usage notes |
 
 
-文档更新不是为了好看，而是为了避免以后忘记。
+Documentation is not for decoration. It prevents future forgetting.
 
-常见文档包括：
+Common documentation files include:
 
 
-| 文件 | 作用 |
+| File | Purpose |
 | --- | --- |
-| README.md | 项目介绍、启动方式、常用命令 |
-| .env.example | 环境变量示例 |
-| docs/ | 详细项目文档 |
-| CHANGELOG.md | 版本更新记录 |
-| AGENTS.md | Codex 工作规则 |
-| CONTRIBUTING.md | 团队协作规范 |
+| README.md | Project introduction, startup method, common commands |
+| .env.example | Environment variable examples |
+| docs/ | Detailed project documentation |
+| CHANGELOG.md | Version update records |
+| AGENTS.md | Codex working rules |
+| CONTRIBUTING.md | Team collaboration standards |
 
 
-###### 提交与复盘提示词模板
+###### Commit and review prompt template
 
-实际使用时，可以直接复制下面这段：
+In actual use, copy this directly:
 
 ```text
-请进入提交与复盘阶段，不要继续新增功能。
+Please enter the commit and review stage. Do not continue adding features.
 
-请按下面结构输出：
+Output using the following structure:
 
-1. Commit 建议
-- 生成一个合适的 commit message
-- 使用 conventional commit 格式
-- 不要夸大本次修改范围
+1. Commit recommendation
+- Generate a suitable commit message
+- Use conventional commit format
+- Do not exaggerate the scope of this change
 
-2. PR 描述
-请生成 PR 内容，包括：
-- 本次修改
-- 修改原因
-- 涉及文件
-- 测试结果
-- 风险说明
-- reviewer 需要重点看的地方
+2. PR description
+Generate PR content including:
+- Changes in this PR
+- Why the change was made
+- Files involved
+- Test results
+- Risk notes
+- Areas reviewers should focus on
 
-3. 问题记录
-请复盘本次过程：
-- 遇到了哪些问题
-- 原因是什么
-- 如何解决
-- 下次如何避免
+3. Issue record
+Review this process:
+- What issues appeared
+- What caused them
+- How they were solved
+- How to avoid them next time
 
-4. Prompt 总结
-请总结：
-- 哪些 Prompt 有效
-- 为什么有效
-- 适合什么场景复用
-- 是否建议加入 AGENTS.md
+4. Prompt summary
+Summarize:
+- Which prompts worked
+- Why they worked
+- Which scenarios can reuse them
+- Whether they should be added to AGENTS.md
 
-5. AGENTS.md 更新建议
-请输出适合加入 AGENTS.md 的长期规则：
-- 修改前规则
-- 修改中规则
-- 测试规则
-- 提交规则
+5. AGENTS.md update suggestions
+Output long-term rules suitable for AGENTS.md:
+- Rules before modification
+- Rules during modification
+- Testing rules
+- Submission rules
 
-6. 项目文档更新建议
-请判断是否需要更新：
+6. Project documentation update suggestions
+Determine whether these need updates:
 - README.md
 - .env.example
 - docs/
 - CHANGELOG.md
-- 其他项目文档
+- Other project documentation
 
-最后请给出交付结论：
-- 是否可以提交
-- 是否可以发 PR
-- 是否还有未完成事项
-- 是否有需要人工确认的风险
+Finally, give a delivery conclusion:
+- Whether it can be committed
+- Whether a PR can be opened
+- Whether anything is unfinished
+- Whether any risk requires human confirmation
 ```
 
-### Codex 任务模板库
+### Codex task template library
 
-前面讲的是 Codex 的标准工作流。
+The previous sections covered Codex's standard workflow.
 
-这一节直接放一些常用模板，方便以后复制使用。
+This section provides common templates that can be copied for future use.
 
-这些模板的作用是：
+The purpose of these templates is:
 
-> 不用每次重新想 Prompt，直接按场景复制，然后填入自己的需求。
+> Do not rethink prompts every time. Copy by scenario, then fill in your own requirement.
 
-#### 读项目模板
+#### Project-reading template
 
-这个模板适合在刚打开一个新项目时使用。
+This template is suitable when you have just opened a new project.
 
-尤其是你第一次让 Codex 接触某个项目，不要一上来就让它改代码。
+Especially when Codex is touching a project for the first time, do not ask it to modify code immediately.
 
-更稳的方式是：先让它读项目，输出一份项目理解报告。
+A safer method is: ask it to read the project first and output a project-understanding report.
 
-这样你可以先判断：
+This lets you check:
 
 
-| 检查点 | 作用 |
+| Checkpoint | Purpose |
 | --- | --- |
-| Codex 是否看懂项目 | 防止一上来改错文件 |
-| 技术栈是否判断正确 | 确认它知道项目用的是什么框架 |
-| 启动方式是否清楚 | 后面测试和运行更顺 |
-| 核心模块是否找对 | 后续修改不会乱找方向 |
-| 风险是否提前暴露 | 避免误改核心逻辑 |
+| Whether Codex understood the project | Prevents modifying the wrong file at the start |
+| Whether the tech stack was identified correctly | Confirms it knows which framework the project uses |
+| Whether startup method is clear | Makes later testing and running smoother |
+| Whether core modules were located correctly | Prevents directionless searching later |
+| Whether risks were exposed in advance | Avoids accidental core-logic changes |
 
 
-##### 读项目模板（可直接复制）
+##### Project-reading template (copy directly)
 
 ```text
-请先不要修改任何代码。
+Do not modify any code yet.
 
-请阅读当前项目，并输出一份项目理解报告，包括：
+Please read the current project and output a project-understanding report including:
 
-1. 技术栈
-- 项目使用了哪些主要技术
-- 前端/后端/数据库/构建工具分别是什么
-- 是否使用 TypeScript、Tailwind、框架或组件库
+1. Tech stack
+- Which main technologies the project uses
+- What the frontend / backend / database / build tools are
+- Whether it uses TypeScript, Tailwind, a framework, or component library
 
-2. 目录结构
-- 主要目录分别负责什么
-- 页面、组件、工具函数、接口、配置文件分别在哪里
-- 哪些目录是核心目录，哪些目录不建议随便改
+2. Directory structure
+- What the main directories are responsible for
+- Where pages, components, utilities, APIs, and configuration files are
+- Which directories are core directories and should not be modified casually
 
-3. 启动方式
-- 项目如何安装依赖
-- 项目如何本地启动
-- 是否需要环境变量
-- 如果 README 里有说明，请优先参考 README
+3. Startup method
+- How to install dependencies
+- How to run the project locally
+- Whether environment variables are required
+- If README contains instructions, prioritize README
 
-4. 测试命令
-- 项目是否有 test 命令
-- 是否有 lint 命令
-- 是否有 typecheck 命令
-- 是否有 build 命令
-- 如果没有相关命令，请明确说明
+4. Test commands
+- Whether the project has a test command
+- Whether it has a lint command
+- Whether it has a typecheck command
+- Whether it has a build command
+- If no related command exists, state that clearly
 
-5. 核心模块
-- 项目的核心功能模块有哪些
-- 每个模块大概负责什么
-- 如果后续要修改功能，应该优先查看哪些文件
+5. Core modules
+- What the core functional modules are
+- What each module is roughly responsible for
+- If later features need modification, which files should be checked first
 
-6. 后续修改风险
-- 哪些文件或目录改动风险较高
-- 哪些逻辑不能随便改
-- 是否存在全局样式、全局配置、鉴权、接口、数据库等高风险区域
-- 后续修改时需要特别注意什么
+6. Future modification risks
+- Which files or directories are high-risk to modify
+- Which logic must not be changed casually
+- Whether there are high-risk areas such as global styles, global config, authentication, APIs, or databases
+- What to pay special attention to in later modifications
 
-请只输出项目理解报告，不要修改代码。
-输出完成后等待我确认。
+Output only the project-understanding report. Do not modify code.
+Wait for my confirmation after output.
 ```
 
-#### 修 Bug 模板
+#### Bug-fix template
 
-我遇到一个 bug：
+I encountered a bug:
 
-- 【现象】
-- 【复现步骤】
-- 【期望结果】
-- 【实际结果】
-- 【相关文件/页面】
+- [Symptom]
+- [Reproduction steps]
+- [Expected result]
+- [Actual result]
+- [Related files/pages]
 
-请先定位原因，不要直接修改。
+Please locate the cause first. Do not modify directly.
 
-先给出：
+First provide:
 
-1. 可能原因
-2. 需要查看的文件
-3. 修复方案
-4. 风险点
-等我确认后再改代码。
+1. Possible causes
+2. Files to inspect
+3. Fix plan
+4. Risks
 
-#### 加功能模板
+Wait for my confirmation before modifying code.
 
-我想新增一个功能：
+#### Feature-addition template
 
-- 【功能描述】
-- 【入口位置】
-- 【交互流程】
-- 【视觉要求】
-- 【数据来源】
-- 【验收标准】
+I want to add a feature:
 
-请先阅读相关代码，给出实现计划。
+- [Feature description]
+- [Entry point]
+- [Interaction flow]
+- [Visual requirements]
+- [Data source]
+- [Acceptance criteria]
 
-不要改无关文件。
+Please read related code first and provide an implementation plan.
 
-实现后请运行测试并总结 diff。
+Do not modify unrelated files.
 
-#### 前端页面模板
+After implementation, run tests and summarize the diff.
 
-请根据下面要求实现一个页面：
+#### Frontend page template
 
-- 【页面用途】
-- 【目标用户】
-- 【视觉风格】
-- 【模块结构】
-- 【中文文案】
-- 【响应式要求】
-- 【不要出现的问题】
+Please implement a page based on the following requirements:
 
-请先给出组件拆分方案，再开始实现。
+- [Page purpose]
+- [Target users]
+- [Visual style]
+- [Module structure]
+- [Chinese copy]
+- [Responsive requirements]
+- [Problems to avoid]
 
-#### 代码审查模板
+Please first provide a component breakdown plan, then start implementation.
 
-请审查当前分支相对 main 的 diff。
+#### Code-review template
 
-重点检查：
+Please review the current branch diff against main.
 
-1. 潜在 bug
-2. 边界条件
-3. 安全风险
-4. 类型问题
-5. 性能问题
-6. 是否有无关修改
-7. 测试是否充分
-请不要直接修改代码，先输出 review 报告。
+Focus on:
 
-#### 重构模板
+1. Potential bugs
+2. Boundary conditions
+3. Security risks
+4. Type issues
+5. Performance issues
+6. Unrelated changes
+7. Whether testing is sufficient
 
-请重构以下模块：
+Do not directly modify code. Output a review report first.
 
-【模块路径】
+#### Refactor template
 
-目标是：
+Please refactor the following module:
 
-1. 提高可读性
-2. 减少重复代码
-3. 保持现有行为不变
-4. 不改变公共 API
-5. 不引入新依赖
-请先写重构计划，并说明如何验证行为一致。
+[Module path]
 
-#### 写测试模板
+Goals:
 
-请为以下功能补充测试：
+1. Improve readability
+2. Reduce duplicated code
+3. Preserve existing behavior
+4. Do not change public APIs
+5. Do not introduce new dependencies
 
-- 【功能描述】
-- 【相关文件】
-- 【边界情况】
+Please write a refactor plan first and explain how to verify behavior remains consistent.
 
-要求：
+#### Test-writing template
 
-1. 不改业务逻辑
-2. 覆盖正常路径
-3. 覆盖异常路径
-4. 覆盖边界条件
-5. 运行测试并报告结果。
+Please add tests for the following feature:
 
-#### 写文档模板
+- [Feature description]
+- [Related files]
+- [Boundary cases]
 
-请根据当前项目生成文档：
+Requirements:
 
-1. 项目简介
-2. 安装方式
-3. 启动方式
-4. 环境变量说明
-5. 常用命令
-6. 目录结构
-7. 开发注意事项
-8. 常见问题
-请不要编造不存在的命令，必须基于项目文件判断。
+1. Do not change business logic
+2. Cover the normal path
+3. Cover error paths
+4. Cover boundary conditions
+5. Run tests and report results.
 
----
+#### Documentation-writing template
 
-## 第五篇：实战案例库
+Please generate documentation based on the current project:
 
-### 实战案例一：制作一个宠物零食售卖的前端页面网站
+1. Project introduction
+2. Installation method
+3. Startup method
+4. Environment variables
+5. Common commands
+6. Directory structure
+7. Development notes
+8. FAQ
 
-从零开始制作可发布在网上的前端网页
-
-#### 在本地创建一个文件夹，命名为 Pet treats
-
-选择好创建的文件夹
-
-<p align="center">
-  <img src="assets/images/image-072-0bacd62ef7.png" alt="Codex移动版界面，左侧为导航栏，有搜索、插件、项目等选项" width="860">
-</p>
-
-#### 开启计划模式
-
-生成初步项目计划，检查没问题后直接执行
-
-<p align="center">
-  <img src="assets/images/image-073-6b92e44e73.png" alt="一个宠物零食售卖网站的项目计划界面" width="860">
-</p>
-
-#### 打开 index.html 文件进行预览
-
-<p align="center">
-  <img src="assets/images/image-074-a7b21a59b4.png" alt="在本地打开index.html文件进行预览的界面" width="860">
-</p>
-
-#### 创建 Git 仓库
-
-创建 Git仓库进行代码管理，方便后续的更新和维护
-
-<p align="center">
-  <img src="assets/images/image-075-a3afbcdfdc.png" alt="在本地创建的“Pet treats”文件夹中，使用Codex生成的初步项目计划" width="860">
-</p>
-
-#### 优化细节更改
-
-直接使用注释在页面进行细节修改
-
-<p align="center">
-  <img src="assets/images/image-076-be7cedd51b.png" alt="一个宠物零食售卖前端页面网站中的一款商品“草本洁齿咀嚼棒”" width="860">
-</p>
-
-增加月销量
-
-<p align="center">
-  <img src="assets/images/image-077-304ae941c4.png" alt="在GitHub上对“制作宠物零食售卖网站”项目的操作界面" width="860">
-</p>
-
-#### 新增功能
-
-新增热销榜
-
-<p align="center">
-  <img src="assets/images/image-078-f63e9b6ad0.png" alt="一个宠物零食售卖前端页面网站的热销榜页面" width="860">
-</p>
-
-#### 推送更新的代码
-
-检查没有任何问题过后推送更新的代码
-
-<p align="center">
-  <img src="assets/images/image-079-d84ddc95b2.png" alt="在GitHub上对“Pet treats”仓库代码进行推送更新的操作界面" width="860">
-</p>
-
-#### 上传到 GitHub 仓库
-
-##### 新建一个仓库
-
-<p align="center">
-  <img src="assets/images/image-080-a53306a9a0.png" alt="Codex平台的界面，左侧为项目列表，右侧是项目详情区域" width="860">
-</p>
-
-<p align="center">
-  <img src="assets/images/image-081-f3937d9863.png" alt="GitHub新建仓库页面" width="860">
-</p>
-
+Do not invent commands that do not exist. You must infer based on project files.
 
 ---
 
-##### 复制对应仓库链接
+## Part 5: Real-world case library
+
+### Case 1: Build a frontend website for selling pet treats
+
+Build a publishable frontend webpage from scratch.
+
+#### Create a local folder named Pet treats
+
+Select the folder you created.
 
 <p align="center">
-  <img src="assets/images/image-082-f8ae50f1eb.png" alt="GitHub仓库创建页面中“快速安装”部分的内容" width="860">
+  <img src="assets/images/image-072-0bacd62ef7.png" alt="Codex mobile interface with navigation on the left, including search, plugins, projects, and other options" width="860">
 </p>
 
-##### 让 Codex 将代码上传到 GitHub 仓库
+#### Enable plan mode
+
+Generate an initial project plan. After checking that everything looks correct, execute it directly.
 
 <p align="center">
-  <img src="assets/images/image-083-384188bf14.png" alt="在GitHub上上传代码后的信息界面" width="860">
+  <img src="assets/images/image-073-6b92e44e73.png" alt="Project planning interface for a pet-treat sales website" width="860">
+</p>
+
+#### Open index.html for preview
+
+<p align="center">
+  <img src="assets/images/image-074-a7b21a59b4.png" alt="Interface for previewing a local index.html file" width="860">
+</p>
+
+#### Create a Git repository
+
+Create a Git repository for code management so future updates and maintenance are easier.
+
+<p align="center">
+  <img src="assets/images/image-075-a3afbcdfdc.png" alt="Initial project plan generated by Codex in a local “Pet treats” folder" width="860">
+</p>
+
+#### Improve detailed changes
+
+Use comments directly on the page to make detailed changes.
+
+<p align="center">
+  <img src="assets/images/image-076-be7cedd51b.png" alt="A product named “Herbal Dental Chew Stick” on a pet-treat sales frontend website" width="860">
+</p>
+
+Add monthly sales.
+
+<p align="center">
+  <img src="assets/images/image-077-304ae941c4.png" alt="GitHub operation interface for the “Build a pet-treat sales website” project" width="860">
+</p>
+
+#### Add a feature
+
+Add a best-sellers ranking.
+
+<p align="center">
+  <img src="assets/images/image-078-f63e9b6ad0.png" alt="Best-sellers page of a pet-treat sales frontend website" width="860">
+</p>
+
+#### Push updated code
+
+After confirming there are no problems, push the updated code.
+
+<p align="center">
+  <img src="assets/images/image-079-d84ddc95b2.png" alt="GitHub interface for pushing updated code to the “Pet treats” repository" width="860">
+</p>
+
+#### Upload to GitHub repository
+
+##### Create a new repository
+
+<p align="center">
+  <img src="assets/images/image-080-a53306a9a0.png" alt="Codex platform interface with project list on the left and project detail area on the right" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-084-2a3160a6c5.png" alt="Codex平台的仓库页面" width="860">
+  <img src="assets/images/image-081-f3937d9863.png" alt="GitHub new repository page" width="860">
 </p>
 
-##### 通过GitHub Pages 发布网页，让其他人也能访问到
 
-在设置里面找到 pages 然后点击保存
+---
 
-等待几分钟
+##### Copy the corresponding repository link
 
 <p align="center">
-  <img src="assets/images/image-085-69a3904d44.png" alt="GitHub Pages的相关设置界面" width="860">
+  <img src="assets/images/image-082-f8ae50f1eb.png" alt="Quick setup section on the GitHub repository creation page" width="860">
 </p>
 
-等待几分钟，就会出现一条链接。这个链接可以让别人访问到你的网页。
-
-需要注意的是，GitHub Pages 适合托管静态网站，比如 HTML、CSS、JavaScript 和静态资源；它不适合运行需要后端服务器、数据库或敏感交易的业务逻辑。
+##### Ask Codex to upload code to the GitHub repository
 
 <p align="center">
-  <img src="assets/images/image-086-35204e4da7.png" alt="GitHub Pages的相关设置界面" width="860">
+  <img src="assets/images/image-083-384188bf14.png" alt="Information interface after uploading code to GitHub" width="860">
 </p>
 
-##### 打开网页查看做好的项目
+<p align="center">
+  <img src="assets/images/image-084-2a3160a6c5.png" alt="Repository page on the Codex platform" width="860">
+</p>
 
-不同地区和网络环境访问 GitHub Pages 的稳定性可能不同，如果打不开，可以先换网络或稍等部署完成后再试。
+##### Publish the webpage through GitHub Pages so others can access it
+
+Find Pages in Settings and click Save.
+
+Wait a few minutes.
+
+<p align="center">
+  <img src="assets/images/image-085-69a3904d44.png" alt="GitHub Pages settings interface" width="860">
+</p>
+
+After a few minutes, a link appears. Others can access your webpage through this link.
+
+Note that GitHub Pages is suitable for hosting static websites such as HTML, CSS, JavaScript, and static assets. It is not suitable for running business logic that requires a backend server, database, or sensitive transactions.
+
+<p align="center">
+  <img src="assets/images/image-086-35204e4da7.png" alt="GitHub Pages settings interface" width="860">
+</p>
+
+##### Open the webpage and view the completed project
+
+Access stability for GitHub Pages may vary by region and network environment. If it cannot be opened, try another network or wait until deployment completes.
 
 https://vink567.github.io/Pet-treats/
 
 <p align="center">
-  <img src="assets/images/image-087-8dd476dd7d.png" alt="在浏览器中打开的“Pet treats”网页" width="860">
+  <img src="assets/images/image-087-8dd476dd7d.png" alt="“Pet treats” webpage opened in a browser" width="860">
 </p>
 
-### 实战案例二：给宠物零食网站增加功能和优化页面
+### Case 2: Add features to the pet-treat website and improve the page
 
-#### 新建用户登录注册页面
+#### Create user login and registration pages
 
-用户购买的时候需要填写自己的地址信息，这个时候就需要一个个人的登录账号来保存这些信息了
+When users make a purchase, they need to fill in their address information. At this point, a personal login account is needed to save that information.
 
 <p align="center">
-  <img src="assets/images/image-088-0b885ab356.png" alt="宠物零食管理系统的登录页面" width="860">
+  <img src="assets/images/image-088-0b885ab356.png" alt="Login page of the pet-treat management system" width="860">
 </p>
 
-#### 创建不同宠物分类，并在宠物分类下进行食品分类
+#### Create different pet categories and food categories under each pet category
 
-依旧先用计划模式，看看AI是否理解了你的需求
+Still start with plan mode and check whether AI understands your requirement.
 
 <p align="center">
-  <img src="assets/images/image-089-50ed4b17e0.png" alt="宠物零食网站的页面及后台内容" width="860">
+  <img src="assets/images/image-089-50ed4b17e0.png" alt="Pet-treat website page and backend content" width="860">
 </p>
 
-#### 使用注释功能优化细节
+#### Use the comment feature to refine details
 
 <p align="center">
-  <img src="assets/images/image-090-cba5ddc255.png" alt="宠物零食网站的页面及后台管理界面" width="860">
-</p>
-
-<p align="center">
-  <img src="assets/images/image-091-4d7f53636d.png" alt="宠物零食管理后台的界面" width="860">
-</p>
-
-#### 选择食品加入购物车后，点击购买时候需要提示确认地址
-
-<p align="center">
-  <img src="assets/images/image-092-4f51572ac5.png" alt="宠物零食管理系统的界面" width="860">
-</p>
-
-#### 提交到 Git 保存代码
-
-<p align="center">
-  <img src="assets/images/image-093-40116a6ce8.png" alt="宠物零食网站的管理后台界面" width="860">
-</p>
-
-### 实战案例三：制作宠物零食的管理后台
-
-#### 依旧先使用计划模式
-
-<p align="center">
-  <img src="assets/images/image-094-7ca371c03b.png" alt="宠物零食网站的管理后台界面" width="860">
+  <img src="assets/images/image-090-cba5ddc255.png" alt="Pet-treat website page and admin interface" width="860">
 </p>
 
 <p align="center">
-  <img src="assets/images/image-095-e441e7e74f.png" alt="宠物零食管理后台计划的相关内容" width="860">
+  <img src="assets/images/image-091-4d7f53636d.png" alt="Pet-treat admin dashboard interface" width="860">
 </p>
 
-#### 检查效果
+#### After selecting food and adding it to the cart, clicking purchase should prompt address confirmation
 
 <p align="center">
-  <img src="assets/images/image-096-cfd9668315.png" alt="宠物零食管理售卖网站的界面" width="860">
+  <img src="assets/images/image-092-4f51572ac5.png" alt="Pet-treat management system interface" width="860">
 </p>
 
-#### 提交到 Git 保存代码
+#### Commit to Git and save code
 
 <p align="center">
-  <img src="assets/images/image-097-2f5c85338e.png" alt="宠物零食管理后台的界面" width="860">
+  <img src="assets/images/image-093-40116a6ce8.png" alt="Admin dashboard interface of the pet-treat website" width="860">
 </p>
 
-### 实战案例四：制作宠物零食品牌招商 PPT
+### Case 3: Build an admin dashboard for pet treats
 
-#### 安装 PPT Skill
-
-这里我安装的是我之前测评过的一个 PPT Skill，直接把 GitHub 上对应的 Skill 地址发给 Codex 让它安装就行了
+#### Still start with plan mode
 
 <p align="center">
-  <img src="assets/images/image-098-7d022cbe9f.png" alt="Codex平台界面，左侧为项目列表，当前选中“Pet treats - 制作宠物零食销售网站”项目" width="860">
+  <img src="assets/images/image-094-7ca371c03b.png" alt="Admin dashboard interface of the pet-treat website" width="860">
 </p>
 
-#### 使用「/」选择对应的 Skill
-
 <p align="center">
-  <img src="assets/images/image-099-b578e0a79f.png" alt="Codex平台中安装PPT Skill的界面" width="860">
+  <img src="assets/images/image-095-e441e7e74f.png" alt="Pet-treat admin dashboard plan content" width="860">
 </p>
 
-#### 检查最终的结果
-
-Codex 最终生成了一份完整的招商 PPT。成品已上传到云端，点击下面的链接即可下载查看：
-
-[⬇ 下载招商 PPT](https://r2notes.bozhouai.com/images/codex-orange-book/pet-treats-investment-deck.pptx)
-
+#### Check the result
 
 <p align="center">
-  <img src="assets/images/image-100-15528eaa6b.png" alt="Codex 生成的宠物零食品牌招商 PPT 预览界面" width="860">
+  <img src="assets/images/image-096-cfd9668315.png" alt="Pet-treat management and sales website interface" width="860">
 </p>
 
-### 实战案例五：制作宠物零食宣传视频
-
-#### 安装视频插件
-
-这里使用的是 HyperFrames 这个插件
+#### Commit to Git and save code
 
 <p align="center">
-  <img src="assets/images/image-101-189755e043.png" alt="HyperFrames by HeyGen的界面" width="860">
+  <img src="assets/images/image-097-2f5c85338e.png" alt="Pet-treat admin dashboard interface" width="860">
+</p>
+
+### Case 4: Create a pet-treat brand partnership PPT
+
+#### Install PPT Skill
+
+Here I installed a PPT Skill I had previously reviewed. Just send the corresponding GitHub Skill URL to Codex and ask it to install it.
+
+<p align="center">
+  <img src="assets/images/image-098-7d022cbe9f.png" alt="Codex platform interface with the “Pet treats - Build a pet-treat sales website” project selected in the project list" width="860">
+</p>
+
+#### Use “/” to select the corresponding Skill
+
+<p align="center">
+  <img src="assets/images/image-099-b578e0a79f.png" alt="Interface for installing PPT Skill on the Codex platform" width="860">
+</p>
+
+#### Check the final result
+
+Codex ultimately generated a complete partnership PPT. The final file has been uploaded to the cloud. Click the link below to download and view it:
+
+[⬇ Download partnership PPT](https://r2notes.bozhouai.com/images/codex-orange-book/pet-treats-investment-deck.pptx)
+
+
+<p align="center">
+  <img src="assets/images/image-100-15528eaa6b.png" alt="Preview interface of a pet-treat brand partnership PPT generated by Codex" width="860">
+</p>
+
+### Case 5: Create a promotional video for pet treats
+
+#### Install video plugin
+
+This example uses the HyperFrames plugin.
+
+<p align="center">
+  <img src="assets/images/image-101-189755e043.png" alt="HyperFrames by HeyGen interface" width="860">
 </p>
 
 
 ---
 
-#### 计划生成视频
+#### Plan video generation
 
 <p align="center">
-  <img src="assets/images/image-102-ee81b66845.png" alt="一个文档界面，标题为“重做《炭禾小食》BGM 版电影级生产过程宣传片”" width="860">
+  <img src="assets/images/image-102-ee81b66845.png" alt="A document interface titled “Remake the Tanhe Snacks BGM Version Cinematic Production Process Promo Video”" width="860">
 </p>
 
-#### 效果预览
+#### Preview the result
 
-成品是一条宠物零食的宣传视频。完整视频已上传到云端，点击下面的链接即可在浏览器直接播放：
+The final output is a promotional video for pet treats. The full video has been uploaded to the cloud. Click the link below to play it directly in the browser:
 
-[▶ 在线观看演示视频](https://r2notes.bozhouai.com/images/codex-orange-book/pet-treats-promo.mp4)
-
-
-## 附录
-
-### 附录 A：第三方模型接入
-
-> 本节介绍第三方模型接入的非官方思路，并以 CC Switch + DeepSeek 为例。它不属于 OpenAI 官方功能，模型兼容性、稳定性、隐私和费用规则以对应第三方工具与模型服务商为准。
-
-#### 什么是 CC Switch
-
-它不是 Claude Code 本体，也不是 Codex 本体，而是一个第三方开源桌面工具，用来统一管理不同 Agent 工具。
-
-简单说：
-
-> **以前你要手动改 Claude Code、Codex、Gemini CLI 的配置文件。**
->  **现在 CC Switch 给你做成一个可视化面板，一键切换。**
-
-它最核心的用途有 3 个：
+[▶ Watch demo video online](https://r2notes.bozhouai.com/images/codex-orange-book/pet-treats-promo.mp4)
 
 
-| 功能 | 简单来说 |
+## Appendix
+
+### Appendix A: Third-party model integration
+
+> This section introduces unofficial ideas for third-party model integration, using CC Switch + DeepSeek as an example. It is not an official OpenAI feature. Model compatibility, stability, privacy, and pricing rules are subject to the corresponding third-party tools and model providers.
+
+#### What is CC Switch?
+
+It is not Claude Code itself and not Codex itself. It is a third-party open-source desktop tool used to manage different agent tools in one place.
+
+In simple terms:
+
+> **Previously, you had to manually edit configuration files for Claude Code, Codex, and Gemini CLI.**  
+> **Now CC Switch turns this into a visual panel where you can switch with one click.**
+
+Its three core uses are:
+
+
+| Function | Simple meaning |
 | --- | --- |
-| Provider 切换 | 比如从官方 Claude API 切到某个中转 API，或者切到另一个模型服务 |
-| MCP 统一管理 | 不用分别给 Claude Code、Codex、Gemini 配 MCP |
-| Skills 管理 | 可以从 GitHub 或 ZIP 安装 Skill，并同步到不同 AI 编程工具 |
+| Provider switching | Switch from the official Claude API to a proxy API, or to another model service |
+| Unified MCP management | Avoid configuring MCP separately for Claude Code, Codex, and Gemini |
+| Skills management | Install Skills from GitHub or ZIP and sync them across different AI programming tools |
 
 
-**如果你需要在多个 Agent 工具和模型之间切换，CC Switch 可以作为一个进阶选项。**
+**If you need to switch among multiple agent tools and models, CC Switch can be an advanced option.**
 
-#### 下载 CC Switch
+#### Download CC Switch
 
-首先进入官网：https://ccswitch.io/zh/
+First go to the official website: https://ccswitch.io/zh/
 
-点击下载后会跳转到对应的下载页面，往下滑找到对应的版本点击下载即可
-
-<p align="center">
-  <img src="assets/images/image-103-fc95eb3d01.png" alt="CC Switch官网的下载页面" width="860">
-</p>
-
-#### 接入三方模型
-
-##### 这里以 DeepSeek 为例
-
-###### 首先找到 DeepSeek 的官网，创建 api key
+After clicking Download, you will be redirected to the corresponding download page. Scroll down, find the correct version, and download it.
 
 <p align="center">
-  <img src="assets/images/image-104-1b85927ab4.png" alt="文档配图" width="860">
+  <img src="assets/images/image-103-fc95eb3d01.png" alt="Download page on the CC Switch official website" width="860">
 </p>
 
-###### 打开 cc switch
+#### Connect third-party models
 
-点击添加模型
+##### DeepSeek is used here as an example
+
+###### First find the DeepSeek official website and create an API key
 
 <p align="center">
-  <img src="assets/images/image-105-2a61cce466.png" alt="CC Switch的界面" width="860">
+  <img src="assets/images/image-104-1b85927ab4.png" alt="Documentation illustration" width="860">
 </p>
 
-将刚刚创建的 API key 复制到这里来
+###### Open CC Switch
+
+Click Add model.
 
 <p align="center">
-  <img src="assets/images/image-106-450fdb2138.png" alt="CC Switch中添加新供应商界面" width="860">
+  <img src="assets/images/image-105-2a61cce466.png" alt="CC Switch interface" width="860">
 </p>
 
-开启本地路由映射
+Copy the API key you just created here.
 
 <p align="center">
-  <img src="assets/images/image-107-8f8a2b6a76.png" alt="接入三方模型时在CC Switch中添加模型的设置界面" width="860">
+  <img src="assets/images/image-106-450fdb2138.png" alt="Add new provider interface in CC Switch" width="860">
 </p>
 
-然后点击添加
+Enable local route mapping.
 
 <p align="center">
-  <img src="assets/images/image-108-9fe0f0d229.png" alt="CC Switch添加新供应商界面" width="860">
+  <img src="assets/images/image-107-8f8a2b6a76.png" alt="Settings interface for adding a model in CC Switch when connecting a third-party model" width="860">
 </p>
 
-进入设置，将路由全部打开
+Then click Add.
 
 <p align="center">
-  <img src="assets/images/image-109-f7edb52f37.png" alt="CC Switch设置中的路由页面" width="860">
+  <img src="assets/images/image-108-9fe0f0d229.png" alt="Add new provider interface in CC Switch" width="860">
 </p>
 
-点击启用
+Go to settings and turn on all routes.
 
 <p align="center">
-  <img src="assets/images/image-110-19ea6cfbfd.png" alt="CC Switch的界面，其中“DeepSeek”模型被选中，其右侧有“启用”按钮，该按钮被红色框突出显示" width="860">
+  <img src="assets/images/image-109-f7edb52f37.png" alt="Routes page in CC Switch settings" width="860">
 </p>
 
-如果 CC Switch 的路由、模型服务和 Codex 侧配置都兼容，这时再打开 Codex，就有可能通过这套非官方路由使用 DeepSeek 等第三方模型。
+Click Enable.
 
-这类方式不属于 OpenAI 官方功能。能否正常使用、模型能力、上下文长度、工具调用兼容性、费用和隐私规则，都要以 CC Switch、模型服务商和你自己的配置为准。重要项目建议先用测试仓库验证，不要直接在生产项目里试。
+<p align="center">
+  <img src="assets/images/image-110-19ea6cfbfd.png" alt="CC Switch interface with the DeepSeek model selected and the Enable button highlighted" width="860">
+</p>
+
+If CC Switch routing, the model service, and Codex-side configuration are compatible, opening Codex at this point may allow you to use DeepSeek and other third-party models through this unofficial routing setup.
+
+This approach is not an official OpenAI feature. Whether it works, model capability, context length, tool-calling compatibility, cost, and privacy rules are all subject to CC Switch, the model provider, and your own configuration. For important projects, verify with a test repository first; do not try it directly in production projects.
